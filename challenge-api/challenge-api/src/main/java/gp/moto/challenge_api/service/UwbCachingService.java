@@ -22,7 +22,7 @@ public class UwbCachingService {
     private MotoRepository motoRepository;
 
     @CacheEvict()
-    public Uwb desassociarUwbMoto (Long id) {
+    public Uwb desassociarUwbMoto (Long id) throws ResourceNotFoundException{
         Uwb uwb = uwbRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Uwb não encontrado"));
         uwb.setIdMoto(null);
@@ -30,7 +30,7 @@ public class UwbCachingService {
     }
 
     @CacheEvict()
-    public Uwb associarUwbMoto(Long idMoto, Long idUwb) throws ResponseStatusException {
+    public Uwb associarUwbMoto(Long idMoto, Long idUwb) throws ResourceNotFoundException {
         Uwb uwb = uwbRepository.findById(idUwb)
                 .orElseThrow(() -> new ResourceNotFoundException("Uwb não encontrado"));
         Moto moto = motoRepository.findById(idMoto)
