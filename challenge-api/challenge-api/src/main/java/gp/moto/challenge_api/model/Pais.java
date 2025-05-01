@@ -13,7 +13,7 @@ public class Pais {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPais;
+    private Long idPais;
     @NotEmpty(message = "Valor inválido para o país")
     @Length(max = 100, message = "Valor inválido para o país. O valor deve ter no máximo 100 caracteres")
     private String nmPais;

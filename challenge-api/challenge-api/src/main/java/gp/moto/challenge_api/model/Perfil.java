@@ -13,7 +13,7 @@ public class Perfil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPerfil;
+    private Long idPerfil;
 
     @NotEmpty(message = "Valor inválido para tipo de perfil")
     @Length(max = 100, message = "Valor inválido para tipo de perfil. O valor deve ter no máximo 100 caracteres")

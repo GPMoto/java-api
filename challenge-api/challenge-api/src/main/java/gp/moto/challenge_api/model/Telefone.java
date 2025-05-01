@@ -13,7 +13,7 @@ public class Telefone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_telefone;
+    private Long id_telefone;
 
     @NotEmpty(message = "Valor inválido para ddi")
     @Length(max = 3, message = "Valor inválido para ddi. O valor deve ter no máximo 3 caracteres")

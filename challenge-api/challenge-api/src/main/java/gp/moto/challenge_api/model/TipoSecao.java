@@ -13,7 +13,7 @@ public class TipoSecao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idTipoSecao;
+    private Long idTipoSecao;
     @NotEmpty(message = "Valor inválido para tipo de seção")
     @Length(max=200, message = "Valor inválido para tipo de seção. O valor deve ter no máximo 200 caracteres")
     private String nmSecao;

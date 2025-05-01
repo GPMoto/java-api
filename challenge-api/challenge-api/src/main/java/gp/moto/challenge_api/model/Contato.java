@@ -15,7 +15,7 @@ public class Contato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idContato;
+    private Long idContato;
 
     @NotEmpty(message = "Valor inválido para nome do contato")
     @Length(max = 200, message = "Valor inválido para nome do contato. O valor deve ter no máximo 200 caracteres")

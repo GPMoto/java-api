@@ -12,7 +12,7 @@ public class Uwb {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUwb;
+    private Long idUwb;
 
     @OneToOne
     @JoinColumn(name = "id_moto")

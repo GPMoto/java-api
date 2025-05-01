@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private Long idUsuario;
 
     @NotEmpty(message = "Valor inválido para nome do usuário")
     @Length(max = 200, message = "Valor inválido para nome do usuário. O valor deve ter no máximo 200 caracteres")

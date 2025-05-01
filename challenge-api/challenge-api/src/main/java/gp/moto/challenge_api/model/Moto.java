@@ -13,7 +13,7 @@ public class Moto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMoto;
+    private Long idMoto;
     @NotEmpty(message = "Valor inválido para condição")
     @Length(max = 50, message = "Valor inválido para condição. O valor deve ter no máximo 50 caracteres")
     private String condicoes;

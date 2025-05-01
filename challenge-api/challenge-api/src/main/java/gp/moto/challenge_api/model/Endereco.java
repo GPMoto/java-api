@@ -16,7 +16,7 @@ public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEndereco;
+    private Long idEndereco;
 
     @NotEmpty(message = "Valor inválido para nome do bairro")
     @Length(min=8, max = 8,message = "Valor inválido para nome do bairro. O valor deve ter no mínimo 8 caracteres")
@@ -29,7 +29,7 @@ public class Endereco {
 
     @NotNull(message = "Valor inválido para número do logradouro")
     @Length(max=5, message = "Valor inválido para número do logradouro. O valor deve ter no máximo 5 caracteres")
-    private int nrLogradouro;
+    private Long nrLogradouro;
 
     @ManyToOne
     @JoinColumn(name = "id_cidade")

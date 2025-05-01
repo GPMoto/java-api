@@ -14,7 +14,7 @@ public class Estado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEstado;
+    private Long idEstado;
     @NotEmpty(message = "Valor inválido para o estado")
     @Length(max = 100, message = "Valor inválido para o estado. O valor deve ter no máximo 100 caracteres")
     private String nmEstado;

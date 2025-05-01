@@ -13,7 +13,7 @@ public class Filial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idFilial;
+    private Long idFilial;
 
     @NotEmpty(message = "Valor inválido para cnpj da filial")
     @Length(max = 14, message = "Valor inválido para nome da filial. O valor deve ter no máximo 14 caracteres")

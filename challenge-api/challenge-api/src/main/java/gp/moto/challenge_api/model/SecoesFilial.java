@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "t_gpMottu_secoes_filial")
-public class secoesFilial {
+public class SecoesFilial {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSecao;
+    private Long idSecao;
 
     @NotNull(message = "Valor inválido para o lado 1")
     private double lado1;
