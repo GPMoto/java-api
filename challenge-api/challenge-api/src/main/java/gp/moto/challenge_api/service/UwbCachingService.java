@@ -6,10 +6,17 @@ import gp.moto.challenge_api.model.Uwb;
 import gp.moto.challenge_api.repository.MotoRepository;
 import gp.moto.challenge_api.repository.UwbRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 
 @Service
@@ -21,15 +28,16 @@ public class UwbCachingService {
     @Autowired
     private MotoRepository motoRepository;
 
-    @CacheEvict()
+    @Transactional
     public Uwb desassociarUwbMoto (Long id) throws ResourceNotFoundException{
         Uwb uwb = uwbRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Uwb não encontrado"));
         uwb.setIdMoto(null);
+        limparCache();
         return uwbRepository.save(uwb);
     }
 
-    @CacheEvict()
+    @Transactional
     public Uwb associarUwbMoto(Long idMoto, Long idUwb) throws ResourceNotFoundException {
         Uwb uwb = uwbRepository.findById(idUwb)
                 .orElseThrow(() -> new ResourceNotFoundException("Uwb não encontrado"));
@@ -37,8 +45,50 @@ public class UwbCachingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada"));
 
         uwb.setIdMoto(moto);
+        limparCache();
         return uwbRepository.save(uwb);
     }
+
+    @Transactional
+    public Uwb save(String valorUwb) {
+        limparCache();
+        return uwbRepository.save(new Uwb( null, valorUwb));
+    }
+
+    @Transactional
+    public boolean delete(Long idUwb) throws ResourceNotFoundException{
+        Uwb uwb = uwbRepository.findById(idUwb)
+                .orElseThrow(() -> new ResourceNotFoundException("Uwb não encontrado"));
+        uwbRepository.delete(uwb);
+        limparCache();
+        return true;
+    }
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = "findAllUwb")
+    public List<Uwb> findAll(){
+        return uwbRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = "findUwbById", key = "#id_uwb")
+    public Uwb findById(Long id_uwb) throws ResourceNotFoundException{
+        return uwbRepository.findById(id_uwb)
+                .orElseThrow(() -> new ResourceNotFoundException("Uwb não encontrado"));
+    }
+
+    @CacheEvict(value = {"findUwbById", "findAllUwb"}, allEntries = true)
+    public void limparCache(){
+        System.out.println("Removendo arquivos de cache!");
+    }
+
+    @Cacheable(value = "paginarUwb", key = "#pageRequest")
+    @Transactional(readOnly = true)
+    public Page<Uwb> paginarUwb(PageRequest pageRequest){
+        return uwbRepository.findAll(pageRequest);
+    }
+
+
 
 
 }
