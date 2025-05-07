@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.Length;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "t_gpMottu_uwb")
 public class Uwb {
 

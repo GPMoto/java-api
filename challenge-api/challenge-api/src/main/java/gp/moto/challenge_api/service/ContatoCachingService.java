@@ -4,8 +4,10 @@ import gp.moto.challenge_api.dto.ContatoDTO;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Contato;
 import gp.moto.challenge_api.repository.ContatoRepository;
+import org.springframework.data.domain.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,5 +58,9 @@ public class ContatoCachingService {
         contatoRepository.delete(contato);
     }
 
+    @Transactional(readOnly = true)
+    public Page<Contato> paginarContato(PageRequest pageRequest){
+        return contatoRepository.findAll(pageRequest);
+    }
 
 }

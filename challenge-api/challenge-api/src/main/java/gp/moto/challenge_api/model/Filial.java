@@ -1,10 +1,12 @@
 package gp.moto.challenge_api.model;
 
 
+import gp.moto.challenge_api.dto.FilialDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.BeanUtils;
 
 @Data
 @Entity
@@ -31,5 +33,9 @@ public class Filial {
     @OneToOne
     @JoinColumn(name = "id_contato")
     private Contato idContato;
+
+    public Filial(FilialDTO filialDTO){
+        BeanUtils.copyProperties(filialDTO, this);
+    }
 
 }
