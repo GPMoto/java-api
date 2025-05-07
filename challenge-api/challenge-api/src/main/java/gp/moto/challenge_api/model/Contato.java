@@ -14,8 +14,6 @@ import org.springframework.beans.BeanUtils;
 @Data
 @Entity
 @Table(name = "t_gpMottu_contato")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Contato {
 
     @Id

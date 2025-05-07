@@ -1,10 +1,12 @@
 package gp.moto.challenge_api.model;
 
 
+import gp.moto.challenge_api.dto.MotoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.BeanUtils;
 
 @Data
 @Entity
@@ -30,6 +32,10 @@ public class Moto {
     @ManyToOne
     @JoinColumn(name = "id_filial")
     private Filial idFilial;
+
+    public Moto(MotoDTO motoDTO){
+        BeanUtils.copyProperties(motoDTO, this);
+    }
 
 
 }
