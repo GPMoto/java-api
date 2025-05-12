@@ -3,7 +3,9 @@ package gp.moto.challenge_api.service;
 import gp.moto.challenge_api.dto.ContatoDTO;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Contato;
+import gp.moto.challenge_api.model.Telefone;
 import gp.moto.challenge_api.repository.ContatoRepository;
+import gp.moto.challenge_api.repository.TelefoneRepository;
 import org.springframework.data.domain.Page;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +15,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
+//Tirei os construtores de conversão de contato e do dto já que vamos manter toda esse lógica aqui
+//usa o ModelMapper para fazer essa lógica de conversão
+
+
 @Service
 public class ContatoCachingService {
 
     @Autowired
     private ContatoRepository contatoRepository;
 
+    @Autowired
+    private TelefoneRepository telefoneRepository;
 
     @Transactional
-    public void criar(ContatoDTO contatoDTO){
+    public void criar(ContatoDTO contatoDTO, Long idTelefone){
+        Telefone telefone = telefoneRepository.findById(idTelefone)
+                .orElseThrow(() -> new RuntimeException("Telefone não encontrado"));
+
+
         Contato contato = new Contato(contatoDTO);
         contatoRepository.save(contato);
+
+
     }
 
 

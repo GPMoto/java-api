@@ -1,14 +1,20 @@
 package gp.moto.challenge_api.model;
 
 
+import gp.moto.challenge_api.dto.TelefoneDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.BeanUtils;
 
 @Data
 @Entity
 @Table(name = "t_gpMottu_telefone")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Telefone {
 
     @Id
@@ -26,4 +32,15 @@ public class Telefone {
     @NotEmpty(message = "Valor inválido para número")
     @Length(max = 10, message = "Valor inválido para número. O valor deve ter no máximo 10 caracteres")
     private String numero;
+
+
+    public Telefone(TelefoneDTO dto){
+
+        this(
+                dto.id_telefone(),
+                dto.ddi(),
+                dto.ddd(),
+                dto.numero()
+        );
+    }
 }

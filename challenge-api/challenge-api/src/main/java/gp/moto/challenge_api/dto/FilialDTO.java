@@ -4,7 +4,7 @@ import gp.moto.challenge_api.model.Contato;
 import gp.moto.challenge_api.model.Endereco;
 import gp.moto.challenge_api.model.Filial;
 
-public record FilialDTO(Long idFilial, String cnpjFilial, String senhaFilial, Endereco idEndereco, Contato idContato) {
+public record FilialDTO(Long idFilial, String cnpjFilial, String senhaFilial, Long idEndereco, Long idContato) {
 
 
     public FilialDTO(Filial filial){
@@ -12,8 +12,8 @@ public record FilialDTO(Long idFilial, String cnpjFilial, String senhaFilial, En
                 filial.getIdFilial(),
                 filial.getCnpjFilial(),
                 filial.getSenhaFilial(),
-                filial.getIdEndereco(),
-                filial.getIdContato()
+                filial.getIdEndereco().getIdEndereco(),
+                filial.getIdContato().getIdContato()
         );
     }
 

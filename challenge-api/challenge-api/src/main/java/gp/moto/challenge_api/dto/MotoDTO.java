@@ -5,7 +5,7 @@ import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.model.TipoMoto;
 
 public record MotoDTO(Long idMoto, String condicoes, String condicoesManutencao, String identificador,
-                      TipoMoto idTipoMoto, Filial idFilial) {
+                      TipoMoto idTipoMoto, Long idFilial) {
 
     public MotoDTO(Moto moto){
         this(
@@ -14,7 +14,7 @@ public record MotoDTO(Long idMoto, String condicoes, String condicoesManutencao,
                 moto.getCondicoesManutencao(),
                 moto.getIdentificador(),
                 moto.getIdTipoMoto(),
-                moto.getIdFilial()
+                moto.getIdFilial().getIdFilial()
         );
     }
 
