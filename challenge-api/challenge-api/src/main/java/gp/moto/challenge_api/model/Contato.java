@@ -9,11 +9,12 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.BeanUtils;
 
 @Data
 @Entity
 @Table(name = "t_gpMottu_contato")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contato {
 
     @Id
@@ -33,11 +34,10 @@ public class Contato {
     @Email(message = "Valor inválido para email")
     private String nmEmail;
 
+    @NotNull
     @OneToOne
     @JoinColumn(name = "id_telefone")
     private Telefone idTelefone;
 
-    public Contato(ContatoDTO contatoDTO) {
-        BeanUtils.copyProperties(contatoDTO, this);
-    }
+
 }

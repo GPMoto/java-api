@@ -4,13 +4,17 @@ package gp.moto.challenge_api.model;
 import gp.moto.challenge_api.dto.FilialDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.BeanUtils;
 
 @Data
 @Entity
 @Table(name = "t_gpMottu_filial")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Filial {
 
     @Id
