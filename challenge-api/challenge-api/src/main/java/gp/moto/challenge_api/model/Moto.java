@@ -1,12 +1,10 @@
 package gp.moto.challenge_api.model;
 
 
-import gp.moto.challenge_api.dto.MotoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.BeanUtils;
 
 @Data
 @Entity
@@ -17,9 +15,9 @@ public class Moto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMoto;
 
-    @NotEmpty(message = "Valor inválido para condição")
-    @Length(max = 50, message = "Valor inválido para condição. O valor deve ter no máximo 50 caracteres")
-    private String condicoes;
+    @NotEmpty(message = "Valor inválido para status")
+    @Length(max = 50, message = "Valor inválido para status. O valor deve ter no máximo 50 caracteres")
+    private String status;
 
     @NotEmpty(message = "Valor inválido para as condições de manutenção")
     @Length(max = 200, message = "Valor inválido para as condições de manutenção. O valor deve ter no máximo 200 caracteres")
@@ -35,12 +33,12 @@ public class Moto {
     private TipoMoto idTipoMoto;
 
     @ManyToOne
-    @JoinColumn(name = "id_filial")
-    private Filial idFilial;
+    @JoinColumn(name = "id_secao")
+    private SecaoFilial idSecaoFilial;
 
-    public Moto(MotoDTO motoDTO){
-        BeanUtils.copyProperties(motoDTO, this);
-    }
+//    public Moto(MotoDTO motoDTO){
+//        BeanUtils.copyProperties(motoDTO, this);
+//    }
 
 
 }

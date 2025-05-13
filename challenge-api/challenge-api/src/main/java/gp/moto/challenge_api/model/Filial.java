@@ -1,7 +1,7 @@
 package gp.moto.challenge_api.model;
 
 
-import gp.moto.challenge_api.dto.FilialDTO;
+import gp.moto.challenge_api.dto.filial.FilialDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -38,8 +38,5 @@ public class Filial {
     @JoinColumn(name = "id_contato")
     private Contato idContato;
 
-    public Filial(FilialDTO filialDTO){
-        BeanUtils.copyProperties(filialDTO, this);
-    }
 
 }

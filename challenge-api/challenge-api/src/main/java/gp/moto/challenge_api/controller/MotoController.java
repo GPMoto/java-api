@@ -1,8 +1,12 @@
 package gp.moto.challenge_api.controller;
 
-import gp.moto.challenge_api.dto.MotoDTO;
+import gp.moto.challenge_api.dto.moto.MotoDTO;
+import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.service.MotoCachingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,25 +19,35 @@ public class MotoController {
     private MotoCachingService motoService;
 
     @GetMapping
-    public List<MotoDTO> get(){
-        return motoService.listarTodos();
+    public ResponseEntity<List<Moto>> findAll() {
+        return ResponseEntity.ok(motoService.listarTodos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Moto> findById(@PathVariable(value = "id") Long id){
+        return ResponseEntity.ok(motoService.buscarPorId(id));
+    }
+
+    @GetMapping("/filial/paginados")
+    public ResponseEntity<Page<Moto>> getPageMotos(@RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
+        return ResponseEntity.ok(motoService.listarTodasPaginadas(pagina, quantidade));
     }
 
     @PostMapping
-    public void post(@RequestBody MotoDTO motoDTO){
-        motoService.criar(motoDTO);
+    public ResponseEntity<Moto> post(@RequestBody MotoDTO motoDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(motoService.criar(motoDTO));
     }
 
     @PutMapping(value = "/{id}")
-    public MotoDTO put(@RequestBody MotoDTO motoDTO, @PathVariable Long id){
-        return motoService.alterar(motoDTO);
+    public ResponseEntity<Moto> put(@RequestBody MotoDTO motoDTO, @PathVariable Long id) {
+        return ResponseEntity.ok(motoService.alterar(id, motoDTO));
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         motoService.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 
 
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "t_gpMottu_secoes_filial")
-public class SecoesFilial {
+public class SecaoFilial {
 
 
     @Id
