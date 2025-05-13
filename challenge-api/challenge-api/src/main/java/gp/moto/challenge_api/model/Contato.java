@@ -1,7 +1,6 @@
 package gp.moto.challenge_api.model;
 
 
-import gp.moto.challenge_api.dto.ContatoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -29,10 +28,10 @@ public class Contato {
     @Max(value = 1, message = "Valor inválido para status. O valor deve ter no máximo 1 caracteres")
     private int status;
 
-    @NotEmpty(message = "Valor inválido para email")
-    @Length(max = 200, message = "Valor inválido para email. O valor deve ter no máximo 200 caracteres")
-    @Email(message = "Valor inválido para email")
-    private String nmEmail;
+//    @NotEmpty(message = "Valor inválido para email")
+//    @Length(max = 200, message = "Valor inválido para email. O valor deve ter no máximo 200 caracteres")
+//    @Email(message = "Valor inválido para email")
+//    private String nmEmail;
 
     @NotNull
     @OneToOne

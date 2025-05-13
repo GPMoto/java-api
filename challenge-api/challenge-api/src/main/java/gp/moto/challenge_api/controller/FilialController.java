@@ -1,8 +1,12 @@
 package gp.moto.challenge_api.controller;
 
-import gp.moto.challenge_api.dto.FilialDTO;
+import gp.moto.challenge_api.dto.filial.FilialDTO;
+import gp.moto.challenge_api.model.Filial;
 import gp.moto.challenge_api.service.FilialCachingService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,23 +19,29 @@ public class FilialController {
     private FilialCachingService filialService;
 
     @GetMapping
-    public List<FilialDTO> get(){
-        return filialService.listarTodos();
+    public ResponseEntity<List<Filial>> findAll() {
+        return ResponseEntity.ok(filialService.listarTodos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Filial> findById(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.ok(filialService.buscarPorId(id));
     }
 
     @PostMapping
-    public void post(@RequestBody FilialDTO filialDTO){
-        filialService.criar(filialDTO);
+    public ResponseEntity<Filial> post(@RequestBody FilialDTO filialDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(filialService.criar(filialDTO));
     }
 
     @PutMapping(value = "/{id}")
-    public FilialDTO put(@RequestBody FilialDTO filialDTO, @PathVariable Long id){
-        return filialService.alterar(filialDTO);
+    public ResponseEntity<Filial> put(@RequestBody FilialDTO filialDTO, @PathVariable Long id) {
+        return ResponseEntity.ok(filialService.alterar(id, filialDTO));
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         filialService.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

@@ -1,14 +1,15 @@
 package gp.moto.challenge_api.service;
 
 
-import gp.moto.challenge_api.dto.TelefoneDTO;
+import gp.moto.challenge_api.dto.telefone.TelefoneDTO;
+import gp.moto.challenge_api.dto.telefone.TelefoneMapper;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Telefone;
 import gp.moto.challenge_api.repository.TelefoneRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,43 +17,41 @@ import java.util.List;
 public class TelefoneCachingService {
 
     @Autowired
-    public TelefoneRepository telefoneRepository;
+    private TelefoneRepository telefoneRepository;
+
+    @Autowired
+    private TelefoneMapper telefoneMapper;
 
 
     @Transactional
-    public void criar(TelefoneDTO telefoneDTO){
-        Telefone tel = new Telefone(telefoneDTO);
-        telefoneRepository.save(tel);
+    public Telefone criar(TelefoneDTO telefoneDTO){
+        return telefoneRepository.save(telefoneMapper.toEntity(telefoneDTO));
     }
 
 
-    @Transactional
-    public List<TelefoneDTO> listarTodos(){
-        List<Telefone> tel = telefoneRepository.findAll();
-        return tel.stream().map(TelefoneDTO ::new).toList();
+    @Transactional()
+    public List<Telefone> listarTodos(){
+        return telefoneRepository.findAll();
     }
 
     @Transactional
-    public TelefoneDTO buscarPorId(Long id) throws ResourceNotFoundException {
-        return new TelefoneDTO(telefoneRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Telefone não encontrada")));
+    public Telefone buscarPorId(Long id) throws ResourceNotFoundException {
+        return telefoneRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Telefone não encontrado!"));
     }
 
     @Transactional
-    public TelefoneDTO alterar(TelefoneDTO telefoneDTO) throws ResourceNotFoundException {
-        if(!telefoneRepository.existsById(telefoneDTO.id_telefone())){
-            throw new ResourceNotFoundException("Telefone não encontrada");
-        }
-
-        Telefone tel = new Telefone(telefoneDTO);
-        return new TelefoneDTO(telefoneRepository.save(tel));
+    public Telefone alterar(Long id, TelefoneDTO telefoneDTO) {
+       Telefone telefone = buscarPorId(id);
+       telefoneMapper.updateTelefoneFromDto(telefoneDTO, telefone);
+       return telefoneRepository.save(telefone);
     }
 
     @Transactional
-    public void deletar(Long id) throws ResourceNotFoundException {
+    public boolean deletar(Long id) throws ResourceNotFoundException {
         Telefone tel = telefoneRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Telefone não encontrada"));
         telefoneRepository.delete(tel);
+        return true;
     }
 
 
