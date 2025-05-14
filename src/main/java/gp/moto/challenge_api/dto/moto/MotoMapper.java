@@ -10,16 +10,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MotoMapper {
     @Mapping(target = "idTipoMoto", source = "idTipoMoto")
-    @Mapping(target = "idSecaoFilial", source = "idSecaoFilial")
     MotoDTO toMotoDTO(Moto moto);
 
     @Mapping(target = "idMoto", ignore = true)
-    @Mapping(target = "idTipoMoto", source = "idTipoMoto")
-    @Mapping(target = "idSecaoFilial", source = "idSecaoFilial")
     Moto toMoto(MotoDTO motoDTO);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(MotoDTO dto, @MappingTarget Moto entity);
+
+    MotoProjection toProjection(Moto moto);
 
     default Long mapTipoMotoToLong(TipoMoto tipoMoto) {
         return tipoMoto != null ? tipoMoto.getId_tipo_moto() : null;
@@ -46,4 +45,13 @@ public interface MotoMapper {
         secaoFilial.setIdSecao(id);
         return secaoFilial;
     }
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    default Page<MotoProjection> toProjection(Page<Moto> allByFilial){
+        if (allByFilial == null) return Page.empty();
+
+        return allByFilial.map(this::toProjection);
+    };
+
+
 }

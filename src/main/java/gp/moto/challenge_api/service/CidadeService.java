@@ -39,4 +39,15 @@ public class CidadeService {
     return null;
     }
 
+    public boolean delete(Long id) {
+        Cidade cidade = findById(id);
+        cidadeRepository.delete(cidade);
+        return true;
+    }
+
+    public Cidade update(Long id, CidadeDto dto) {
+        Cidade cidade = findById(id);
+        cidadeMapper.updateEntityFromDto(dto, cidade);
+        return cidadeRepository.save(cidade);
+    }
 }

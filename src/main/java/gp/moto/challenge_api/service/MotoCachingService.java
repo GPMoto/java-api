@@ -1,6 +1,7 @@
 package gp.moto.challenge_api.service;
 
 import gp.moto.challenge_api.dto.moto.MotoDTO;
+import gp.moto.challenge_api.dto.moto.MotoProjection;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.model.Moto;
@@ -35,7 +36,13 @@ public class MotoCachingService {
         return motoRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+    public MotoProjection buscarPorIdProjection(Long id) throws ResourceNotFoundException {
+        return motoMapper.toProjection(motoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada")));
+    }
+
+    @Transactional(readOnly = true)
     public Moto buscarPorId(Long id) throws ResourceNotFoundException {
         return motoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada"));
@@ -55,16 +62,16 @@ public class MotoCachingService {
         motoRepository.delete(moto);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Moto> paginarMoto(PageRequest pageRequest){
         return motoRepository.findAll(pageRequest);
     }
 
 
     @Transactional(readOnly = true)
-    public Page<Moto> listarTodasPaginadas(Long idFilial, Integer page, Integer size) {
+    public Page<MotoProjection> listarTodasPaginadas(Long idFilial, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return motoRepository.findAllByFilial(pageable, idFilial);
+        return motoMapper.toProjection(motoRepository.findAllByFilial(pageable, idFilial));
     }
 
 }

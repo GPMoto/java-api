@@ -1,6 +1,7 @@
 package gp.moto.challenge_api.controller;
 
 import gp.moto.challenge_api.dto.moto.MotoDTO;
+import gp.moto.challenge_api.dto.moto.MotoProjection;
 import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.service.MotoCachingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ public class MotoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Moto> findById(@PathVariable(value = "id") Long id){
-        return ResponseEntity.ok(motoService.buscarPorId(id));
+    public ResponseEntity<MotoProjection> findById(@PathVariable(value = "id") Long id){
+        return ResponseEntity.ok(motoService.buscarPorIdProjection(id));
     }
 
     @GetMapping("/filial/{idFilial}/paginados/")
-    public ResponseEntity<Page<Moto>> getPageMotos(@PathVariable Long idFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
+    public ResponseEntity<Page<MotoProjection>> getPageMotos(@PathVariable Long idFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
         return ResponseEntity.ok(motoService.listarTodasPaginadas(idFilial, pagina, quantidade));
     }
 

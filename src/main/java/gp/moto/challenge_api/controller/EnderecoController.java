@@ -31,9 +31,20 @@ public class EnderecoController {
     }
 
     // TODO: Terminar método de salvar
-//    @PostMapping()
-//    public ResponseEntity<Endereco> save(@RequestBody EnderecoDto dto){
-//        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(dto));
-//    }
+    @PostMapping()
+    public ResponseEntity<Endereco> save(@RequestBody EnderecoDto dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Endereco> update(@RequestBody EnderecoDto dto, @PathVariable Long id){
+        return ResponseEntity.ok(enderecoService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        enderecoService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }

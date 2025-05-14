@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gp.moto</groupId>
-	<artifactId>challenge-api</artifactId>
+	<artifactId>java-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>challenge-api</name>
+	<name>java-api</name>
 	<description>API Rest da aplicação GPMoto do Challenge 2025</description>
 	<url/>
 	<licenses>
