@@ -62,9 +62,9 @@ public class MotoCachingService {
 
 
     @Transactional(readOnly = true)
-    public Page<Moto> listarTodasPaginadas(Integer page, Integer size) {
+    public Page<Moto> listarTodasPaginadas(Long idFilial, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return motoRepository.findAll(pageable);
+        return motoRepository.findAllByFilial(pageable, idFilial);
     }
 
 }
