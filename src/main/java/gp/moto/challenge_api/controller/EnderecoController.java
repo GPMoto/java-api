@@ -30,9 +30,10 @@ public class EnderecoController {
         return ResponseEntity.ok(enderecoService.findById(id));
     }
 
-    @PostMapping()
-    public ResponseEntity<Endereco> save(@RequestBody EnderecoDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(dto));
-    }
+    // TODO: Terminar método de salvar
+//    @PostMapping()
+//    public ResponseEntity<Endereco> save(@RequestBody EnderecoDto dto){
+//        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(dto));
+//    }
 
 }
