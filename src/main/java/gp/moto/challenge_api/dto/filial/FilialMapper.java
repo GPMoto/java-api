@@ -8,7 +8,6 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface FilialMapper {
 
-    @Mapping(target = "idSecaoFilial", ignore = true)
     FilialDTO toFilialDTO(Filial filial);
 
     @Mapping(target = "idFilial", ignore = true)
