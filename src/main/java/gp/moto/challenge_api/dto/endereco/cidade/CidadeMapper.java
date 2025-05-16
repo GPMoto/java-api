@@ -2,8 +2,7 @@ package gp.moto.challenge_api.dto.endereco.cidade;
 
 import gp.moto.challenge_api.model.Cidade;
 import gp.moto.challenge_api.model.Estado;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface CidadeMapper {
@@ -25,4 +24,6 @@ public interface CidadeMapper {
         return estado;
     }
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromDto(CidadeDto dto, @MappingTarget Cidade cidade);
 }

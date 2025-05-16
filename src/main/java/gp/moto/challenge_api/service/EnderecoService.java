@@ -1,6 +1,7 @@
 package gp.moto.challenge_api.service;
 
 import gp.moto.challenge_api.dto.endereco.EnderecoDto;
+import gp.moto.challenge_api.dto.endereco.EnderecoMapper;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Endereco;
 import gp.moto.challenge_api.model.Pais;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class EnderecoService {
 
     private final EnderecoRepository enderecoRepository;
+    private final EnderecoMapper enderecoMapper;
     private final PaisService paisService;
     private final CidadeService cidadeService;
     private final EstadoService estadoService;
@@ -29,15 +32,29 @@ public class EnderecoService {
         return enderecoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado"));
     }
 
+    public Endereco save(EnderecoDto dto){
+        return enderecoRepository.save(enderecoMapper.toEntity(dto));
+    }
+
     public Endereco saveOrFind(EnderecoDto dto) {
-        String strPais = dto.pais();
-        String strEstado = dto.estado();
-        String strCidade = dto.cidade();
 
 //        Pais pais = paisService.saveOrFindByName(strPais);
 //        return enderecoRepository.save()
         // TODO: Realizar método para achar ou salvar endereco
 
         return null;
+    }
+
+    public Endereco update(Long id, EnderecoDto dto) {
+        Endereco endereco = findById(id);
+        enderecoMapper.updateEntityFromDto(dto, endereco);
+        return enderecoRepository.save(endereco);
+    }
+
+    @Transactional
+    public boolean delete(Long id) {
+        Endereco endereco = findById(id);
+        enderecoRepository.delete(endereco);
+        return true;
     }
 }

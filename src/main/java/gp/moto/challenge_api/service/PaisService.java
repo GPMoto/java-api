@@ -2,6 +2,7 @@ package gp.moto.challenge_api.service;
 
 import gp.moto.challenge_api.dto.endereco.pais.PaisDto;
 import gp.moto.challenge_api.dto.endereco.pais.PaisMapper;
+import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Pais;
 import gp.moto.challenge_api.repository.PaisRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,27 @@ public class PaisService {
         return paisRepository.findAll();
     }
 
-    public Pais findOrSaveByName(String nomePais){
-        return paisRepository.findByName(nomePais).orElse(save(nomePais));
+    public Pais findOrSaveByName(PaisDto dto){
+        return paisRepository.findByName(dto.nmPais()).orElse(save(dto));
     }
 
-    public Pais save(String nomePais){
-        return paisRepository.save(paisMapper.toEntity(new PaisDto(nomePais)));
+    public Pais save(PaisDto paisDto){
+        return paisRepository.save(paisMapper.toEntity(paisDto));
     }
 
+    public Pais findById(Long id) {
+        return paisRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pais não encontrado"));
+    }
+
+    public Pais update(Long id, PaisDto paisDto) {
+        Pais pais = findById(id);
+        paisMapper.updateEntityFromDto(pais, paisDto);
+        return paisRepository.save(pais);
+    }
+
+    public boolean delete(Long id) {
+        Pais pais = findById(id);
+        paisRepository.delete(pais);
+        return true;
+    }
 }
