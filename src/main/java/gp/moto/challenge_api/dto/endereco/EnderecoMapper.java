@@ -17,6 +17,9 @@ public interface EnderecoMapper {
     @Mapping(target = "cidade", source = "idCidade")
     EnderecoDto toDto(Endereco entity);
 
+    @Mapping(target = "nrLogradouro", source = "numLogradouro")
+    @Mapping(target = "nmLogradouro", source = "logradouro")
+    @Mapping(target = "idCidade", source = "cidade")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(EnderecoDto dto, @MappingTarget Endereco entity);
 

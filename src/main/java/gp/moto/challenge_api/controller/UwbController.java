@@ -7,6 +7,7 @@ import gp.moto.challenge_api.service.UwbCachingService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,11 @@ public class UwbController {
     @GetMapping("/{idUwb}")
     public ResponseEntity<Uwb> findById(@PathVariable Long idUwb){
         return ResponseEntity.ok(uwbCachingService.findById(idUwb));
+    }
+
+    @PostMapping
+    public ResponseEntity<Uwb> save(@RequestBody UwbDTO dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(uwbCachingService.save(dto));
     }
 
     @PatchMapping("/{idUwb}/mudar-moto/")

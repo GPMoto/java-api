@@ -7,6 +7,7 @@ import gp.moto.challenge_api.model.Endereco;
 import gp.moto.challenge_api.model.Pais;
 import gp.moto.challenge_api.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class EnderecoService {
 
     private final EnderecoRepository enderecoRepository;
@@ -33,6 +35,7 @@ public class EnderecoService {
     }
 
     public Endereco save(EnderecoDto dto){
+        log.info("olha o que tem no dto:{}", dto);
         return enderecoRepository.save(enderecoMapper.toEntity(dto));
     }
 
