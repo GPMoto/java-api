@@ -35,9 +35,9 @@ public class UwbCachingService {
     private UwbMapper uwbMapper;
 
     @Transactional
-    public Uwb save(String valorUwb) {
+    public Uwb save(UwbDTO dto) {
         limparCache();
-        return uwbRepository.save(new Uwb( null, valorUwb));
+        return uwbRepository.save(uwbMapper.toEntity(dto));
     }
 
     @Transactional

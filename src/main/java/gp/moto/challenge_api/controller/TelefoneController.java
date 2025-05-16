@@ -23,6 +23,11 @@ public class TelefoneController {
         return ResponseEntity.ok(telefoneCachingService.listarTodos());
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Telefone> findById(@PathVariable Long id){
+        return ResponseEntity.ok(telefoneCachingService.buscarPorId(id));
+    }
+
     @PostMapping
     public ResponseEntity<Telefone> post(@RequestBody TelefoneDTO telefoneDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(telefoneCachingService.criar(telefoneDTO));

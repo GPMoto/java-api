@@ -5,86 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/EnderecoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/EnderecoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/FilialController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TelefoneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TelefoneController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/endereco/pais/PaisMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/endereco/pais/PaisMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Endereco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/CidadeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/CidadeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/PaisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/PaisService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/MotoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/PerfilController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/SecaoFilialController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/TelefoneController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/TipoMotoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/TipoSecaoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/UsuarioController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/contato/ContatoMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/endereco/EnderecoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/endereco/EnderecoProjection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/controller/UwbController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/endereco/pais/PaisMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/endereco/pais/PaisMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/filial/FilialDTO.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/filial/FilialMapper.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/filial/FilialMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/filial/FilialProjection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/moto/MotoDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/moto/MotoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/moto/MotoMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/moto/MotoProjection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/perfil/PerfilDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/perfil/PerfilMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/perfil/PerfilMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/secaoFilial/SecaoFilialDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/secaoFilial/SecaoFilialMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/secaoFilial/SecaoFilialMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/secaoFilial/SecaoFilialProjection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/telefone/TelefoneDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/telefone/TelefoneMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/telefone/TelefoneMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/telefone/TelefoneProjection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/tipoMoto/TipoMotoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/tipoMoto/TipoMotoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/tipoMoto/TipoMotoMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/tipoSecao/TipoSecaoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/tipoSecao/TipoSecaoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/tipoSecao/TipoSecaoMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/usuario/UsuarioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/usuario/UsuarioMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/usuario/UsuarioMapperImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/usuario/UsuarioProjection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/usuario/UsuarioWithPasswordProjection.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/dto/uwb/UwbDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/exception/GlobalExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Cidade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Endereco.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Estado.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Filial.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Moto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Pais.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Perfil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/SecaoFilial.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/TipoMoto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/TipoSecao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Usuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Uwb.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/CidadeRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/EnderecoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/EstadoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/FilialRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/MotoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/PaisRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/PerfilRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/SecaoFilialRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/TipoMotoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/TipoSecaoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/UsuarioRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/repository/UwbRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/FilialCachingService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Endereco.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/model/Endereco.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/CidadeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/CidadeService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/MotoCachingService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/PerfilService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/SecaoFilialService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/TelefoneCachingService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/TipoMotoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/TipoSecaoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/UsuarioService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/PaisService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/PaisService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/service/UwbCachingService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/gp/moto/challenge_api/swagger/SwaggerConfiguration.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/contato/ContatoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/contato/ContatoMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/EnderecoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/EnderecoMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/cidade/CidadeMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/cidade/CidadeMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/estado/EstadoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/estado/EstadoMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/pais/PaisMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/endereco/pais/PaisMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/filial/FilialMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/filial/FilialMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/moto/MotoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/moto/MotoMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/perfil/PerfilMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/perfil/PerfilMapperImpl.java" afterDir="false" />
@@ -93,9 +41,10 @@
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/tipoMoto/TipoMotoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/tipoMoto/TipoMotoMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/tipoSecao/TipoSecaoMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/tipoSecao/TipoSecaoMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/usuario/UsuarioMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/usuario/UsuarioMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/uwb/UwbMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/gp/moto/challenge_api/dto/uwb/UwbMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/gp/moto/challenge_api/ChallengeApiApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,17 +62,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;gustavo&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/gustavo/gps-mottu/java-api&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "gustavo",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/gustavo/gps-mottu/java-api",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <module name="java-api" />

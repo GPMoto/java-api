@@ -16,8 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PaisService {
 
-    private PaisRepository paisRepository;
-    private PaisMapper paisMapper;
+    private final PaisRepository paisRepository;
+    private final PaisMapper paisMapper;
     public List<Pais> findAll() {
         return paisRepository.findAll();
     }

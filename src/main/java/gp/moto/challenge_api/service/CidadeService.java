@@ -17,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CidadeService {
 
-    private CidadeRepository cidadeRepository;
-    private CidadeMapper cidadeMapper;
+    private final CidadeRepository cidadeRepository;
+    private final CidadeMapper cidadeMapper;
 
     public List<Cidade> findAll() {
         return cidadeRepository.findAll();

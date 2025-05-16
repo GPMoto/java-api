@@ -25,7 +25,7 @@ public class Endereco {
     private String cep;
 
     @NotEmpty(message = "Valor inválido para nome do logradouro")
-    @Max(value = 200, message = "Valor inválido para nome do logradouro. O valor deve ter no máximo 200 caracteres")
+    @Max(value = 400, message = "Valor inválido para nome do logradouro. O valor deve ter no máximo 200 caracteres")
     private String nmLogradouro;
 
     @NotNull(message = "Valor inválido para número do logradouro")
