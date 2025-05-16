@@ -1,0 +1,1 @@
+insert into t_gp_mottu_cidade values ()

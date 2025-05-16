@@ -2,9 +2,7 @@ package gp.moto.challenge_api.model;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -24,12 +22,12 @@ public class Endereco {
     @Column(unique = true)
     private String cep;
 
-    @NotEmpty(message = "Valor inválido para nome do logradouro")
-    @Max(value = 400, message = "Valor inválido para nome do logradouro. O valor deve ter no máximo 200 caracteres")
+    @NotBlank (message = "Valor inválido para nome do logradouro")
+    @Size(max = 200, message = "Valor inválido para nome do logradouro. O valor deve ter no máximo 200 caracteres")
     private String nmLogradouro;
 
     @NotNull(message = "Valor inválido para número do logradouro")
-    @Max(value = 5, message = "Valor inválido para número do logradouro. O valor deve ter no máximo 5 caracteres")
+    @Max(value = 99999, message = "Valor inválido para número do logradouro. O valor deve ter no máximo 5 caracteres")
     private Integer nrLogradouro;
 
     @ManyToOne

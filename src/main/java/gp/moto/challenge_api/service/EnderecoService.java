@@ -36,7 +36,9 @@ public class EnderecoService {
 
     public Endereco save(EnderecoDto dto){
         log.info("olha o que tem no dto:{}", dto);
-        return enderecoRepository.save(enderecoMapper.toEntity(dto));
+        Endereco endereco = enderecoMapper.toEntity(dto);
+        log.info("conversao do mapper: {}", endereco);
+        return enderecoRepository.save(endereco);
     }
 
     public Endereco saveOrFind(EnderecoDto dto) {

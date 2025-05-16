@@ -29,7 +29,7 @@ public class EstadoController {
 
     @PostMapping
     public ResponseEntity<Estado> save(@RequestBody EstadoDto estadoDto){
-        return ResponseEntity.ok(estadoService.save(estadoDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(estadoService.save(estadoDto));
     }
 
     @PutMapping("/{id}")
