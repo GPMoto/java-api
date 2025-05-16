@@ -2,6 +2,7 @@ package gp.moto.challenge_api.exception;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,4 +38,8 @@ public class GlobalExceptionHandler {
         resposta.put("errors", errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resposta);
     }
-}
+
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException e){
+
+    }

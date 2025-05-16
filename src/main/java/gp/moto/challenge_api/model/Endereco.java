@@ -30,7 +30,7 @@ public class Endereco {
 
     @NotNull(message = "Valor inválido para número do logradouro")
     @Max(value = 5, message = "Valor inválido para número do logradouro. O valor deve ter no máximo 5 caracteres")
-    private Long nrLogradouro;
+    private Integer nrLogradouro;
 
     @ManyToOne
     @JoinColumn(name = "id_cidade")
