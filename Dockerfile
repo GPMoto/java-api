@@ -1,11 +1,30 @@
-FROM maven:3.9.9-eclipse-temurin-21-jammy
+#FROM maven:3.9.9-eclipse-temurin-21-jammy
+#
+#WORKDIR /app
+#
+#COPY . .
+#
+#RUN mvn clean install
+#
+#EXPOSE 8080
+#
+#CMD ["mvn", "spring-boot:run"]
 
+# Etapa 1: build (com cache eficiente)
+FROM maven:3.9-eclipse-temurin-21 AS builder
 WORKDIR /app
 
-COPY . .
+# Copia apenas arquivos necessários para resolver dependências primeiro
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-RUN mvn clean install
+# Copia o restante (isso invalida o cache apenas se houver mudança no código)
+COPY src ./src
+RUN mvn package -DskipTests
 
-EXPOSE 8080
+# Etapa 2: imagem final mínima (só com o .jar)
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
 
-CMD ["mvn", "spring-boot:run"]
+CMD ["java", "-jar", "app.jar"]

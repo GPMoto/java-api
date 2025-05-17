@@ -6,6 +6,7 @@ import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.repository.MotoRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Log4j2
 public class MotoCachingService {
 
     @Autowired
@@ -26,14 +28,17 @@ public class MotoCachingService {
 
 
     @Transactional
-    public Moto criar(MotoDTO motoDTO){
+    public Moto criar(MotoDTO motoDTO) {
         return motoRepository.save(motoMapper.toMoto(motoDTO));
     }
 
 
     @Transactional(readOnly = true)
-    public List<Moto> listarTodos(){
-        return motoRepository.findAll();
+    public List<MotoProjection> listarTodos() {
+        return motoRepository.findAll()
+                .stream()
+                .map(moto -> motoMapper.toProjection(moto))
+                .toList();
     }
 
     @Transactional(readOnly = true)
@@ -63,7 +68,7 @@ public class MotoCachingService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Moto> paginarMoto(PageRequest pageRequest){
+    public Page<Moto> paginarMoto(PageRequest pageRequest) {
         return motoRepository.findAll(pageRequest);
     }
 
@@ -71,7 +76,10 @@ public class MotoCachingService {
     @Transactional(readOnly = true)
     public Page<MotoProjection> listarTodasPaginadas(Long idFilial, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return motoMapper.toProjection(motoRepository.findAllByFilial(pageable, idFilial));
+        log.info("Pageable: \n{}\n\n\n", pageable);
+        Page<Moto> motos = motoRepository.findAllByFilial(pageable, idFilial);
+        log.info("Motos: \n{}\n\n\n", motos);
+        return motoMapper.toProjection(motos);
     }
 
 }
