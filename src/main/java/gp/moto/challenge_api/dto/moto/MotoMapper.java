@@ -1,14 +1,16 @@
 package gp.moto.challenge_api.dto.moto;
-import gp.moto.challenge_api.model.Filial;
 import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.model.SecaoFilial;
 import gp.moto.challenge_api.model.TipoMoto;
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface MotoMapper {
+
+    MotoMapper INSTANCE = Mappers.getMapper(MotoMapper.class);
+
     @Mapping(target = "idTipoMoto", source = "idTipoMoto")
     MotoDTO toMotoDTO(Moto moto);
 

@@ -1,10 +1,9 @@
 package gp.moto.challenge_api.controller;
 
 import gp.moto.challenge_api.dto.uwb.UwbDTO;
-import gp.moto.challenge_api.model.Moto;
+import gp.moto.challenge_api.dto.uwb.UwbProjection;
 import gp.moto.challenge_api.model.Uwb;
 import gp.moto.challenge_api.service.UwbCachingService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -22,12 +21,12 @@ public class UwbController {
 
 
     @GetMapping
-    public ResponseEntity<List<Uwb>> findAll(){
+    public ResponseEntity<List<UwbProjection>> findAll(){
         return ResponseEntity.ok(uwbCachingService.findAll());
     }
 
     @GetMapping("/page/filial/{idFilial}")
-    public ResponseEntity<Page<Uwb>> findAllByFilialPage(@PathVariable Long idFilial, @RequestParam(value = "quantidade", defaultValue = "10") Integer size, @RequestParam(value = "pagina", defaultValue = "0") Integer page){
+    public ResponseEntity<Page<UwbProjection>> findAllByFilialPage(@PathVariable Long idFilial, @RequestParam(value = "quantidade", defaultValue = "10") Integer size, @RequestParam(value = "pagina", defaultValue = "0") Integer page){
         return ResponseEntity.ok(uwbCachingService.findAllByFilialPage(size, page, idFilial));
     }
 

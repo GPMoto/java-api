@@ -20,7 +20,7 @@ public class MotoController {
     private MotoCachingService motoService;
 
     @GetMapping
-    public ResponseEntity<List<Moto>> findAll() {
+    public ResponseEntity<List<MotoProjection>> findAll() {
         return ResponseEntity.ok(motoService.listarTodos());
     }
 

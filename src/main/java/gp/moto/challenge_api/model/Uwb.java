@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @Entity
 @Table(name = "t_gpMottu_uwb")
+
 public class Uwb {
 
     @Id
@@ -22,11 +23,6 @@ public class Uwb {
     @NotEmpty(message = "Valor inválido para o valor Uwb")
     @Length(max = 200, message = "Valor inválido para o valor Uwb. O valor deve ter no máximo 200 caracteres")
     private String vlUwb;
-
-    public Uwb(Moto idMoto, String vlUwb) {
-        this.idMoto = idMoto;
-        this.vlUwb = vlUwb;
-    }
 
 
 }

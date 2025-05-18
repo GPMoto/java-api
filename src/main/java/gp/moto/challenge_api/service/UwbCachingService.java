@@ -2,6 +2,7 @@ package gp.moto.challenge_api.service;
 
 import gp.moto.challenge_api.dto.uwb.UwbDTO;
 import gp.moto.challenge_api.dto.uwb.UwbMapper;
+import gp.moto.challenge_api.dto.uwb.UwbProjection;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.model.Uwb;
@@ -41,7 +42,7 @@ public class UwbCachingService {
     }
 
     @Transactional
-    public boolean delete(Long idUwb) throws ResourceNotFoundException{
+    public boolean delete(Long idUwb) throws ResourceNotFoundException {
         Uwb uwb = findById(idUwb);
         uwbRepository.delete(uwb);
         limparCache();
@@ -50,30 +51,32 @@ public class UwbCachingService {
 
     @Transactional(readOnly = true)
     @Cacheable(value = "findAllUwb")
-    public List<Uwb> findAll(){
-        return uwbRepository.findAll();
+    public List<UwbProjection> findAll() {
+        return uwbRepository.findAll()
+                .stream().map(uwb -> uwbMapper.toProjection(uwb))
+                .toList();
     }
 
     @Transactional(readOnly = true)
     @Cacheable(value = "findUwbById", key = "#id_uwb")
-    public Uwb findById(Long id_uwb) throws ResourceNotFoundException{
+    public Uwb findById(Long id_uwb) throws ResourceNotFoundException {
         return uwbRepository.findById(id_uwb)
                 .orElseThrow(() -> new ResourceNotFoundException("Uwb não encontrado"));
     }
 
 
-
     @Cacheable(value = "paginarUwb", key = "#pageRequest")
     @Transactional(readOnly = true)
-    public Page<Uwb> paginarUwb(PageRequest pageRequest){
+    public Page<Uwb> paginarUwb(PageRequest pageRequest) {
         return uwbRepository.findAll(pageRequest);
     }
 
 
     @Transactional(readOnly = true)
-    public Page<Uwb> findAllByFilialPage(Integer size, Integer page, Long idFilial) {
+    public Page<UwbProjection> findAllByFilialPage(Integer size, Integer page, Long idFilial) {
         Pageable pageable = PageRequest.of(size, page);
-        return uwbRepository.findAllByFilialPage(pageable, idFilial);
+        return uwbRepository.findAllByFilialPage(pageable, idFilial)
+                .map(uwb -> uwbMapper.toProjection(uwb));
     }
 
     @Transactional()
@@ -93,7 +96,7 @@ public class UwbCachingService {
     }
 
     @CacheEvict(value = {"findUwbById", "findAllUwb"}, allEntries = true)
-    public void limparCache(){
+    public void limparCache() {
         System.out.println("Removendo arquivos de cache!");
     }
 
