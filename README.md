@@ -74,3 +74,9 @@ A documentação da API está disponível em: http://localhost:8080/swagger-ui.h
 - `src/main/resources` - Arquivos de configuração.
 - `src/test` - Testes automatizados.
 
+### Equipe 
+- Gustavo Dias da Silva Cruz - RM556448
+- Júlia Medeiros Angelozi - RM556364
+- Felipe Ribeiro Tardochi da Silva - RM555100
+
+
