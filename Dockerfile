@@ -1,15 +1,3 @@
-#FROM maven:3.9.9-eclipse-temurin-21-jammy
-#
-#WORKDIR /app
-#
-#COPY . .
-#
-#RUN mvn clean install
-#
-#EXPOSE 8080
-#
-#CMD ["mvn", "spring-boot:run"]
-
 # Etapa 1: build (com cache eficiente)
 FROM maven:3.9-eclipse-temurin-21 AS builder
 WORKDIR /app
@@ -26,5 +14,6 @@ RUN mvn package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
+EXPOSE 8080
 
 CMD ["java", "-jar", "app.jar"]
