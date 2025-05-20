@@ -20,7 +20,3 @@ sudo systemctl start docker
 sudo usermod -aG docker $USER
 
 newgrp docker
-
-docker build -t api-gpsmottu .
-
-docker container run --rm -d -p 8080:8080 --name api-java api-gpsmottu
