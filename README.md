@@ -176,9 +176,4 @@ http://<IP_DA_VM>:8080/swagger-ui.html
 az group delete --name rg-gpsmottu --yes --no-wait
 ```
 
-### Equipe 
-- Gustavo Dias da Silva Cruz - RM556448
-- Júlia Medeiros Angelozi - RM556364
-- Felipe Ribeiro Tardochi da Silva - RM555100
-
 
