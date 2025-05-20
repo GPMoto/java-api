@@ -1,4 +1,4 @@
-sudo apt-get update
+cd java-api && sudo apt-get update
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -18,3 +18,7 @@ sudo systemctl enable docker
 sudo systemctl start docker
 
 sudo usermod -aG docker $USER
+
+docker build -t api-gpsmottu .
+
+docker container run --rm -d -p 8080:8080 --name api-java api-gpsmottu
