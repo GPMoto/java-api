@@ -3,6 +3,8 @@
 Este é um projeto de API em desenvolvimento com **Java** utilizando o framework **Spring Boot**. 
 A aplicação é um sistema geral de análise de motos, incluindo rastreamento, associação entre dispositivos uwb e relatórios.
 
+![alt text](<assets/gps-mottu-diagrama.drawio.png>)
+
 ### Equipe
 
 
