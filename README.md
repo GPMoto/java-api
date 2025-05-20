@@ -3,6 +3,15 @@
 Este é um projeto de API em desenvolvimento com **Java** utilizando o framework **Spring Boot**. 
 A aplicação é um sistema geral de análise de motos, incluindo rastreamento, associação entre dispositivos uwb e relatórios.
 
+### Equipe
+
+
+- Gustavo Dias da Silva Cruz - RM556448
+
+- Júlia Medeiros Angelozi - RM556364
+
+- Felipe Ribeiro Tardochi da Silva - RM555100
+
 ## Tecnologias Utilizadas
 
 - **Java 21**
@@ -12,65 +21,156 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 - **Spring Data JPA**
 - **Spring Cache**
 - **OpenAPI/Swagger** (documentação da API)
-- **Spring Security**
+- **Mapstruct**
 
 ## Configuração do Ambiente
 
-### Pré-requisitos
+---
 
-- **Java 21**
-- **Maven** instalado
+## 1. Criando a VM na Azure
 
-### Configuração do Banco de Dados
+Você pode executar com
 
-O projeto utiliza o banco de dados em memória **H2**. As configurações estão no arquivo `src/main/resources/application.properties`:
+```bash
 
-```properties
-spring.datasource.url=jdbc:h2:mem:gpmoto
-spring.datasource.username=sa
-spring.datasource.password=
-spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console
+chmod +x ./create-vm-azure.sh
+./create-vm-azure.sh
+
 ```
 
-Acesse o console do H2 em: http://localhost:8080/h2-console.
+Ou execute os comandos abaixo: 
 
-### Como Executar o Projeto
-1. Clone o repositório:
+```bash
+# Crie o grupo de recursos
+az group create --location brazilsouth --resource-group rg-gpsmottu
 
-```shell
-git clone https://github.com/GPMoto/java-api.git
-cd challenge-api
+# Crie a VM Ubuntu 22.04
+az vm create \
+  --resource-group rg-gpsmottu \
+  --name vm-ubuntu \
+  --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest \
+  --size Standard_B2s \
+  --vnet-name nnet-linux \
+  --nsg nsgsr-linux \
+  --public-ip-address pip-ubuntu \
+  --authentication-type password \
+  --admin-username admlnx \
+  --admin-password Gps@mottu329
+
+# Libere a porta 8080 para acesso externo
+az network nsg rule create \
+  --resource-group rg-gpsmottu \
+  --nsg-name nsgsr-linux \
+  --name port_8080 \
+  --protocol tcp \
+  --priority 1100 \
+  --destination-port-range 8080
 ```
 
-2. Compile e execute o projeto:
+---
 
-```shell
-mvn spring-boot:run
+## 2. Conectando via SSH
+
+Pegue o IP público da VM no portal Azure ou com:
+
+```bash
+az vm show -d -g rg-gpsmottu -n vm-ubuntu --query publicIps -o tsv
 ```
 
-A API estará disponível em: http://localhost:8080.
+Conecte:
+
+```bash
+ssh admlnx@<IP_DA_VM>
+```
+
+---
+
+## 3. Baixando o Projeto do GitHub
+
+```bash
+git clone https://github.com/GPMoto/java-api
+cd java-api
+```
+
+---
+
+## 4. Configurando Docker na VM
+
+Execute com os seguintes comandos:
+
+```bash
+chmod +x ./configure-docker.sh
+./configure-docker.sh
+
+```
+
+Ou execute esses comandos:
+
+```bash
+# Atualize os pacotes
+sudo apt-get update
+
+# Instale dependências e Docker
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+# Habilite e inicie o serviço Docker
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# Adicione seu usuário ao grupo docker (relogin necessário)
+sudo usermod -aG docker $USER
+
+#Execute para que já faça os efeitos necessários sem sair do terminal
+newgrp docker
+```
 
 
-### Endpoints Principais
-- Uwb
-  - GET /uwb - Lista todos os Uwb.
-  - GET /uwb/{id} - Busca um Uwb pelo ID.
-  - POST /uwb - Cria um novo Uwb.
-  - PUT /uwb/{id}/associar/{idMoto} - Associa um Moto a um Uwb.
-  - PUT /uwb/{id}/desassociar - Desassocia um Moto de um Uwb.
-  - DELETE /uwb/{id} - Deleta um Uwb.
-  
-- Moto
-  - GET /moto - Lista todas as Moto.
-  - GET /moto/{id} - Busca uma Moto pelo ID.
-  
-### Documentação da API
-A documentação da API está disponível em: http://localhost:8080/swagger-ui.html.
+
+---
+
+## 5. Buildando a Imagem Docker
+
+```bash
+docker build -t api-gpsmottu .
+```
+
+---
+
+## 6. Executando a API em Container
+
+```bash
+docker container run --rm -d -p 8080:8080 --name api-java api-gpsmottu
+```
+
+Acesse a API em:  
+http://<IP_DA_VM>:8080
+
+Acesse o console H2 em:  
+http://<IP_DA_VM>:8080/h2-console
+
+---
+
+## 7. Documentação da API
+
+Acesse:  
+http://<IP_DA_VM>:8080/swagger-ui.html
 
 
-### Estrutura do Projeto
-- `src/main/java/gp/moto/challenge_api` - Código-fonte principal.
-- `src/main/resources` - Arquivos de configuração.
-- `src/test` - Testes automatizados.
+### Informações adicionais
+
+*Ps: Caso queira deletar tudo, execute o seguinte comando na vm:
+
+```bash
+az vm show -d -g rg-gpsmottu -n vm-ubuntu --query publicIps -o tsv
+```
 
