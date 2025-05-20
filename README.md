@@ -5,6 +5,8 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 
 ![alt text](<assets/gps-mottu-diagrama.drawio.png>)
 
+![Challenge Api - Vìdeo demonstrativo](https://www.youtube.com/watch?v=INf0R-hfaD0)
+
 ### Equipe
 
 
