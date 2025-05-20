@@ -40,18 +40,18 @@ public class UwbController {
         return ResponseEntity.status(HttpStatus.CREATED).body(uwbCachingService.save(dto));
     }
 
-    @PatchMapping("/{idUwb}/mudar-moto/")
-    public ResponseEntity<Uwb> updateMotoWithUwb(@PathVariable Long idUwb, @RequestParam Long idMoto){
-        return ResponseEntity.ok(uwbCachingService.updateMotoWithUwb(idUwb, idMoto));
-    }
+//    @PatchMapping("/{idUwb}/mudar-moto/")
+//    public ResponseEntity<Uwb> updateMotoWithUwb(@PathVariable Long idUwb, @RequestParam Long idMoto){
+//        return ResponseEntity.ok(uwbCachingService.updateMotoWithUwb(idUwb, idMoto));
+//    }
 
     @PutMapping("/{idUwb}")
     public ResponseEntity<Uwb> update(@PathVariable Long idUwb, @RequestBody UwbDTO dto){
         return ResponseEntity.ok(uwbCachingService.update(idUwb, dto));
     }
 
-    @PatchMapping("{idUwb}/remover-moto")
-    public ResponseEntity<Uwb> removeMotoWithUwb(@PathVariable Long idUwb){
-        return ResponseEntity.ok(uwbCachingService.removeMotoWithUwb(idUwb));
-    }
+//    @PatchMapping("{idUwb}/remover-moto")
+//    public ResponseEntity<Uwb> removeMotoWithUwb(@PathVariable Long idUwb){
+//        return ResponseEntity.ok(uwbCachingService.removeMotoWithUwb(idUwb));
+//    }
 }
