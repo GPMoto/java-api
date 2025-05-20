@@ -30,8 +30,13 @@ public class MotoController {
     }
 
     @GetMapping("/filial/{idFilial}/paginados/")
-    public ResponseEntity<Page<MotoProjection>> getPageMotos(@PathVariable Long idFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
-        return ResponseEntity.ok(motoService.listarTodasPaginadas(idFilial, pagina, quantidade));
+    public ResponseEntity<Page<MotoProjection>> getPageMotosFilial(@PathVariable Long idFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
+        return ResponseEntity.ok(motoService.listarTodasPaginadasFilial(idFilial, pagina, quantidade));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<Moto>> getPageMotos(@RequestParam(value = "pagina", defaultValue = "0") Integer page, @RequestParam(value = "quantidade", defaultValue = "10") Integer size){
+        return ResponseEntity.ok(motoService.paginarMoto(page, size));
     }
 
     @PostMapping

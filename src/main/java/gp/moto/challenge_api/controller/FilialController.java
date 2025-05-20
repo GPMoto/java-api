@@ -5,6 +5,7 @@ import gp.moto.challenge_api.model.Filial;
 import gp.moto.challenge_api.service.FilialCachingService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,11 @@ public class FilialController {
         return ResponseEntity.ok(filialService.buscarPorId(id));
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<Page<Filial>> findAllPage(@RequestParam Integer page, @RequestParam Integer size){
+        return ResponseEntity.ok(filialService.paginarFilial(page, size));
+    }
+
     @PostMapping
     public ResponseEntity<Filial> post(@RequestBody FilialDTO filialDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(filialService.criar(filialDTO));
@@ -43,5 +49,6 @@ public class FilialController {
         filialService.deletar(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 
 }

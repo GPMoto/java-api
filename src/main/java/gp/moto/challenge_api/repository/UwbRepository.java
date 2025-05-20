@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UwbRepository extends JpaRepository<Uwb, Long> {
 
-    @Query(value = "select u from Uwb u where u.idMoto.idSecaoFilial = :idFilial")
+    @Query(value = "select u from Uwb u join fetch u.idMoto m join fetch m.idSecaoFilial sf join fetch sf.idFilial f where f.idFilial = :idFilial")
     Page<Uwb> findAllByFilialPage(Pageable pageable, Long idFilial);
 }

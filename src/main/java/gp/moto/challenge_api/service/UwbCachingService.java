@@ -1,15 +1,7 @@
 package gp.moto.challenge_api.service;
 
-import gp.moto.challenge_api.dto.uwb.UwbDTO;
-import gp.moto.challenge_api.dto.uwb.UwbMapper;
-import gp.moto.challenge_api.dto.uwb.UwbProjection;
-import gp.moto.challenge_api.exception.ResourceNotFoundException;
-import gp.moto.challenge_api.model.Moto;
-import gp.moto.challenge_api.model.Uwb;
-import gp.moto.challenge_api.repository.MotoRepository;
-import gp.moto.challenge_api.repository.UwbRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import jakarta.persistence.Id;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -18,9 +10,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import gp.moto.challenge_api.dto.uwb.UwbDTO;
+import gp.moto.challenge_api.dto.uwb.UwbMapper;
+import gp.moto.challenge_api.dto.uwb.UwbProjection;
+import gp.moto.challenge_api.exception.ResourceNotFoundException;
+import gp.moto.challenge_api.model.Uwb;
+import gp.moto.challenge_api.repository.MotoRepository;
+import gp.moto.challenge_api.repository.UwbRepository;
 
 
 @Service
@@ -74,7 +71,7 @@ public class UwbCachingService {
 
     @Transactional(readOnly = true)
     public Page<UwbProjection> findAllByFilialPage(Integer size, Integer page, Long idFilial) {
-        Pageable pageable = PageRequest.of(size, page);
+        Pageable pageable = PageRequest.of(page, size);
         return uwbRepository.findAllByFilialPage(pageable, idFilial)
                 .map(uwb -> uwbMapper.toProjection(uwb));
     }
@@ -95,10 +92,6 @@ public class UwbCachingService {
         return uwbRepository.save(uwb);
     }
 
-    @CacheEvict(value = {"findUwbById", "findAllUwb"}, allEntries = true)
-    public void limparCache() {
-        System.out.println("Removendo arquivos de cache!");
-    }
 
     public Uwb update(Long idUwb, UwbDTO uwbDto) {
         Uwb uwb = findById(idUwb);
@@ -106,4 +99,13 @@ public class UwbCachingService {
         limparCache();
         return uwbRepository.save(uwb);
     }
+
+    @CacheEvict(value = {
+        "findUwbById", "findAllUwb", "paginarUwb"
+    }, allEntries = true)
+    public void limparCache() {
+        System.out.println("Removendo arquivos de cache!");
+    }
+
+
 }
