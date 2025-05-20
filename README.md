@@ -171,7 +171,7 @@ http://<IP_DA_VM>:8080/swagger-ui.html
 *Ps: Caso queira deletar tudo, execute o seguinte comando na vm:
 
 ```bash
-az vm show -d -g rg-gpsmottu -n vm-ubuntu --query publicIps -o tsv
+az group delete --name rg-gpsmottu --yes
 ```
 
 ### Equipe 
