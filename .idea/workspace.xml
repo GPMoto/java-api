@@ -6,10 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/ContatoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/ContatoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/FilialController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/FilialController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/MotoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/MotoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/UwbRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/UwbRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/CidadeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/CidadeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/ContatoCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/ContatoCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/EnderecoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/EnderecoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/EstadoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/EstadoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/FilialCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/FilialCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/PaisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/PaisService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/PerfilService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/PerfilService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/SecaoFilialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/SecaoFilialService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/TelefoneCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/TelefoneCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/TipoMotoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/TipoMotoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/TipoSecaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/TipoSecaoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +109,7 @@
       <workItem from="1747443824969" duration="5197000" />
       <workItem from="1747612187641" duration="3395000" />
       <workItem from="1747699538212" duration="5126000" />
-      <workItem from="1747737622826" duration="1842000" />
+      <workItem from="1747737622826" duration="7099000" />
     </task>
     <servers />
   </component>

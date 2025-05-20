@@ -1,58 +1,61 @@
 package gp.moto.challenge_api.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import gp.moto.challenge_api.dto.endereco.EnderecoDto;
 import gp.moto.challenge_api.dto.endereco.EnderecoMapper;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Endereco;
-import gp.moto.challenge_api.model.Pais;
 import gp.moto.challenge_api.repository.EnderecoRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-@Log4j2
 public class EnderecoService {
 
-    private final EnderecoRepository enderecoRepository;
-    private final EnderecoMapper enderecoMapper;
-    private final PaisService paisService;
-    private final CidadeService cidadeService;
-    private final EstadoService estadoService;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private EnderecoMapper enderecoMapper;
+
+    @Autowired
+    private PaisService paisService;
+
+    @Autowired
+    private CidadeService cidadeService;
+
+    @Autowired
+    private EstadoService estadoService;
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = "findAllEndereco")
     public List<Endereco> findAll() {
         return enderecoRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    @Cacheable(value = "findByIdEndereco", key = "#id")
     public Endereco findById(Long id) {
         return enderecoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado"));
     }
 
-    public Endereco save(EnderecoDto dto){
-        log.info("olha o que tem no dto:{}", dto);
+    @Transactional
+    public Endereco save(EnderecoDto dto) {
         Endereco endereco = enderecoMapper.toEntity(dto);
-        log.info("conversao do mapper: {}", endereco);
+        limparCache();
         return enderecoRepository.save(endereco);
     }
 
-    public Endereco saveOrFind(EnderecoDto dto) {
-
-//        Pais pais = paisService.saveOrFindByName(strPais);
-//        return enderecoRepository.save()
-        // TODO: Realizar método para achar ou salvar endereco
-
-        return null;
-    }
-
+    @Transactional
     public Endereco update(Long id, EnderecoDto dto) {
         Endereco endereco = findById(id);
         enderecoMapper.updateEntityFromDto(dto, endereco);
+        limparCache();
         return enderecoRepository.save(endereco);
     }
 
@@ -60,6 +63,14 @@ public class EnderecoService {
     public boolean delete(Long id) {
         Endereco endereco = findById(id);
         enderecoRepository.delete(endereco);
+        limparCache();
         return true;
+    }
+
+    @CacheEvict(value = {
+            "findAllEndereco", "findByIdEndereco"
+    }, allEntries = true)
+    public void limparCache() {
+        System.out.println("Limpando cache");
     }
 }

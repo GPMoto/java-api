@@ -1,17 +1,19 @@
 package gp.moto.challenge_api.service;
 
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import gp.moto.challenge_api.dto.telefone.TelefoneDTO;
 import gp.moto.challenge_api.dto.telefone.TelefoneMapper;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Telefone;
 import gp.moto.challenge_api.repository.TelefoneRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class TelefoneCachingService {
@@ -25,16 +27,18 @@ public class TelefoneCachingService {
 
     @Transactional
     public Telefone criar(TelefoneDTO telefoneDTO){
+        limparCache();
         return telefoneRepository.save(telefoneMapper.toEntity(telefoneDTO));
     }
 
-
-    @Transactional()
+    @Transactional(readOnly = true)
+    @Cacheable(value = "listarTodosTelefone")
     public List<Telefone> listarTodos(){
         return telefoneRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+    @Cacheable(value = "buscarPorIdTelefone", key = "#id")
     public Telefone buscarPorId(Long id) throws ResourceNotFoundException {
         return telefoneRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Telefone não encontrado!"));
     }
@@ -43,6 +47,7 @@ public class TelefoneCachingService {
     public Telefone alterar(Long id, TelefoneDTO telefoneDTO) {
        Telefone telefone = buscarPorId(id);
        telefoneMapper.updateTelefoneFromDto(telefoneDTO, telefone);
+       limparCache();
        return telefoneRepository.save(telefone);
     }
 
@@ -51,10 +56,16 @@ public class TelefoneCachingService {
         Telefone tel = telefoneRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Telefone não encontrada"));
         telefoneRepository.delete(tel);
+        limparCache();
         return true;
     }
 
-
+    @CacheEvict(value = {
+        "listarTodosTelefone", "buscarPorIdTelefone"
+    }, allEntries = true)
+    public void limparCache(){
+        System.out.println("Limpando cache...");
+    }
 
 
 }

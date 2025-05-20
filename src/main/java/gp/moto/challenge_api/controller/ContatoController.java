@@ -6,6 +6,7 @@ import gp.moto.challenge_api.model.Contato;
 import gp.moto.challenge_api.service.ContatoCachingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,16 @@ public class ContatoController {
         return ResponseEntity.ok(contatoService.listarTodos());
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<Page<Contato>> findAllPage(@RequestParam(value = "pagina", defaultValue = "0") Integer page, @RequestParam(value = "quantidade", defaultValue = "10") Integer size) {
+        return ResponseEntity.ok(contatoService.paginarContato(page, size));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Contato> findById(@PathVariable Long id) {
         return ResponseEntity.ok(contatoService.buscarPorId(id));
     }
+
 
 
     @PostMapping
