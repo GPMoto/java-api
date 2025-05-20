@@ -74,7 +74,7 @@ public class UwbCachingService {
 
     @Transactional(readOnly = true)
     public Page<UwbProjection> findAllByFilialPage(Integer size, Integer page, Long idFilial) {
-        Pageable pageable = PageRequest.of(size, page);
+        Pageable pageable = PageRequest.of(page, size);
         return uwbRepository.findAllByFilialPage(pageable, idFilial)
                 .map(uwb -> uwbMapper.toProjection(uwb));
     }

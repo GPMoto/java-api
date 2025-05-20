@@ -16,7 +16,7 @@ public class Uwb {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUwb;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_moto")
     private Moto idMoto;
 
