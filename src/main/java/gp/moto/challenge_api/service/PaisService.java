@@ -13,8 +13,10 @@ import gp.moto.challenge_api.dto.endereco.pais.PaisMapper;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Pais;
 import gp.moto.challenge_api.repository.PaisRepository;
+import lombok.extern.log4j.Log4j2;
 
 @Service
+@Log4j2
 public class PaisService {
 
     @Autowired
@@ -33,7 +35,9 @@ public class PaisService {
     @Transactional()
     public Pais save(PaisDto paisDto){
         limparCache();
-        return paisRepository.save(paisMapper.toEntity(paisDto));
+        Pais entity = paisMapper.toEntity(paisDto);
+        log.info("Entity Pais no save: {}\n\n\n\n", entity);
+        return paisRepository.save(entity);
     }
 
     @Transactional(readOnly = true)
@@ -45,7 +49,7 @@ public class PaisService {
     @Transactional
     public Pais update(Long id, PaisDto paisDto) {
         Pais pais = findById(id);
-        paisMapper.updateEntityFromDto(pais, paisDto);
+        paisMapper.updateEntityFromDto(paisDto, pais);
         limparCache();
         return paisRepository.save(pais);
     }
