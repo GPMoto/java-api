@@ -19,7 +19,7 @@ import gp.moto.challenge_api.model.Perfil;
 import gp.moto.challenge_api.service.PerfilService;
 
 @RestController
-@RequestMapping("/perfil")
+@RequestMapping("api/perfil")
 public class PerfilController {
 
     @Autowired

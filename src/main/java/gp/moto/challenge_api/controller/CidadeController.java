@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cidade")
+@RequestMapping("api/cidade")
 public class CidadeController {
 
     @Autowired

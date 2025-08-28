@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/uwb")
+@RequestMapping("api/uwb")
 public class UwbController {
 
     @Autowired

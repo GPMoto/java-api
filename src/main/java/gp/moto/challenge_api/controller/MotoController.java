@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/moto")
+@RequestMapping(value = "api/moto")
 public class MotoController {
 
     @Autowired

@@ -8,9 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/autenticacao")
+@RequestMapping("api/autenticacao")
 public class AutenticacaoController {
 
     @Autowired
@@ -31,6 +32,25 @@ public class AutenticacaoController {
             return jwtUtil.construirToken(username);
         }catch (Exception e){
             return "Usuário ou senha inválidos";
+        }
+    }
+
+    @PostMapping("/login/view")
+    public ModelAndView gerarTokenValidoView (@RequestParam String username, @RequestParam String password) {
+        ModelAndView mv = new ModelAndView("home/home");
+        try {
+
+            var auth = new UsernamePasswordAuthenticationToken(username, password);
+            authenticationManager.authenticate(auth);
+            String token = jwtUtil.construirToken(username);
+
+            mv.addObject("token", token);
+
+
+        }catch (Exception e){
+            mv.setViewName("login/login");
+            mv.addObject("errorMsg", "Usuário ou senha inválidos");
+            return mv;
         }
     }
 
