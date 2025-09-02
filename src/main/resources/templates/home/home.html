@@ -30,8 +30,8 @@
                             <td class="col-2" th:text="${moto.identificador}">B</td>
                             <td class="col-2" th:text="${moto.status}">C</td>
                             <td class="col-2" th:text="${moto.condicoesManutencao}">D</td>
-                            <td class="col-2" th:text="${moto.idTipoMoto != null ? moto.idTipoMoto.nome : 'N/A'}">E</td>
-                            <td class="col-2" th:text="${moto.idSecaoFilial != null ? moto.idSecaoFilial.nome : 'N/A'}">F</td>
+                            <td class="col-2" th:text="${moto.idTipoMoto != null ? moto.idTipoMoto.nmTipo : 'N/A'}">E</td>
+                            <td class="col-2" th:text="${moto.idSecaoFilial != null ? moto.idSecaoFilial.idTipoSecao.nmSecao : 'N/A'}">F</td>
                             <td class="col-2"><a th:href="@{/moto/detalhes/{idMoto}(idMoto = ${moto.idMoto})}">Detalhes</a></td>
                             <td class="col-2"><a th:href="@{/moto/editar/{idMoto}(idMoto = ${moto.idMoto})}">Editar</a></td>
                             <td class="col-2"><a th:href="@{/moto/remover/{idMoto}(idMoto = ${moto.idMoto})}">Remover</a></td>
@@ -41,11 +41,12 @@
             </div>
         </div>
         <div class="row">
-            <a href="/pessoa/nova">Cadastrar uma Nova Pessoa</a>
+            <a href="/pessoa/nova">Cadastrar uma Nova moto</a>
         </div>
     </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
   </body>
 </html>
