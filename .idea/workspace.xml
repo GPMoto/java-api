@@ -5,25 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/template/home/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/template/login/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/MotoControllerView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/moto/nova.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/AutenticacaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/AutenticacaoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/CidadeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/CidadeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/ContatoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/ContatoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/EnderecoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/EnderecoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/EstadoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/EstadoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/FilialController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/FilialController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/MotoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/MotoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/PaisController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/PaisController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/PerfilController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/PerfilController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/SecaoFilialController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/SecaoFilialController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TelefoneController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TelefoneController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TipoMotoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TipoMotoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TipoSecaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/TipoSecaoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/MotoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/MotoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/UsuarioConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/UsuarioConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/template/fragmentos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragmentos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/template/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/template/login/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,6 +150,9 @@
       <workItem from="1756172844951" duration="2096000" />
       <workItem from="1756210577166" duration="4570000" />
       <workItem from="1756334133471" duration="4533000" />
+      <workItem from="1756769687906" duration="4296000" />
+      <workItem from="1756780182717" duration="6569000" />
+      <workItem from="1756813765133" duration="8958000" />
     </task>
     <task id="LOCAL-00001" summary="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
       <option name="closed" value="true" />

@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface MotoRepository extends JpaRepository<Moto, Long> {
     @Query(value = "select m from Moto m where m.idSecaoFilial.idFilial.idFilial = :idFilial")
     Page<Moto> findAllByFilial(Pageable pageable, Long idFilial);
+
 }
