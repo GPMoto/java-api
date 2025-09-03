@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Inserir moto')}" />
+<body>
+    <div class="container mt-5">
+        <h2>Cadastrar Nova Moto</h2>
+        <form th:action="@{/view/moto}" th:object="${moto}" method="post">
+            <div class="mb-3">
+                <label for="identificador" class="form-label">Identificador</label>
+                <input type="text" class="form-control" id="identificador" th:field="*{identificador}" maxlength="50" required>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <input type="text" class="form-control" id="status" th:field="*{status}" maxlength="50" required>
+            </div>
+            <div class="mb-3">
+                <label for="condicoesManutencao" class="form-label">Condições de Manutenção</label>
+                <input type="text" class="form-control" id="condicoesManutencao" th:field="*{condicoesManutencao}" maxlength="200" required>
+            </div>
+            <div class="mb-3">
+                <label for="idTipoMoto" class="form-label">Tipo da Moto</label>
+                <select class="form-select" id="idTipoMoto" th:field="*{idTipoMoto}" required>
+                    <option th:each="tipo : ${tiposMoto}" th:value="${tipo.id_tipo_moto}" th:text="${tipo.nmTipo}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="idSecaoFilial" class="form-label">Seção/Filial</label>
+                <select class="form-select" id="idSecaoFilial" th:field="*{idSecaoFilial}" required>
+                    <option th:each="secao : ${secoesFilial}" th:value="${secao.idTipoSecao.idTipoSecao}" th:text="${secao.idTipoSecao.nmSecao}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+</body>
+</html>

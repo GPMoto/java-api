@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @RestController
-@Controller
 @RequestMapping(value = "api/moto")
 public class MotoController {
 
