@@ -1,0 +1,24 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: cabecalho('Teste Fragmento')}"></head>
+<body>
+    <div class="container mt-5">
+        <h2>Testando Fragmento</h2>
+        <p th:text="'Quantidade de motos: ' + ${#lists.size(motos)}"></p>
+        <div th:each="moto : ${motos}">
+            <div th:replace="~{fragmentos :: teste(${moto})}"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".div").forEach(function(div){
+                div.addEventListener("click", function(){
+                    const p = div.querySelector(".ptag");
+                    p.classList.toggle("hidden");
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -7,3 +7,23 @@
 
     <title th:text="${titulo}"></title>
 </head>
+
+
+
+<div th:fragment="teste(moto)" class="div" style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #f9f9f9;">
+    <h3 style="margin-top: 0;" th:text="${moto.identificador}">Identificador</h3>
+    <p class="ptag">
+        <strong>Status:</strong> <span th:text="${moto.status}"></span><br>
+        <strong>Condições:</strong> <span th:text="${moto.condicoesManutencao}"></span>
+    </p>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .div:hover {
+            background: #e3e3e3;
+            cursor: pointer;
+        }
+    </style>
+    
+</div>

@@ -4,12 +4,15 @@ package gp.moto.challenge_api.controllerView;
 import gp.moto.challenge_api.dto.moto.MotoDTO;
 import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.model.Moto;
+import gp.moto.challenge_api.repository.MotoRepository;
 import gp.moto.challenge_api.service.MotoCachingService;
 import gp.moto.challenge_api.service.SecaoFilialService;
 import gp.moto.challenge_api.service.TipoMotoService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,9 @@ public class MotoControllerView {
     @Autowired
     private SecaoFilialService secaoFilialService;
 
+    @Autowired
+    private MotoRepository motoRep;
+
 
     @GetMapping("/nova")
     public ModelAndView viewMoto(){
@@ -37,6 +43,27 @@ public class MotoControllerView {
 
         try{
             mv.addObject("moto", new Moto());
+
+            mv.addObject("tiposMoto", tipoMotoService.findAll());
+            mv.addObject("secoesFilial", secaoFilialService.findAll());
+
+            return mv;
+        }catch(Exception e){
+
+
+            return mv;
+        }
+
+    }
+
+    @GetMapping("/teste")
+    public ModelAndView viewTeste(){
+
+        ModelAndView mv = new ModelAndView("home/teste");
+
+        try{
+            Pageable pageable = PageRequest.of(0, 10);
+            mv.addObject("motos", motoRep.findAllByFilial(pageable, 1L));
 
             mv.addObject("tiposMoto", tipoMotoService.findAll());
             mv.addObject("secoesFilial", secaoFilialService.findAll());
