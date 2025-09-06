@@ -3,12 +3,11 @@ package gp.moto.challenge_api.controllerView;
 
 import gp.moto.challenge_api.dto.moto.MotoDTO;
 import gp.moto.challenge_api.model.Moto;
-import gp.moto.challenge_api.repository.MotoRepository;
+import gp.moto.challenge_api.service.FilialCachingService;
 import gp.moto.challenge_api.service.MotoCachingService;
 import gp.moto.challenge_api.service.SecaoFilialService;
 import gp.moto.challenge_api.service.TipoMotoService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class FilialControllerView {
 
     @Autowired
+    private FilialCachingService filialService;
+
+    @Autowired
     private MotoCachingService motoService;
 
     @Autowired
@@ -33,20 +35,16 @@ public class FilialControllerView {
 
 
     @GetMapping("/{id}")
-    public ModelAndView viewMoto(@PathVariable("id") Long id){
+    public ModelAndView viewFilial(@PathVariable("id") Long id){
 
-        ModelAndView mv = new ModelAndView("filial/ver");
+        ModelAndView mv = new ModelAndView("/filial/ver");
 
         try{
-            mv.addObject("moto", new Moto());
-
-            mv.addObject("tiposMoto", tipoMotoService.findAll());
-            mv.addObject("secoesFilial", secaoFilialService.findAll());
-
+            mv.addObject("filial", filialService.buscarPorId(id));
             return mv;
         }catch(Exception e){
 
-            return mv;
+            return new ModelAndView("redirect:/login/index");
         }
 
     }

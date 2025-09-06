@@ -50,12 +50,13 @@ public class AutenticacaoControllerView {
             String token = jwtUtil.construirToken(loginDTO.getUsername());
             Optional<Usuario> user = userRep.findByNmUsuario(loginDTO.getUsername());
 
-            System.out.println("Login bem-sucedido para usuário: " + loginDTO.getUsername());
+
+            Long idFilial = user.get().getIdFilial().getIdFilial();
 
             mv.addObject("token", token);
             Pageable pageable = PageRequest.of(0, 10);
             mv.addObject("motos", motoRep.findAllByFilial(pageable, user.get().getIdFilial().getIdFilial()));
-            mv.addObject("idFilial", user.get().getIdFilial().getIdFilial());
+            mv.addObject("idFilial", idFilial);
 
             return mv;
 
@@ -75,9 +76,13 @@ public class AutenticacaoControllerView {
 
         var user = userRep.findByNmUsuario(username);
         if (user.isPresent()) {
+            Long idFilial = user.get().getIdFilial().getIdFilial();
+
             Pageable pageable = PageRequest.of(0, 10);
             mv.addObject("motos", motoRep.findAllByFilial(pageable, user.get().getIdFilial().getIdFilial()));
             mv.addObject("usuario", user.get());
+            mv.addObject("idFilial", idFilial);
+
         }
         return mv;
     }
