@@ -1,12 +1,22 @@
 package gp.moto.challenge_api.controllerView;
 
 
+import gp.moto.challenge_api.dto.contato.ContatoDTO;
+import gp.moto.challenge_api.dto.endereco.EnderecoDto;
+import gp.moto.challenge_api.dto.filial.FilialDTO;
+import gp.moto.challenge_api.dto.filial.FilialFormDTO;
 import gp.moto.challenge_api.dto.moto.MotoDTO;
-import gp.moto.challenge_api.model.Moto;
+import gp.moto.challenge_api.dto.telefone.TelefoneDTO;
+import gp.moto.challenge_api.model.Contato;
+import gp.moto.challenge_api.model.Endereco;
+import gp.moto.challenge_api.model.Filial;
+import gp.moto.challenge_api.model.Telefone;
+import gp.moto.challenge_api.service.CidadeService;
+import gp.moto.challenge_api.service.ContatoCachingService;
+import gp.moto.challenge_api.service.EnderecoService;
 import gp.moto.challenge_api.service.FilialCachingService;
 import gp.moto.challenge_api.service.MotoCachingService;
-import gp.moto.challenge_api.service.SecaoFilialService;
-import gp.moto.challenge_api.service.TipoMotoService;
+import gp.moto.challenge_api.service.TelefoneCachingService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +35,17 @@ public class FilialControllerView {
     private FilialCachingService filialService;
 
     @Autowired
-    private MotoCachingService motoService;
+    private CidadeService cidadeService;
 
     @Autowired
-    private TipoMotoService tipoMotoService;
+    private EnderecoService enderecoService;
 
     @Autowired
-    private SecaoFilialService secaoFilialService;
+    private ContatoCachingService contatoService;
+
+    @Autowired
+    private TelefoneCachingService telefoneService;
+
 
 
     @GetMapping("/{id}")
@@ -50,16 +64,13 @@ public class FilialControllerView {
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView viewMotoAtualizar(@PathVariable("id") Long id){
+    public ModelAndView viewFilialAtualizar(@PathVariable("id") Long id){
 
-        ModelAndView mv = new ModelAndView("moto/atualiza");
+        ModelAndView mv = new ModelAndView("filial/atualiza");
 
         try{
-            mv.addObject("moto", motoService.buscarPorId(id));
-
-            mv.addObject("tiposMoto", tipoMotoService.findAll());
-            mv.addObject("secoesFilial", secaoFilialService.findAll());
-
+            mv.addObject("filial", filialService.buscarPorId(id));
+            mv.addObject("cidades", cidadeService.findAll());
             return mv;
         }catch(Exception e){
 
@@ -69,41 +80,58 @@ public class FilialControllerView {
 
     }
 
-
-    @PostMapping
-    public ModelAndView salvarMoto(@Valid MotoDTO motoDTO) {
-        ModelAndView mv = new ModelAndView("redirect:/login/index");
-        try{
-            
-            motoService.criar(motoDTO);
-            return mv;
-        }catch(Exception e){
-            return mv;
-        }
-    }
 
     @PostMapping("{id}")
-    public ModelAndView editarMoto(@Valid MotoDTO motoDTO, @PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView("redirect:/login/index");
-        try{
+    public ModelAndView editarFilial(@Valid FilialFormDTO filialFormDTO, @PathVariable("id") Long id) {
+        try {
 
-            motoService.alterar(id,motoDTO);
-            return mv;
-        }catch(Exception e){
-            return mv;
+            Filial filialAtual = filialService.buscarPorId(id);
+            
+
+            if (filialAtual.getIdEndereco() != null) {
+                EnderecoDto enderecoDto = new EnderecoDto(
+                    filialFormDTO.nmLogradouro(),
+                    filialFormDTO.nrLogradouro(),
+                    filialFormDTO.idCidade(),
+                    filialFormDTO.cep()
+                );
+                enderecoService.update(filialAtual.getIdEndereco().getIdEndereco(), enderecoDto);
+            }
+            
+
+            if (filialAtual.getIdContato() != null) {
+                ContatoDTO contatoDto = new ContatoDTO(
+                    filialFormDTO.nmDono(),
+                    filialFormDTO.status(),
+                    filialAtual.getIdContato().getIdTelefone().getId_telefone()
+                );
+                contatoService.alterar(filialAtual.getIdContato().getIdContato(), contatoDto);
+                
+
+                if (filialAtual.getIdContato().getIdTelefone() != null) {
+                    TelefoneDTO telefoneDto = new TelefoneDTO(
+                        filialAtual.getIdContato().getIdTelefone().getDdi(), 
+                        filialFormDTO.ddd(),
+                        filialFormDTO.numero()
+                    );
+                    telefoneService.alterar(filialAtual.getIdContato().getIdTelefone().getId_telefone(), telefoneDto);
+                }
+            }
+            
+            FilialDTO filialDTO = new FilialDTO(
+                filialFormDTO.cnpjFilial(),
+                filialFormDTO.senhaFilial(),
+                filialAtual.getIdEndereco().getIdEndereco(),
+                filialAtual.getIdContato().getIdContato()
+            );
+            
+            filialService.alterar(id, filialDTO);
+            
+            return new ModelAndView("redirect:/view/filial/" + id);
+            
+        } catch (Exception e) {
+            return new ModelAndView("redirect:/view/filial/editar/" + id + "?erro=true");
         }
-    }
-
-    @GetMapping("remover/{id}")
-    public ModelAndView deleteMoto(@PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView("redirect:/login/index");
-        try{
-
-            motoService.deletar(id);
-            return mv;
-        }catch(Exception e){
-            return mv;
-        }
-    }
+}
 
 }

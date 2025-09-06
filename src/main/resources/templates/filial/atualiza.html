@@ -1,0 +1,77 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Atualizar Filial')}" />
+<body>
+    <div class="container mt-5">
+        <h2>Atualizar Filial</h2>
+        <form th:action="@{/view/filial/{idFilial}(idFilial = ${filial.idFilial})}" method="post">
+
+            <input type="hidden" name="idFilial" th:value="${filial.idFilial}">
+            <input type="hidden" name="idEndereco" th:value="${filial.idEndereco != null ? filial.idEndereco.idEndereco : ''}">
+            <input type="hidden" name="idContato" th:value="${filial.idContato != null ? filial.idContato.idContato : ''}">
+
+            <div class="mb-3">
+                <label for="cnpjFilial" class="form-label">CNPJ</label>
+                <input type="text" name="cnpjFilial" th:value="${filial.cnpjFilial}" class="form-control" id="cnpjFilial" maxlength="14" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="senhaFilial" class="form-label">Senha da Filial</label>
+                <input type="password" name="senhaFilial" th:value="${filial.senhaFilial}" class="form-control" id="senhaFilial" maxlength="200" required>
+            </div>
+
+            <h4>Endereço</h4>
+            <div class="mb-3">
+                <label for="cep" class="form-label">CEP</label>
+                <input type="text" name="cep" th:value="${filial.idEndereco != null ? filial.idEndereco.cep : ''}" class="form-control" id="cep" maxlength="8" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="nmLogradouro" class="form-label">Logradouro</label>
+                <input type="text" name="nmLogradouro" th:value="${filial.idEndereco != null ? filial.idEndereco.nmLogradouro : ''}" class="form-control" id="nmLogradouro" maxlength="200" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="nrLogradouro" class="form-label">Número</label>
+                <input type="number" name="nrLogradouro" th:value="${filial.idEndereco != null ? filial.idEndereco.nrLogradouro : ''}" class="form-control" id="nrLogradouro" max="99999" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="idCidade" class="form-label">Cidade</label>
+                <select class="form-select" name="idCidade" id="idCidade" required>
+                    <option th:each="cidade : ${cidades}" th:value="${cidade.idCidade}" th:text="${cidade.nmCidade}" 
+                            th:selected="${filial.idEndereco != null and filial.idEndereco.idCidade != null and filial.idEndereco.idCidade.idCidade == cidade.idCidade}"></option>
+                </select>
+            </div>
+
+            <h4>Contato</h4>
+            <div class="mb-3">
+                <label for="nmDono" class="form-label">Nome do Responsável</label>
+                <input type="text" name="nmDono" th:value="${filial.idContato != null ? filial.idContato.nmDono : ''}" class="form-control" id="nmDono" maxlength="200" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="status" class="form-label">Status do Contato</label>
+                <select class="form-select" name="status" id="status" required>
+                    <option value="0" th:selected="${filial.idContato != null and filial.idContato.status == 0}">Inativo</option>
+                    <option value="1" th:selected="${filial.idContato != null and filial.idContato.status == 1}">Ativo</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="ddd" class="form-label">DDD</label>
+                <input type="text" name="ddd" th:value="${filial.idContato != null and filial.idContato.idTelefone != null ? filial.idContato.idTelefone.ddd : ''}" class="form-control" id="ddd" maxlength="2" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="numero" class="form-label">Telefone</label>
+                <input type="text" name="numero" th:value="${filial.idContato != null and filial.idContato.idTelefone != null ? filial.idContato.idTelefone.numero : ''}" class="form-control" id="numero" maxlength="15" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Atualizar Filial</button>
+            <a th:href="@{/view/filial/{id}(id=${filial.idFilial})}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
