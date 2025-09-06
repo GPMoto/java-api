@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
+      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/FilialControllerView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/AutenticacaoControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/AutenticacaoControllerView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/MotoControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/MotoControllerView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/UwbRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/UwbRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragmentos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragmentos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +101,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\challenge-segundo-semestre\teste2\java-api\src\main\resources\template" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="gp.moto.challenge_api.controllerView" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="ChallengeApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -148,6 +155,8 @@
       <workItem from="1756859119649" duration="4846000" />
       <workItem from="1756934936404" duration="1048000" />
       <workItem from="1756948177971" duration="2607000" />
+      <workItem from="1757029991597" duration="4105000" />
+      <workItem from="1757179742080" duration="2416000" />
     </task>
     <task id="LOCAL-00001" summary="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
       <option name="closed" value="true" />

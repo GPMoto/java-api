@@ -5,8 +5,9 @@
 
   <body>
     <div class="container">
-        <div class="row">
+        <div class="row justify-between">
             <h1>Lista de motos</h1>
+            <a th:href="@{/view/filial/{idFilial}(idFilial = ${idFilial})}">Filial</a>
         </div>
         <div class="row">
             <div class="col-12">
@@ -19,7 +20,6 @@
                             <th scope="col">Condições de Manutenção</th>
                             <th scope="col">Tipo Moto</th>
                             <th scope="col">Seção/Filial</th>
-                            <th scope="col">Detalhes</th>
                             <th scope="col">Editar</th>
                             <th scope="col">Remover</th>
                         </tr>
@@ -32,9 +32,8 @@
                             <td class="col-2" th:text="${moto.condicoesManutencao}">D</td>
                             <td class="col-2" th:text="${moto.idTipoMoto != null ? moto.idTipoMoto.nmTipo : 'N/A'}">E</td>
                             <td class="col-2" th:text="${moto.idSecaoFilial != null ? moto.idSecaoFilial.idTipoSecao.nmSecao : 'N/A'}">F</td>
-                            <td class="col-2"><a th:href="@{/moto/detalhes/{idMoto}(idMoto = ${moto.idMoto})}">Detalhes</a></td>
-                            <td class="col-2"><a th:href="@{/moto/editar/{idMoto}(idMoto = ${moto.idMoto})}">Editar</a></td>
-                            <td class="col-2"><a th:href="@{/moto/remover/{idMoto}(idMoto = ${moto.idMoto})}">Remover</a></td>
+                            <td class="col-2"><a th:href="@{/view/moto/editar/{idMoto}(idMoto = ${moto.idMoto})}">Editar</a></td>
+                            <td class="col-2"><a th:href="@{/view/moto/remover/{idMoto}(idMoto = ${moto.idMoto})}">Remover</a></td>
                         </tr>
                     </tbody>
                 </table>

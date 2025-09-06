@@ -2,27 +2,25 @@ package gp.moto.challenge_api.controllerView;
 
 
 import gp.moto.challenge_api.dto.moto.MotoDTO;
-import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.repository.MotoRepository;
 import gp.moto.challenge_api.service.MotoCachingService;
 import gp.moto.challenge_api.service.SecaoFilialService;
 import gp.moto.challenge_api.service.TipoMotoService;
-
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/view/moto")
-public class MotoControllerView {
+@RequestMapping("/view/filial")
+public class FilialControllerView {
 
     @Autowired
     private MotoCachingService motoService;
@@ -33,14 +31,11 @@ public class MotoControllerView {
     @Autowired
     private SecaoFilialService secaoFilialService;
 
-    @Autowired
-    private MotoRepository motoRep;
 
+    @GetMapping("/{id}")
+    public ModelAndView viewMoto(@PathVariable("id") Long id){
 
-    @GetMapping("/nova")
-    public ModelAndView viewMoto(){
-
-        ModelAndView mv = new ModelAndView("moto/nova");
+        ModelAndView mv = new ModelAndView("filial/ver");
 
         try{
             mv.addObject("moto", new Moto());
@@ -50,7 +45,6 @@ public class MotoControllerView {
 
             return mv;
         }catch(Exception e){
-
 
             return mv;
         }

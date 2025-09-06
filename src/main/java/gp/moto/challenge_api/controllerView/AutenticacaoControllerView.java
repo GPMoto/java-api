@@ -55,7 +55,7 @@ public class AutenticacaoControllerView {
             mv.addObject("token", token);
             Pageable pageable = PageRequest.of(0, 10);
             mv.addObject("motos", motoRep.findAllByFilial(pageable, user.get().getIdFilial().getIdFilial()));
-
+            mv.addObject("idFilial", user.get().getIdFilial().getIdFilial());
 
             return mv;
 

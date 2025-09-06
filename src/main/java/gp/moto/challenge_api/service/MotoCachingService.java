@@ -1,6 +1,7 @@
 package gp.moto.challenge_api.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,13 +17,18 @@ import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.dto.moto.MotoProjection;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Moto;
+import gp.moto.challenge_api.model.Uwb;
 import gp.moto.challenge_api.repository.MotoRepository;
+import gp.moto.challenge_api.repository.UwbRepository;
 
 @Service
 public class MotoCachingService {
 
     @Autowired
     private MotoRepository motoRepository;
+
+    @Autowired
+    private UwbRepository uwbRepository;
 
     @Autowired
     private MotoMapper motoMapper;
@@ -70,6 +76,12 @@ public class MotoCachingService {
     public boolean deletar(Long id) throws ResourceNotFoundException {
         Moto moto = motoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("moto não encontrada"));
+
+        Optional<Uwb> uwb = uwbRepository.findByIdMoto(moto);
+        if (uwb.isPresent()) {
+            uwb.get().setIdMoto(null);
+            uwbRepository.save(uwb.get());
+        }
         motoRepository.delete(moto);
         limparCache();
         return true;
