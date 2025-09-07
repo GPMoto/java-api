@@ -1,0 +1,31 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Atualizar UWB')}" />
+<body>
+    <div class="container mt-5">
+        <h2>Atualizar UWB</h2>
+        <form th:action="@{/view/uwb/editar/{idUwb}(idUwb = ${uwb.idUwb})}" th:object="${uwb}" method="post">
+            <input type="hidden" name="_method" value="put"/>
+            
+            <div class="mb-3">
+                <label for="vlUwb" class="form-label">Valor UWB</label>
+                <input type="text" th:value="${uwb.vlUwb}" class="form-control" id="vlUwb" th:field="*{vlUwb}" maxlength="100" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="idMoto" class="form-label">Moto Associada</label>
+                <select class="form-select" id="idMoto" th:field="*{idMoto}">
+                    <option value="">Nenhuma moto associada</option>
+                    <option th:each="moto : ${motos}" th:value="${moto.idMoto}" th:text="${moto.identificador}" 
+                            th:selected="${uwb.idMoto != null and uwb.idMoto.idMoto == moto.idMoto}"></option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Editar</button>
+            <a th:href="@{/view/uwb/{idFilial}(idFilial = ${idFilial})}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+
+</body>
+</html>
