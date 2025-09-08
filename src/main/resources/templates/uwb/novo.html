@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Cadastrar UWB')}" />
+<body>
+    <div class="container mt-5">
+        <h2>Cadastrar Novo UWB</h2>
+        
+        
+        <form th:action="@{/view/uwb/novo/{idFilial}(idFilial = ${idFilial})}" th:object="${uwb}" method="post">
+            
+            
+            <div class="mb-3">
+                <label for="vlUwb" class="form-label">
+                    Valor UWB <span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control" 
+                       id="vlUwb" th:field="*{vlUwb}" maxlength="200" 
+                       placeholder="Digite o valor do UWB (ex: UWB-MOTO-001)" required>
+                <div class="form-text">Máximo de 200 caracteres</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="idMoto" class="form-label">Moto Associada</label>
+                <select class="form-select" id="idMoto" th:field="*{idMoto}">
+                    <option value="">Nenhuma moto associada</option>
+                    <option th:each="moto : ${motos}" th:value="${moto.idMoto}" 
+                            th:text="${moto.identificador + ' - ' + moto.status}"></option>
+                </select>
+                <div class="form-text">Selecione uma moto ou deixe em branco para associar depois</div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a th:href="@{/view/uwb/{idFilial}(idFilial = ${idFilial})}" class="btn btn-outline-secondary me-md-2">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    Cadastrar UWB
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -33,10 +33,12 @@ public class SegurancaConfig {
             .headers(banco -> banco.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
             .authorizeHttpRequests(request ->
                 request
-                    .requestMatchers(HttpMethod.POST, "/api/usuario", "/api/autenticacao/login", "/login","/view/moto","/view/moto/teste", "/view/moto/**","/view/filial/**","/view/uwb/editar/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/usuario", "/api/autenticacao/login", 
+                    "/login","/view/moto","/view/moto/teste", "/view/moto/**","/view/filial/**","/view/uwb/editar/**",
+                    "/view/uwb/nova/**").permitAll()
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/autenticacao/view", "/view/moto/nova",
                         "/login/index", "/view/moto/editar/**" , "/view/moto/remover/**","/view/filial/**","/view/filial/editar/**"
-                        , "/view/uwb/**").permitAll()
+                        , "/view/uwb/**","/view/uwb/nova/**").permitAll()
                     .requestMatchers("/login", "/logout", "/login/**").permitAll()
                     .anyRequest().authenticated()
             )

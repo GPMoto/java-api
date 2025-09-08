@@ -4,12 +4,15 @@ import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.dto.moto.MotoProjection;
 import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.model.Uwb;
+import gp.moto.challenge_api.repository.MotoRepository;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
 public interface UwbMapper {
+
+    
 
     @Mapping(target = "idUwb", ignore = true)
     Uwb toEntity(UwbDTO dto);

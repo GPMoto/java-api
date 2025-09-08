@@ -3,7 +3,6 @@ package gp.moto.challenge_api.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Data
@@ -16,7 +15,7 @@ public class Uwb {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUwb;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "id_moto")
     private Moto idMoto;
 

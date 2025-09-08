@@ -15,6 +15,7 @@ import gp.moto.challenge_api.dto.uwb.UwbDTO;
 import gp.moto.challenge_api.dto.uwb.UwbMapper;
 import gp.moto.challenge_api.dto.uwb.UwbProjection;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
+import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.model.Uwb;
 import gp.moto.challenge_api.repository.MotoRepository;
 import gp.moto.challenge_api.repository.UwbRepository;
@@ -34,8 +35,9 @@ public class UwbCachingService {
 
     @Transactional
     public Uwb save(UwbDTO dto) {
+        Uwb uwb = uwbRepository.save(uwbMapper.toEntity(dto));
         limparCache();
-        return uwbRepository.save(uwbMapper.toEntity(dto));
+        return uwb;
     }
 
     @Transactional
@@ -95,7 +97,16 @@ public class UwbCachingService {
 
     public Uwb update(Long idUwb, UwbDTO uwbDto) {
         Uwb uwb = findById(idUwb);
-        uwbMapper.updateEntityFromDto(uwbDto, uwb);
+        uwb.setVlUwb(uwbDto.vlUwb());
+        
+        
+        if (uwbDto.idMoto() != null && uwbDto.idMoto() > 0) {
+            Moto moto = motoRepository.findById(uwbDto.idMoto())
+                    .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada com ID: " + uwbDto.idMoto()));
+            uwb.setIdMoto(moto);
+        } else {
+            uwb.setIdMoto(null);
+        }
         limparCache();
         return uwbRepository.save(uwb);
     }

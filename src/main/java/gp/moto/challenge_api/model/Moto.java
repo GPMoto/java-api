@@ -4,6 +4,9 @@ package gp.moto.challenge_api.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 
 @Data
@@ -28,11 +31,13 @@ public class Moto {
     @Column(unique = true)
     private String identificador;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "id_tipo_moto")
     private TipoMoto idTipoMoto;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "id_secao")
     private SecaoFilial idSecaoFilial;
 
