@@ -5,15 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
+      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/QrcodeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/qrcode/QrcodeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/qrcode/QrcodeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/QrcodeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Moto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Moto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/QrcodeControllerView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/qrcode/QrcodeProjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Qrcode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/UwbRepository.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/atualiza.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/uwb/atualiza.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/ver.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/uwb/ver.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/QrcodeCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/atualiza.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/qrcode/atualiza.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/novo.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/qrcode/novo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/ver.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/qrcode/ver.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,8 +88,8 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.ChallengeApiApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "Spring Boot.ChallengeApiApplication.executor": "Debug",
+    "git-widget-placeholder": "qr-code-teste",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/challenge-segundo-semestre/teste2/java-api",
@@ -160,7 +172,9 @@
       <workItem from="1757209796526" duration="5769000" />
       <workItem from="1757290751363" duration="8654000" />
       <workItem from="1757329018561" duration="8109000" />
-      <workItem from="1757341207041" duration="1959000" />
+      <workItem from="1757341207041" duration="2742000" />
+      <workItem from="1757383148046" duration="407000" />
+      <workItem from="1757417334691" duration="7544000" />
     </task>
     <task id="LOCAL-00001" summary="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
       <option name="closed" value="true" />
@@ -208,92 +222,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java</url>
-          <line>110</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java</url>
-          <line>98</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java</url>
-          <line>100</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java</url>
-          <line>99</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java</url>
-          <line>29</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java</url>
-          <line>22</line>
-          <properties class="gp.moto.challenge_api.dto.uwb.UwbMapper" method="updateEntityFromDto">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="((JdkDynamicAopProxy)this.h).cache" custom="org.springframework.aop.framework.JdkDynamicAopProxy,java.lang.reflect.Proxy,gp.moto.challenge_api.service.UwbCachingService" />

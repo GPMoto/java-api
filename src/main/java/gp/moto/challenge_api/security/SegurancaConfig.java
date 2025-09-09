@@ -34,11 +34,11 @@ public class SegurancaConfig {
             .authorizeHttpRequests(request ->
                 request
                     .requestMatchers(HttpMethod.POST, "/api/usuario", "/api/autenticacao/login", 
-                    "/login","/view/moto","/view/moto/teste", "/view/moto/**","/view/filial/**","/view/uwb/editar/**",
-                    "/view/uwb/nova/**").permitAll()
+                    "/login","/view/moto","/view/moto/teste", "/view/moto/**","/view/filial/**","/view/qrcode/editar/**",
+                    "/view/qrcode/nova/**").permitAll()
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/autenticacao/view", "/view/moto/nova",
                         "/login/index", "/view/moto/editar/**" , "/view/moto/remover/**","/view/filial/**","/view/filial/editar/**"
-                        , "/view/uwb/**","/view/uwb/nova/**").permitAll()
+                        , "/view/qrcode/**","/view/qrcode/nova/**").permitAll()
                     .requestMatchers("/login", "/logout", "/login/**").permitAll()
                     .anyRequest().authenticated()
             )
