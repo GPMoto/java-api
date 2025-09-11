@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
-      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/QrcodeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/qrcode/QrcodeDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/qrcode/QrcodeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/QrcodeRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controller/UwbController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UwbControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/QrcodeControllerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/uwb/UwbProjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/qrcode/QrcodeProjection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Uwb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Qrcode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/repository/UwbRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/AutenticacaoControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/AutenticacaoControllerView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Perfil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/model/Perfil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/SegurancaConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/MotoCachingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/UwbCachingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/service/QrcodeCachingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/UsuarioConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/security/UsuarioConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/import.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/import.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/atualiza.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/qrcode/atualiza.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/novo.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/qrcode/novo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/uwb/ver.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/qrcode/ver.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/qrcode/atualiza.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/qrcode/atualiza.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +21,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -88,7 +75,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.ChallengeApiApplication.executor": "Debug",
+    "Spring Boot.ChallengeApiApplication.executor": "Run",
     "git-widget-placeholder": "qr-code-teste",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -174,7 +161,9 @@
       <workItem from="1757329018561" duration="8109000" />
       <workItem from="1757341207041" duration="2742000" />
       <workItem from="1757383148046" duration="407000" />
-      <workItem from="1757417334691" duration="7544000" />
+      <workItem from="1757417334691" duration="8535000" />
+      <workItem from="1757465773956" duration="1183000" />
+      <workItem from="1757552738502" duration="3317000" />
     </task>
     <task id="LOCAL-00001" summary="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
       <option name="closed" value="true" />

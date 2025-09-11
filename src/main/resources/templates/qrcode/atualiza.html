@@ -7,7 +7,7 @@
         <h2>Atualizar Qrcode</h2>
         
         <form th:action="@{/view/qrcode/editar/{idQrcode}(idQrcode = ${qrcode.idQrcode})}" th:object="${qrcode}" method="post">
-            <input type="hidden" th:field="*{filial.idFilial}" th:value="${idFilial}">
+
             
             <div class="mb-3">
                 <label for="vlQrcode" class="form-label">

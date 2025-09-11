@@ -88,6 +88,33 @@ public class AutenticacaoControllerView {
     }
 
 
+    @GetMapping("/acesso_negado")
+    public ModelAndView acessoNegado() {
+        ModelAndView mv = new ModelAndView("error/acesso_negado");
+        
+        // Pegar dados do usuário logado se disponível
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
+                String username = auth.getName();
+                var user = userRep.findByNmUsuario(username);
+                if (user.isPresent()) {
+                    mv.addObject("usuario", user.get());
+                    mv.addObject("idFilial", user.get().getIdFilial().getIdFilial());
+                }
+            }
+        } catch (Exception e) {
+            return mv;
+        }
+        
+        mv.addObject("titulo", "Acesso Negado");
+        mv.addObject("mensagem", "Você não tem permissão para acessar esta página ou realizar esta operação.");
+        mv.addObject("submensagem", "Entre em contato com o administrador do sistema se acredita que deveria ter acesso.");
+        
+        return mv;
+    }
+
+
     @GetMapping
     public ModelAndView loginView() {
         ModelAndView mv = new ModelAndView("login/index");

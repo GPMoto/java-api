@@ -25,7 +25,7 @@ public class UsuarioConfig {
 
             return User.builder().username(usuario.getNmUsuario())
                     .password(usuario.getSenha())
-                    .roles("USER")
+                    .roles(usuario.getIdPerfil().getNmPerfil().toString())
                     .build();
         };
     }
