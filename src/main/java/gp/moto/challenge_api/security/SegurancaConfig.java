@@ -33,13 +33,23 @@ public class SegurancaConfig {
             .headers(banco -> banco.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
             .authorizeHttpRequests(request ->
                 request
-                    .requestMatchers(HttpMethod.POST, "/api/usuario", "/api/autenticacao/login", 
-                    "/login","/view/moto","/view/moto/teste", "/view/moto/**","/view/filial/**","/view/uwb/editar/**",
-                    "/view/uwb/nova/**").permitAll()
-                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/autenticacao/view", "/view/moto/nova",
-                        "/login/index", "/view/moto/editar/**" , "/view/moto/remover/**","/view/filial/**","/view/filial/editar/**"
-                        , "/view/uwb/**","/view/uwb/nova/**").permitAll()
+
                     .requestMatchers("/login", "/logout", "/login/**").permitAll()
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/autenticacao/login").permitAll()
+                    .requestMatchers("/api/autenticacao/view").permitAll()
+                    
+
+
+                    .requestMatchers("/view/filial/editar/**").hasRole("ADMINISTRADOR")
+                    .requestMatchers("/view/usuario/**").hasRole("ADMINISTRADOR")
+                    .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMINISTRADOR")
+
+
+                    .requestMatchers("/view/**").authenticated()
+                    .requestMatchers("/api/**").authenticated()
+                    
+                    
                     .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -61,7 +71,7 @@ public class SegurancaConfig {
             )
             .exceptionHandling(exception -> 
                 exception.accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.sendRedirect("/acesso_negado");
+                    response.sendRedirect("/login/acesso_negado");
                 })
             );
 

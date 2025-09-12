@@ -1,12 +1,12 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragmentos :: cabecalho('Lista UWBs')}" />
+<head th:replace="~{fragmentos :: cabecalho('Lista Qrcodes')}" />
 
 <body>
     <div class="container">
         <div class="row justify-between">
-            <h1>Lista de UWBs</h1>
+            <h1>Lista de Qrcodes</h1>
             
             <a th:href="@{/view/filial/{idFilial}(idFilial = ${filial.idFilial})}">Filial</a>
             <a th:href="@{/login/index}">Voltar para Motos</a>
@@ -16,8 +16,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">ID UWB</th>
-                            <th scope="col">Valor UWB</th>
+                            <th scope="col">ID Qrcode</th>
+                            <th scope="col">Valor Qrcode</th>
                             <th scope="col">Moto Associada</th>
                             <th scope="col">Identificador da Moto</th>
                             <th scope="col">Status da Moto</th>
@@ -26,21 +26,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="uwb : ${uwbs}">
-                            <th class="col-2" scope="row" th:text="${uwb.idUwb}">A</th>
-                            <td class="col-2" th:text="${uwb.vlUwb}">B</td>
-                            <td class="col-2" th:text="${uwb.moto != null ? uwb.moto.idMoto : 'Sem Moto'}">C</td>
-                            <td class="col-2" th:text="${uwb.moto != null ? uwb.moto.identificador : 'N/A'}">D</td>
-                            <td class="col-2" th:text="${uwb.moto != null ? uwb.moto.status : 'N/A'}">E</td>
-                            <td class="col-2"><a th:href="@{/view/uwb/editar/{idUwb}(idUwb = ${uwb.idUwb})}">Editar</a></td>
-                            <td class="col-2"><a th:href="@{/view/uwb/remover/{idUwb}(idUwb = ${uwb.idUwb})}">Remover</a></td>
+                        <tr th:each="qrcode : ${qrcodes}">
+                            <th class="col-2" scope="row" th:text="${qrcode.idQrcode}">A</th>
+                            <td class="col-2" th:text="${qrcode.vlQrcode}">B</td>
+                            <td class="col-2" th:text="${qrcode.moto != null ? qrcode.moto.idMoto : 'Sem Moto'}">C</td>
+                            <td class="col-2" th:text="${qrcode.moto != null ? qrcode.moto.identificador : 'N/A'}">D</td>
+                            <td class="col-2" th:text="${qrcode.moto != null ? qrcode.moto.status : 'N/A'}">E</td>
+                            <td class="col-2"><a th:href="@{/view/qrcode/editar/{idQrcode}(idQrcode = ${qrcode.idQrcode})}">Editar</a></td>
+                            <td class="col-2"><a th:href="@{/view/qrcode/remover/{idQrcode}(idQrcode = ${qrcode.idQrcode})}">Remover</a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="row">
-            <a th:href="@{/view/uwb/novo/{idFilial}(idFilial = ${filial.idFilial})}">Cadastrar um Novo UWB</a>
+            <a th:href="@{/view/qrcode/novo/{idFilial}(idFilial = ${filial.idFilial})}">Cadastrar um Novo Qrcode</a>
         </div>
     </div>
 

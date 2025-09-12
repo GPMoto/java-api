@@ -1,22 +1,24 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragmentos :: cabecalho('Cadastrar UWB')}" />
+<head th:replace="~{fragmentos :: cabecalho('Cadastrar Qrcode')}" />
 <body>
     <div class="container mt-5">
-        <h2>Cadastrar Novo UWB</h2>
+        <h2>Cadastrar Novo Qrcode</h2>
         
         
-        <form th:action="@{/view/uwb/novo/{idFilial}(idFilial = ${idFilial})}" th:object="${uwb}" method="post">
-            
+        <form th:action="@{/view/qrcode/novo/{idFilial}(idFilial = ${idFilial})}" th:object="${qrcode}" method="post">
+
+            <input type="hidden" th:field="*{filial.idFilial}" th:value="${idFilial}">
+
             
             <div class="mb-3">
-                <label for="vlUwb" class="form-label">
-                    Valor UWB <span class="text-danger">*</span>
+                <label for="vlQrcode" class="form-label">
+                    Valor Qrcode <span class="text-danger">*</span>
                 </label>
                 <input type="text" class="form-control" 
-                       id="vlUwb" th:field="*{vlUwb}" maxlength="200" 
-                       placeholder="Digite o valor do UWB (ex: UWB-MOTO-001)" required>
+                       id="vlQrcode" th:field="*{vlQrcode}" maxlength="200"
+                       placeholder="Digite o valor do Qrcode (ex: UWB-MOTO-001)" required>
                 <div class="form-text">Máximo de 200 caracteres</div>
             </div>
             
@@ -31,11 +33,11 @@
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a th:href="@{/view/uwb/{idFilial}(idFilial = ${idFilial})}" class="btn btn-outline-secondary me-md-2">
+                <a th:href="@{/view/qrcode/{idFilial}(idFilial = ${idFilial})}" class="btn btn-outline-secondary me-md-2">
                     Cancelar
                 </a>
                 <button type="submit" class="btn btn-primary">
-                    Cadastrar UWB
+                    Cadastrar Qrcode
                 </button>
             </div>
         </form>

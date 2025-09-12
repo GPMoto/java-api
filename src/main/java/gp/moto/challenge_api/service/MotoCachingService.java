@@ -3,6 +3,7 @@ package gp.moto.challenge_api.service;
 import java.util.List;
 import java.util.Optional;
 
+import gp.moto.challenge_api.model.Qrcode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,9 +18,8 @@ import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.dto.moto.MotoProjection;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Moto;
-import gp.moto.challenge_api.model.Uwb;
 import gp.moto.challenge_api.repository.MotoRepository;
-import gp.moto.challenge_api.repository.UwbRepository;
+import gp.moto.challenge_api.repository.QrcodeRepository;
 
 @Service
 public class MotoCachingService {
@@ -28,7 +28,7 @@ public class MotoCachingService {
     private MotoRepository motoRepository;
 
     @Autowired
-    private UwbRepository uwbRepository;
+    private QrcodeRepository qrcodeRepository;
 
     @Autowired
     private MotoMapper motoMapper;
@@ -77,10 +77,10 @@ public class MotoCachingService {
         Moto moto = motoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("moto não encontrada"));
 
-        Optional<Uwb> uwb = uwbRepository.findByIdMoto(moto);
+        Optional<Qrcode> uwb = qrcodeRepository.findByIdMoto(moto);
         if (uwb.isPresent()) {
             uwb.get().setIdMoto(null);
-            uwbRepository.save(uwb.get());
+            qrcodeRepository.save(uwb.get());
         }
         motoRepository.delete(moto);
         limparCache();
