@@ -40,11 +40,12 @@ public class SegurancaConfig {
                     .requestMatchers("/api/autenticacao/view").permitAll()
                     
 
+
                     .requestMatchers("/view/filial/editar/**").hasRole("ADMINISTRADOR")
                     .requestMatchers("/view/usuario/**").hasRole("ADMINISTRADOR")
                     .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMINISTRADOR")
-                    
-                    
+
+
                     .requestMatchers("/view/**").authenticated()
                     .requestMatchers("/api/**").authenticated()
                     

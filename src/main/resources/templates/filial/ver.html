@@ -55,6 +55,38 @@
                 <a th:href="@{/view/filial/editar/{id}(id=${filial.idFilial})}" class="btn btn-primary">Atualizar Filial</a>
             </div>
         </div>
+
+        <div class="container mt-5">
+        <h2>Usuários da Filial</h2>
+        <div class="mb-3">
+            <a th:href="@{/view/usuario/novo/{idFilial}(idFilial=${filial.idFilial})}" class="btn btn-primary">
+                Criar Novo Usuário
+            </a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Perfil</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.idUsuario}">1</td>
+                    <td th:text="${usuario.nmUsuario}">Nome</td>
+                    <td th:text="${usuario.nmEmail}">email@email.com</td>
+                    <td th:text="${usuario.idPerfil.nmPerfil}">Perfil</td>
+                    <td>
+                        <a th:href="@{/view/usuario/editar/{id}(id=${usuario.idUsuario})}" class="btn btn-primary btn-sm">Editar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
         
     </div>
 

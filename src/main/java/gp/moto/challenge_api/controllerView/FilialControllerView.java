@@ -11,12 +11,7 @@ import gp.moto.challenge_api.model.Contato;
 import gp.moto.challenge_api.model.Endereco;
 import gp.moto.challenge_api.model.Filial;
 import gp.moto.challenge_api.model.Telefone;
-import gp.moto.challenge_api.service.CidadeService;
-import gp.moto.challenge_api.service.ContatoCachingService;
-import gp.moto.challenge_api.service.EnderecoService;
-import gp.moto.challenge_api.service.FilialCachingService;
-import gp.moto.challenge_api.service.MotoCachingService;
-import gp.moto.challenge_api.service.TelefoneCachingService;
+import gp.moto.challenge_api.service.*;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +41,9 @@ public class FilialControllerView {
     @Autowired
     private TelefoneCachingService telefoneService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
 
 
     @GetMapping("/{id}")
@@ -55,6 +53,7 @@ public class FilialControllerView {
 
         try{
             mv.addObject("filial", filialService.buscarPorId(id));
+            mv.addObject("usuarios", usuarioService.findAllByFilial(id));
             return mv;
         }catch(Exception e){
 
