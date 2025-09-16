@@ -4,71 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V3__filiais_tabela.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V4__tabelas_moto.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V5__alter_tables.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V6__inserts_tabela.sql" afterDir="false" />
+    <list default="true" id="2237c4ef-264b-4946-9ac8-e52ba6f7d2ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/usuario/UsuarioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/usuario/UsuarioMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/filial/ver.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/filial/ver.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragmentos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragmentos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Enum" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;feliperibeiroa&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "feliperibeiroa"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/GPMoto/java-api&quot;,
-    &quot;accountId&quot;: &quot;e7ceffe7-4168-44e5-beed-56c269bde50e&quot;
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/GPMoto/java-api",
+    "accountId": "e7ceffe7-4168-44e5-beed-56c269bde50e"
   }
-}</component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
-}</component>
-  <component name="ProjectId" id="2x4MdLWvcGn8FuAyMgF2EN8ViTg" />
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="32l37GHsSb7noqK0RjFQq5wucn6" />
   <component name="ProjectViewState">
     <option name="flattenModules" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.ChallengeApiApplication.executor": "Run",
-    "Maven.java-api [deploy].executor": "Run",
-    "Maven.java-api [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -76,46 +48,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ChallengeApiApplication.executor": "Run",
-    "git-widget-placeholder": "qr-code-teste",
-    "ignore.virus.scanning.warn.message": "true",
+    "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/challenge-segundo-semestre/teste2/java-api",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "h2"
-    ]
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\challenge-segundo-semestre\teste2\java-api\src\main\resources\template" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="gp.moto.challenge_api.controllerView" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="ChallengeApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="corretto-21" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="java-api" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="gp.moto.challenge_api.ChallengeApiApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -124,99 +66,18 @@
       </set>
     </attachedChunks>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="StructureViewState">
-    <option name="selectedTab" value="Logical" />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="63ae5241-92bb-4be4-82e1-02f1942b1ab7" name="Changes" comment="" />
-      <created>1747192978931</created>
+      <changelist id="2237c4ef-264b-4946-9ac8-e52ba6f7d2ef" name="Changes" comment="" />
+      <created>1757981169614</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1747192978931</updated>
-      <workItem from="1747192980085" duration="182000" />
-      <workItem from="1747432187973" duration="333000" />
-      <workItem from="1747436006542" duration="1091000" />
-      <workItem from="1747443824969" duration="5197000" />
-      <workItem from="1747612187641" duration="3395000" />
-      <workItem from="1747699538212" duration="5126000" />
-      <workItem from="1747737622826" duration="15126000" />
-      <workItem from="1747772508417" duration="168000" />
-      <workItem from="1756164360758" duration="2208000" />
-      <workItem from="1756166603819" duration="5906000" />
-      <workItem from="1756172844951" duration="2096000" />
-      <workItem from="1756210577166" duration="4570000" />
-      <workItem from="1756334133471" duration="4533000" />
-      <workItem from="1756769687906" duration="4296000" />
-      <workItem from="1756780182717" duration="6569000" />
-      <workItem from="1756813765133" duration="9504000" />
-      <workItem from="1756859119649" duration="4846000" />
-      <workItem from="1756934936404" duration="1048000" />
-      <workItem from="1756948177971" duration="2607000" />
-      <workItem from="1757029991597" duration="4105000" />
-      <workItem from="1757179742080" duration="8425000" />
-      <workItem from="1757209796526" duration="5769000" />
-      <workItem from="1757290751363" duration="8654000" />
-      <workItem from="1757329018561" duration="8109000" />
-      <workItem from="1757341207041" duration="2742000" />
-      <workItem from="1757383148046" duration="407000" />
-      <workItem from="1757417334691" duration="8535000" />
-      <workItem from="1757465773956" duration="1183000" />
-      <workItem from="1757552738502" duration="3651000" />
-      <workItem from="1757630258147" duration="7808000" />
-      <workItem from="1757977496449" duration="2130000" />
+      <updated>1757981169614</updated>
+      <workItem from="1757981176256" duration="343000" />
     </task>
-    <task id="LOCAL-00001" summary="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
-      <option name="closed" value="true" />
-      <created>1756214536903</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1756214536903</updated>
-    </task>
-    <task id="LOCAL-00002" summary="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
-      <option name="closed" value="true" />
-      <created>1756214607096</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1756214607096</updated>
-    </task>
-    <task id="LOCAL-00003" summary="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário">
-      <option name="closed" value="true" />
-      <created>1756214638263</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1756214638263</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: adicionada autenticacao jwt no projeto baseada no nome e senha do usuário" />
-  </component>
-  <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="SpringBootApplicationConfigurationType">
-        <watch expression="((JdkDynamicAopProxy)this.h).cache" custom="org.springframework.aop.framework.JdkDynamicAopProxy,java.lang.reflect.Proxy,gp.moto.challenge_api.service.UwbCachingService" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

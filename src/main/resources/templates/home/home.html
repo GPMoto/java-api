@@ -9,6 +9,7 @@
             <h1>Lista de motos</h1>
             <a th:href="@{/view/filial/{idFilial}(idFilial = ${idFilial})}">Filial</a>
             <a th:href="@{/view/qrcode/{idFilial}(idFilial = ${idFilial})}">Identificadores</a>
+            <form th:replace="~{fragmentos :: form-logout}" />
         </div>
         <div class="row">
             <div class="col-12">
