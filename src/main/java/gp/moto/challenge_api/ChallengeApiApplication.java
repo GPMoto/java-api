@@ -10,4 +10,5 @@ public class ChallengeApiApplication {
 		SpringApplication.run(ChallengeApiApplication.class, args);
 	}
 
+
 }

@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="2237c4ef-264b-4946-9ac8-e52ba6f7d2ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/usuario/UsuarioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/usuario/UsuarioMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/filial/ver.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/filial/ver.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragmentos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragmentos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/ChallengeApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/ChallengeApiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UsuarioControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UsuarioControllerView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/usuario/atualiza.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/usuario/atualiza.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/usuario/novo.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/usuario/novo.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,21 +19,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "feliperibeiroa"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;feliperibeiroa&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/GPMoto/java-api",
-    "accountId": "e7ceffe7-4168-44e5-beed-56c269bde50e"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/GPMoto/java-api&quot;,
+    &quot;accountId&quot;: &quot;e7ceffe7-4168-44e5-beed-56c269bde50e&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="32l37GHsSb7noqK0RjFQq5wucn6" />
   <component name="ProjectViewState">
     <option name="flattenModules" value="true" />
@@ -41,6 +41,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ChallengeApiApplication.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -49,7 +50,9 @@
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ChallengeApiApplication.executor": "Run",
     "git-widget-placeholder": "develop",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/labsfiap/java-api",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,14 +61,6 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
-        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-IU-252.23892.409" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2237c4ef-264b-4946-9ac8-e52ba6f7d2ef" name="Changes" comment="" />
