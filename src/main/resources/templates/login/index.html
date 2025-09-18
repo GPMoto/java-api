@@ -7,6 +7,35 @@
 <body>
     <div class="container mt-5">
         <h2>Login</h2>
+
+        <div th:if="${param.falha != null and param.falha[0] == 'true'}" class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>Falha no login!</strong> Usuário ou senha incorretos.
+        </div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <div th:if="${errors != null and !errors.empty}" class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-circle"></i>
+            <strong>Erros de validação:</strong>
+            <ul class="mb-0 mt-2">
+                <li th:each="error : ${errors}" th:text="${error.defaultMessage}"></li>
+            </ul>
+        </div>
+
+        <div th:if="${param.logout}" class="alert alert-success" role="alert">
+            <i class="bi bi-check-circle"></i>
+            Logout realizado com sucesso!
+        </div>
+
+        <div th:if="${param.erro == 'nao_autenticado'}" class="alert alert-info" role="alert">
+            <i class="bi bi-info-circle"></i>
+            É necessário fazer login para acessar esta página.
+        </div>
+
         <form th:action="@{/login}" method="post" id="loginForm">
             <div class="mb-3">
                 <label for="username" class="form-label">Usuário</label>

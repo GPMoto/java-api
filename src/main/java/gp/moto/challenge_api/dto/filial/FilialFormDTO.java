@@ -14,14 +14,13 @@ public record FilialFormDTO(
     @NotEmpty(message = "Senha é obrigatória")
     @Length(max = 200, message = "Senha deve ter no máximo 200 caracteres")
     String senhaFilial,
-    
-    // IDs para manter referência com as entidades
+
     Long idEndereco,
     Long idContato,
     
-    // Campos do endereço (expandidos)
+
     @NotEmpty(message = "CEP é obrigatório")
-    @Length(max = 8, message = "CEP deve ter no máximo 8 caracteres")
+    @Length(min=8, max = 8, message = "CEP deve ter no máximo 8 caracteres")
     String cep,
     
     @NotEmpty(message = "Logradouro é obrigatório")
@@ -34,7 +33,7 @@ public record FilialFormDTO(
     @NotNull(message = "Cidade é obrigatória")
     Long idCidade,
     
-    // Campos do contato (expandidos)
+
     @NotEmpty(message = "Nome do responsável é obrigatório")
     @Length(max = 200, message = "Nome deve ter no máximo 200 caracteres")
     String nmDono,
@@ -43,7 +42,7 @@ public record FilialFormDTO(
     Integer status,
     
     @NotEmpty(message = "DDD é obrigatório")
-    @Length(max = 2, message = "DDD deve ter no máximo 2 caracteres")
+    @Length(min=2, max = 2, message = "DDD deve ter no máximo 2 caracteres")
     String ddd,
     
     @NotEmpty(message = "Número do telefone é obrigatório")

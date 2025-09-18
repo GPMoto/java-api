@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +40,16 @@ public class AutenticacaoControllerView {
     private UsuarioRepository userRep;
 
     @PostMapping
-    public ModelAndView gerarTokenValidoView(@Valid LoginDTO loginDTO) {
-        System.out.println("Tentativa de login para usuário: " + loginDTO.getUsername());
+    public ModelAndView gerarTokenValidoView(@Valid LoginDTO loginDTO, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView mv = new ModelAndView("login/index");
+            mv.addObject("loginDTO", loginDTO);
+            mv.addObject("errors", bindingResult.getAllErrors());
+            return mv;
+        }
+
+        
         ModelAndView mv = new ModelAndView("/home/home");
         try {
 
@@ -92,7 +101,7 @@ public class AutenticacaoControllerView {
     public ModelAndView acessoNegado() {
         ModelAndView mv = new ModelAndView("error/acesso_negado");
         
-        // Pegar dados do usuário logado se disponível
+
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {

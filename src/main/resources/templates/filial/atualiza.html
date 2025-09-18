@@ -5,6 +5,32 @@
 <body>
     <div class="container mt-5">
         <h2>Atualizar Filial</h2>
+
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <div th:if="${param.erro != null and param.erro[0] == 'true'}" class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>Erro!</strong> Ocorreu um problema ao atualizar a filial. Tente novamente.
+        </div>
+        
+
+        <div th:if="${errors != null and !errors.empty}" class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-circle"></i>
+            <strong>Erros de validação:</strong>
+            <ul class="mb-0 mt-2">
+                <li th:each="error : ${errors}" th:text="${error.defaultMessage}"></li>
+            </ul>
+        </div>
+
+        <div th:if="${param.sucesso}" class="alert alert-success" role="alert">
+            <i class="bi bi-check-circle"></i>
+            Filial atualizada com sucesso!
+        </div>
+
+
         <form th:action="@{/view/filial/editar/{idFilial}(idFilial = ${filial.idFilial})}" method="post">
 
             <input type="hidden" name="idFilial" th:value="${filial.idFilial}">

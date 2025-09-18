@@ -5,6 +5,20 @@
 <body>
     <div class="container mt-5">
         <h2>Cadastrar Nova Moto</h2>
+
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <div th:if="${errors != null and !errors.empty}" class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-circle"></i>
+            <strong>Erros de validação:</strong>
+            <ul class="mb-0 mt-2">
+                <li th:each="error : ${errors}" th:text="${error.defaultMessage}"></li>
+            </ul>
+        </div>
+
         <form th:action="@{/view/moto}" th:object="${moto}" method="post">
             <div class="mb-3">
                 <label for="identificador" class="form-label">Identificador</label>

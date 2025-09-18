@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -79,14 +80,28 @@ public class MotoControllerView {
 
 
     @PostMapping
-    public ModelAndView salvarMoto(@Valid MotoDTO motoDTO) {
-        ModelAndView mv = new ModelAndView("redirect:/login/index");
+    public ModelAndView salvarMoto(@Valid MotoDTO motoDTO, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView mv = new ModelAndView("moto/nova");
+            mv.addObject("moto", motoDTO);
+            mv.addObject("tiposMoto", tipoMotoService.findAll());
+            mv.addObject("secoesFilial", secaoFilialService.findAll());
+            mv.addObject("errors", bindingResult.getAllErrors());
+            return mv;
+        }
+
         try{
-            
+            ModelAndView mv = new ModelAndView("redirect:/login/index");
             motoService.criar(motoDTO);
             return mv;
         }catch(Exception e){
-            return mv;
+            ModelAndView mvMoto = new ModelAndView("moto/nova?erro=true");
+            mvMoto.addObject("moto", motoDTO);
+            mvMoto.addObject("tiposMoto", tipoMotoService.findAll()); 
+            mvMoto.addObject("secoesFilial", secaoFilialService.findAll()); 
+            mvMoto.addObject("errorMessage", "Erro ao salvar moto: " + e.getMessage()); 
+            return mvMoto;
         }
     }
 

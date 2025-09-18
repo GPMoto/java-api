@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,8 +81,18 @@ public class FilialControllerView {
     }
 
 
-    @PostMapping("{id}")
-    public ModelAndView editarFilial(@Valid FilialFormDTO filialFormDTO, @PathVariable("id") Long id) {
+    @PostMapping("/editar/{id}")
+    public ModelAndView editarFilial(@Valid FilialFormDTO filialFormDTO, BindingResult bindingResult, @PathVariable("id") Long id) {
+
+        if (bindingResult.hasErrors()) {
+        ModelAndView mv = new ModelAndView("filial/atualiza");
+        mv.addObject("filial", filialService.buscarPorId(id));
+        mv.addObject("cidades", cidadeService.findAll());
+        mv.addObject("errors", bindingResult.getAllErrors());
+        return mv;
+    }
+
+
         try {
 
             Filial filialAtual = filialService.buscarPorId(id);
