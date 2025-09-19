@@ -39,6 +39,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resposta);
     }
 
+
+
 //    @ExceptionHandler(DataIntegrityViolationException.class)
 //    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException e){
 

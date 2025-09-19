@@ -1,6 +1,7 @@
 package gp.moto.challenge_api.controller;
 
 
+import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.security.JWTUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class AutenticacaoController {
 
             return jwtUtil.construirToken(username);
         } catch (Exception e) {
-            return "Usuário ou senha inválidos";
+            throw new ResourceNotFoundException("Usuário ou senha inválidos");
         }
     }
 
