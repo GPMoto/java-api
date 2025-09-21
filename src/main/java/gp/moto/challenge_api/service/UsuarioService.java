@@ -1,5 +1,6 @@
 package gp.moto.challenge_api.service;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +19,11 @@ import gp.moto.challenge_api.dto.usuario.UsuarioMapper;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.repository.UsuarioRepository;
+import gp.moto.challenge_api.security.JWTUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service
 public class UsuarioService {
 
@@ -34,9 +41,17 @@ public class UsuarioService {
 
     @Transactional(readOnly = true)
     @Cacheable(value = "findAllPageUsuario", key = "#page + '-' + #size")
-    public Page<Usuario> findAllPage(Integer page, Integer size){
+    public Page<Usuario> findAllPage(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return usuarioRepository.findAll(pageable);
+    }
+
+    public Usuario findByToken(HttpServletRequest request) {
+        // Pega o usuário autenticado do contexto de segurança
+        String requestUser = JWTUtil.getNameFromRequest(request);
+        log.debug("Nome do usuario da request: ", requestUser);
+        return usuarioRepository.findByNmUsuario(requestUser)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
     @Transactional
@@ -56,7 +71,8 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     @Cacheable(value = "findByIdUsuario", key = "#id")
     public Usuario findById(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     }
 
     @Transactional(readOnly = true)
@@ -75,9 +91,9 @@ public class UsuarioService {
 
     @Transactional
     @CacheEvict(value = {
-        "findAllUsuario", "findAllPageUsuario", "findByIdUsuario", "findAllByFilialUsuario"
+            "findAllUsuario", "findAllPageUsuario", "findByIdUsuario", "findAllByFilialUsuario"
     }, allEntries = true)
-    public void limparCache(){
+    public void limparCache() {
         System.out.println("Limpando cache...");
     }
 }
