@@ -6,16 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="2237c4ef-264b-4946-9ac8-e52ba6f7d2ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/AutenticacaoControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/AutenticacaoControllerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/FilialControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/FilialControllerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/MotoControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/MotoControllerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UsuarioControllerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/controllerView/UsuarioControllerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/filial/FilialFormDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/filial/FilialFormDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/login/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/login/LoginDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/moto/MotoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gp/moto/challenge_api/dto/moto/MotoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/filial/atualiza.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/filial/atualiza.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/moto/nova.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/moto/nova.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__removendo_tabelas.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__removendo_tabelas.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__adicionando_tabelas_cidade.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V2__adicionando_tabelas_cidade.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V3__filiais_tabela.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V3__filiais_tabela.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V4__tabelas_moto.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V4__tabelas_moto.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V5__alter_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V5__alter_tables.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +20,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -45,28 +47,44 @@
     <option name="flattenModules" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ChallengeApiApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ChallengeApiApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/labsfiap/java-api&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ChallengeApiApplication.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ChallengeApiApplication.executor": "Run",
+    "git-widget-placeholder": "flyway-sqlserver",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/challenge-segundo-semestre/teste2/java-api/src/main/resources/db/migration",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\challenge-segundo-semestre\teste2\java-api\src\main\resources\db\migration" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ChallengeApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="java-api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="gp.moto.challenge_api.ChallengeApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -83,7 +101,11 @@
       <option name="presentableId" value="Default" />
       <updated>1757981169614</updated>
       <workItem from="1757981176256" duration="343000" />
-      <workItem from="1758150949744" duration="3198000" />
+      <workItem from="1758150949744" duration="3515000" />
+      <workItem from="1758461154974" duration="1331000" />
+      <workItem from="1758464698554" duration="2999000" />
+      <workItem from="1758482111195" duration="1534000" />
+      <workItem from="1758483691834" duration="969000" />
     </task>
     <servers />
   </component>
