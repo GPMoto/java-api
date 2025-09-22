@@ -46,9 +46,10 @@ public class SegurancaConfig {
                         .requestMatchers("/view/filial/editar/**").hasRole("ADMINISTRADOR")
                         .requestMatchers("/view/usuario/**").hasRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMINISTRADOR")
-
-                        .requestMatchers("/view/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/perfil").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/filial").permitAll()
                         .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/view/**").authenticated()
 
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

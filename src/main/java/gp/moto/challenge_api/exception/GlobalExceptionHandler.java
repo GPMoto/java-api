@@ -21,8 +21,10 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(ResourceNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<Map<String, String>> handleNotFound(ResourceNotFoundException e) {
+        Map<String, String> message = new HashMap<>();
+        message.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
