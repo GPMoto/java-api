@@ -9,17 +9,21 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gp.moto.challenge_api.dto.usuario.UsuarioDto;
 import gp.moto.challenge_api.dto.usuario.UsuarioMapper;
+import gp.moto.challenge_api.exception.InvalidTokenException;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.repository.UsuarioRepository;
 import gp.moto.challenge_api.security.JWTUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 
@@ -29,6 +33,7 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
 
     @Autowired
     private UsuarioMapper usuarioMapper;
@@ -46,12 +51,17 @@ public class UsuarioService {
         return usuarioRepository.findAll(pageable);
     }
 
-    public Usuario findByToken(HttpServletRequest request) {
-        // Pega o usuário autenticado do contexto de segurança
-        String requestUser = JWTUtil.getNameFromRequest(request);
-        log.debug("Nome do usuario da request: ", requestUser);
-        return usuarioRepository.findByNmUsuario(requestUser)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public Usuario findByToken() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new InvalidTokenException("Não autenticado");
+        };
+
+        String username = auth.getName();
+
+        return usuarioRepository.findByNmUsuario(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     }
 
     @Transactional

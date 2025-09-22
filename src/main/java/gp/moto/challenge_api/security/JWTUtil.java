@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import gp.moto.challenge_api.exception.InvalidTokenException;
+
 import javax.crypto.SecretKey;
 
 import java.util.Base64;
@@ -40,11 +42,13 @@ public class JWTUtil {
         return builder.compact();
     }
 
-    public String extrairUsername(String token){
-
-        JwtParser parser = Jwts.parser().verifyWith(getSigningKey()).build();
-
-        return parser.parseSignedClaims(token).getPayload().getSubject();
+    public String extrairUsername(String token) throws InvalidTokenException{
+        try {
+            JwtParser parser = Jwts.parser().verifyWith(getSigningKey()).build();
+            return parser.parseSignedClaims(token).getPayload().getSubject();
+        } catch (Exception e) {
+            throw new InvalidTokenException("Token inválido");
+        }
 
     }
 

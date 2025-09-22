@@ -1,7 +1,9 @@
 package gp.moto.challenge_api.security;
 
-import gp.moto.challenge_api.model.Usuario;
-import gp.moto.challenge_api.repository.UsuarioRepository;
+import gp.moto.challenge_api.exception.InvalidTokenException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import io.swagger.v3.oas.models.OpenAPI;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,7 +22,6 @@ import java.io.IOException;
 
 @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
-
 
     private final OpenAPI configurarSwagger;
 
@@ -41,25 +42,38 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
+            try {
+                String token = header.substring(7);
+                String username = jwtUtil.extrairUsername(token);
 
-            String token = header.substring(7);
-            String username = jwtUtil.extrairUsername(token);
+                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
+                    UserDetails userDetails = usuario.loadUserByUsername(username);
 
-            if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    if (jwtUtil.validarToken(token)) {
 
-                UserDetails userDetails = usuario.loadUserByUsername(username);
+                        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null,
+                                userDetails.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(auth);
 
-                if(jwtUtil.validarToken(token)) {
-
-                    Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null,
-                            userDetails.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
 
                 }
-
+            } catch (ExpiredJwtException | MalformedJwtException | SignatureException | InvalidTokenException e) {
+                if (request.getRequestURI().startsWith("/api")) {
+                    // Check if response is already committed
+                    if (!response.isCommitted()) {
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.setCharacterEncoding("UTF-8");
+                        response.setContentType("application/json");
+                        response.getWriter().write("{\"message\": \"Não autenticado\"}");
+                        response.getWriter().flush();
+                    }
+                    return; // Don't continue with the filter chain
+                } else {
+                    throw e;
+                }
             }
-
         }
 
         filterChain.doFilter(request, response);

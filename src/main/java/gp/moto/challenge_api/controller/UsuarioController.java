@@ -32,8 +32,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<Usuario> findByToken(HttpServletRequest request) {
-        return ResponseEntity.ok(usuarioService.findByToken(request));
+    public ResponseEntity<Usuario> findByToken() {
+        return ResponseEntity.ok(usuarioService.findByToken());
     }
 
     @GetMapping("/page")
