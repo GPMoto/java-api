@@ -36,6 +36,16 @@ public class MotoController {
         return ResponseEntity.ok(motoService.listarTodasPaginadasFilial(idFilial, pagina, quantidade));
     }
 
+    @GetMapping("/filial/{idFilial}/paginados/inteiras")
+    public ResponseEntity<Page<Moto>> getPageMotosFilialFull(@PathVariable Long idFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
+        return ResponseEntity.ok(motoService.listarTodasPaginadasFilialFull(idFilial, pagina, quantidade));
+    }
+
+    @GetMapping("/secao-filial/{idSecaoFilial}")
+    public ResponseEntity<Page<Moto>> getPageMotoBySecaoFilial(@PathVariable Long idSecaoFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade, @RequestParam(required = false) String search) {
+        return ResponseEntity.ok(motoService.listarTodasPaginadasSecaoFilial(idSecaoFilial, search, pagina, quantidade));
+    }
+
     @GetMapping("/page")
     public ResponseEntity<Page<Moto>> getPageMotos(@RequestParam(value = "pagina", defaultValue = "0") Integer page, @RequestParam(value = "quantidade", defaultValue = "10") Integer size){
         return ResponseEntity.ok(motoService.paginarMoto(page, size));

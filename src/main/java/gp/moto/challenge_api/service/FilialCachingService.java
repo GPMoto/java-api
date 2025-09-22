@@ -15,7 +15,9 @@ import gp.moto.challenge_api.dto.filial.FilialDTO;
 import gp.moto.challenge_api.dto.filial.FilialMapper;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
 import gp.moto.challenge_api.model.Filial;
+import gp.moto.challenge_api.model.SecaoFilial;
 import gp.moto.challenge_api.repository.FilialRepository;
+import gp.moto.challenge_api.repository.SecaoFilialRepository;
 
 @Service
 public class FilialCachingService {
@@ -24,17 +26,20 @@ public class FilialCachingService {
     private FilialRepository filialRepository;
 
     @Autowired
+    private SecaoFilialRepository secaoFilialRepository;
+
+    @Autowired
     private FilialMapper filialMapper;
 
     @Transactional
-    public Filial criar(FilialDTO filialDTO){
+    public Filial criar(FilialDTO filialDTO) {
         limparCache();
         return filialRepository.save(filialMapper.toFilial(filialDTO));
     }
 
     @Transactional(readOnly = true)
     @Cacheable(value = "listarTodosFilial")
-    public List<Filial> listarTodos(){
+    public List<Filial> listarTodos() {
         return filialRepository.findAll();
     }
 
@@ -46,8 +51,14 @@ public class FilialCachingService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "secoes-filial", key = "#id")
+    public List<SecaoFilial> buscarSecaoFilialPorId(Long id) {
+        return secaoFilialRepository.findAllByFilial(id);
+    }
+
+    @Transactional(readOnly = true)
     @Cacheable(value = "paginarFilial", key = "#page + '-' + #size")
-    public Page<Filial> paginarFilial(Integer page, Integer size){
+    public Page<Filial> paginarFilial(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return filialRepository.findAll(pageable);
     }
@@ -70,7 +81,7 @@ public class FilialCachingService {
     }
 
     @CacheEvict(value = {
-        "listarTodosFilial", "buscarPorIdFilial", "paginarFilial"
+            "listarTodosFilial", "buscarPorIdFilial", "paginarFilial"
     }, allEntries = true)
     public void limparCache() {
         System.out.println("Limpando cache...");

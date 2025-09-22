@@ -6,5 +6,5 @@ public enum PerfilEnum {
     OPERADOR,MOTOBOY,
     GERENTE,RH,
     TI,FINANCEIRO,COMERCIAL,
-    AUDITOR
+    AUDITOR, CONVIDADO
 }

@@ -33,7 +33,6 @@ public class MotoCachingService {
     @Autowired
     private MotoMapper motoMapper;
 
-
     @Transactional
     public Moto criar(MotoDTO motoDTO) {
         limparCache();
@@ -62,7 +61,6 @@ public class MotoCachingService {
         return motoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada"));
     }
-
 
     @Transactional
     public Moto alterar(Long id, MotoDTO motoDTO) throws ResourceNotFoundException {
@@ -102,10 +100,30 @@ public class MotoCachingService {
         return motoMapper.toProjection(motos);
     }
 
+    @Transactional(readOnly = true)
+    @Cacheable(value = "listarTodosPaginadasMotoFull", key = "#idFilial + '-' + #page + '-' + #size")
+    public Page<Moto> listarTodasPaginadasFilialFull(Long idFilial, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return motoRepository.findAllByFilial(pageable, idFilial);
+    }
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = "listarTodasPaginadasMotoSecaoFilial", key = "#idFilial + '-' + #page + '-' + #size")
+    public Page<Moto> listarTodasPaginadasSecaoFilial(Long idSecaoFilial, String search, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        if (search != null && !search.trim().isEmpty()) {
+            return motoRepository.findByIdSecaoFilialWithSearch(pageable, idSecaoFilial, search.trim());
+        }
+
+        return motoRepository.findByIdSecaoFilial(pageable, idSecaoFilial);
+    }
+
     @CacheEvict(value = {
-            "listarTodosMotos",  "buscarPorIdProjectionMoto", "buscarPorIdMoto", "paginarMoto", "listarTodosPaginadasMoto"
+            "listarTodosMotos", "buscarPorIdProjectionMoto", "buscarPorIdMoto", "paginarMoto",
+            "listarTodosPaginadasMoto"
     }, allEntries = true)
-    public void limparCache(){
+    public void limparCache() {
         System.out.println("Limpando cache...");
     }
 
