@@ -13,6 +13,7 @@ import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioMapper usuarioMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     @Cacheable(value = "findAllUsuario")
@@ -66,8 +70,11 @@ public class UsuarioService {
 
     @Transactional
     public Usuario save(UsuarioDto dto) {
+        String senhaDto = dto.senha();
+        Usuario usuario = usuarioMapper.toEntity(dto);
+        usuario.setSenha(passwordEncoder.encode(senhaDto));
         limparCache();
-        return usuarioRepository.save(usuarioMapper.toEntity(dto));
+        return usuarioRepository.save(usuario);
     }
 
     @Transactional

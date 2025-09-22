@@ -40,12 +40,14 @@ public class SegurancaConfig {
 
                         .requestMatchers("/login", "/logout", "/login/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/autenticacao/login").permitAll()
                         .requestMatchers("/api/autenticacao/view").permitAll()
 
                         .requestMatchers("/view/filial/editar/**").hasRole("ADMINISTRADOR")
                         .requestMatchers("/view/usuario/**").hasRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.POST, "/api/usuario").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/perfil").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/filial").permitAll()
                         .requestMatchers("/api/**").authenticated()

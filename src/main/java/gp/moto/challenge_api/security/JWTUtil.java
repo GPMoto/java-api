@@ -3,10 +3,8 @@ package gp.moto.challenge_api.security;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,12 +20,11 @@ import java.util.Date;
 @Component
 public class JWTUtil {
 
-    @Value("${jwt.secret}")
-    private String secretKey;
+    // Use uma chave estática gerada automaticamente com algoritmo seguro
+    private static final SecretKey SIGNING_KEY = Jwts.SIG.HS256.key().build();
 
     private SecretKey getSigningKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return SIGNING_KEY;
     }
 
     public String construirToken(String username){
