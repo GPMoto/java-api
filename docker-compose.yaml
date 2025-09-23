@@ -1,0 +1,21 @@
+services:
+  sqlserver:
+    image: 'mcr.microsoft.com/mssql/server:latest'
+    environment:
+      - 'ACCEPT_EULA=yes'
+      - 'MSSQL_PID=express'
+      - 'MSSQL_SA_PASSWORD=verYs3cret'
+    restart: unless-stopped
+    ports:
+      - '1433:1433'
+  java-api-app:
+    build: .
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://sqlserver:1433;databaseName=meu_banco;encrypt=true;trustServerCertificate=true
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=verYs3cret
+    depends_on:
+      - sqlserver
+    ports:
+      - '8080:8080'
+    
