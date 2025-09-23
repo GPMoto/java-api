@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "api/moto")
@@ -44,11 +42,13 @@ public class MotoController {
         return ResponseEntity.ok(motoService.listarTodasPaginadasFilial(idFilial, pagina, quantidade));
     }
 
-    @GetMapping("/filial/{idFilial}/paginados/inteiras")
-    public ResponseEntity<Page<Moto>> getPageMotosFilialFull(@PathVariable Long idFilial,
-            @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
-        return ResponseEntity.ok(motoService.listarTodasPaginadasFilialFull(idFilial, pagina, quantidade));
+    @GetMapping("/filial/{idFilial}/paginados/full")
+    public ResponseEntity<Page<Moto>> getPageMotosFilialInteiras(@PathVariable Long idFilial,
+            @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade,
+            @RequestParam(required = false) String search) {
+        return ResponseEntity.ok(motoService.listarTodasPaginadasFilialFull(idFilial, search, pagina, quantidade));
     }
+
 
     @GetMapping("/secao-filial/{idSecaoFilial}")
     public ResponseEntity<Page<Moto>> getPageMotoBySecaoFilial(@PathVariable Long idSecaoFilial,

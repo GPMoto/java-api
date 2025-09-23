@@ -57,7 +57,7 @@ public class MotoCachingService {
 
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "buscarPodIdMoto", key = "#id")
+    @Cacheable(value = "buscarPorIdMoto", key = "#id")
     public Moto buscarPorId(Long id) throws ResourceNotFoundException {
         return motoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada"));
@@ -102,9 +102,14 @@ public class MotoCachingService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "listarTodosPaginadasMotoFull", key = "#idFilial + '-' + #page + '-' + #size")
-    public Page<Moto> listarTodasPaginadasFilialFull(Long idFilial, Integer page, Integer size) {
+    @Cacheable(value = "listarTodosPaginadasMotoFull", key = "#idFilial + '-' + #search + '-' + #page + '-' + #size")
+    public Page<Moto> listarTodasPaginadasFilialFull(Long idFilial, String search, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
+        
+        if (search != null && !search.trim().isEmpty()) {
+            return motoRepository.findAllByFilialWithSearch(pageable, idFilial, search.trim());
+        }
+        
         return motoRepository.findAllByFilial(pageable, idFilial);
     }
 
@@ -121,8 +126,13 @@ public class MotoCachingService {
     }
 
     @CacheEvict(value = {
-            "listarTodosMotos", "buscarPorIdProjectionMoto", "buscarPorIdMoto", "paginarMoto",
-            "listarTodosPaginadasMoto"
+        "listarTodosMotos",
+        "buscarPorIdProjectionMoto",
+        "buscarPorIdMoto",
+        "paginarMoto",
+        "listarTodosPaginadasMoto",
+        "listarTodosPaginadasMotoFull",
+        "listarTodasPaginadasMotoSecaoFilial"
     }, allEntries = true)
     public void limparCache() {
         System.out.println("Limpando cache...");
