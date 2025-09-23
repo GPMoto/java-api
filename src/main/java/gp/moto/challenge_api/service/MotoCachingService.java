@@ -55,6 +55,7 @@ public class MotoCachingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada")));
     }
 
+
     @Transactional(readOnly = true)
     @Cacheable(value = "buscarPodIdMoto", key = "#id")
     public Moto buscarPorId(Long id) throws ResourceNotFoundException {
