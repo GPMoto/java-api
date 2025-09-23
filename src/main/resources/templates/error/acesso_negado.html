@@ -1,0 +1,76 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Acesso Negado')}" />
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+
+            <div th:if="${usuario != null}" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/login/index}">
+                                <i class="bi bi-house"></i> Início
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/view/qrcode/{idFilial}(idFilial = ${idFilial})}">
+                                <i class="bi bi-qr-code"></i> QR Codes
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <main th:class="${usuario != null} ? 'col-md-9 ms-sm-auto col-lg-10 px-md-4' : 'col-12'">
+                <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+                    <div class="text-center">
+                        <div class="error-icon mb-4">
+                            <i class="bi bi-shield-exclamation text-danger" style="font-size: 5rem;"></i>
+                        </div>
+                        
+                        <h1 class="display-4 text-danger mb-3" th:text="${titulo}">Acesso Negado</h1>
+                        
+                        <p class="lead mb-4" th:text="${mensagem}">
+                            Você não tem permissão para acessar esta página ou realizar esta operação.
+                        </p>
+                        
+                        <p class="text-muted mb-4" th:text="${submensagem}">
+                            Entre em contato com o administrador do sistema se acredita que deveria ter acesso.
+                        </p>
+                        
+                        <div class="d-flex justify-content-center gap-3">
+                            <button onclick="history.back()" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Voltar
+                            </button>
+                            
+                            <a th:href="@{/login/index}" class="btn btn-primary">
+                                <i class="bi bi-house"></i> Ir para Início
+                            </a>
+                            
+                            <div th:if="${usuario == null}">
+                                <a th:href="@{/login}" class="btn btn-success">
+                                    <i class="bi bi-box-arrow-in-right"></i> Fazer Login
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Info do usuário se logado -->
+                        <div th:if="${usuario != null}" class="mt-4 p-3 bg-light rounded">
+                            <small class="text-muted">
+                                <strong>Usuário logado:</strong> <span th:text="${usuario.nmUsuario}"></span><br>
+                                <strong>Perfil:</strong> <span th:text="${usuario.idPerfil?.nmPerfil}"></span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

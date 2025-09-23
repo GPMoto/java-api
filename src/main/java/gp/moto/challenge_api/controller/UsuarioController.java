@@ -2,7 +2,10 @@ package gp.moto.challenge_api.controller;
 
 import gp.moto.challenge_api.dto.usuario.UsuarioDto;
 import gp.moto.challenge_api.model.Usuario;
+import gp.moto.challenge_api.security.JWTUtil;
 import gp.moto.challenge_api.service.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -12,39 +15,46 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("api/usuario")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping()
-    public ResponseEntity<List<Usuario>> findAll(){
+    public ResponseEntity<List<Usuario>> findAll() {
         return ResponseEntity.ok(usuarioService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> findById(@PathVariable Long id){
+    public ResponseEntity<Usuario> findById(@PathVariable Long id) {
         return ResponseEntity.ok(usuarioService.findById(id));
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<Usuario> findByToken() {
+        return ResponseEntity.ok(usuarioService.findByToken());
+    }
+
     @GetMapping("/page")
-    public ResponseEntity<Page<Usuario>> findAllPage(@RequestParam(value = "quantidade", defaultValue = "10") Integer size, @RequestParam(value = "pagina", defaultValue = "0") Integer page){
+    public ResponseEntity<Page<Usuario>> findAllPage(
+            @RequestParam(value = "quantidade", defaultValue = "10") Integer size,
+            @RequestParam(value = "pagina", defaultValue = "0") Integer page) {
         return ResponseEntity.ok(usuarioService.findAllPage(page, size));
     }
 
     @GetMapping("/filial/{idFilial}")
-    public ResponseEntity<List<Usuario>> findAllByFilial(@PathVariable Long idFilial){
+    public ResponseEntity<List<Usuario>> findAllByFilial(@PathVariable Long idFilial) {
         return ResponseEntity.ok(usuarioService.findAllByFilial(idFilial));
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@RequestBody UsuarioDto dto){
+    public ResponseEntity<Usuario> save(@RequestBody UsuarioDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody UsuarioDto dto){
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody UsuarioDto dto) {
         return ResponseEntity.ok(usuarioService.update(id, dto));
     }
 
@@ -53,6 +63,5 @@ public class UsuarioController {
         usuarioService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 
 }

@@ -2,6 +2,7 @@ package gp.moto.challenge_api.controller;
 
 import gp.moto.challenge_api.dto.filial.FilialDTO;
 import gp.moto.challenge_api.model.Filial;
+import gp.moto.challenge_api.model.SecaoFilial;
 import gp.moto.challenge_api.service.FilialCachingService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/filial")
+@RequestMapping(value = "api/filial")
 public class FilialController {
 
     @Autowired
@@ -29,8 +30,13 @@ public class FilialController {
         return ResponseEntity.ok(filialService.buscarPorId(id));
     }
 
+    @GetMapping("/{id}/secao")
+    public ResponseEntity<List<SecaoFilial>> findAllSecaoById(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.ok(filialService.buscarSecaoFilialPorId(id));
+    }
+
     @GetMapping("/page")
-    public ResponseEntity<Page<Filial>> findAllPage(@RequestParam Integer page, @RequestParam Integer size){
+    public ResponseEntity<Page<Filial>> findAllPage(@RequestParam Integer page, @RequestParam Integer size) {
         return ResponseEntity.ok(filialService.paginarFilial(page, size));
     }
 
@@ -49,6 +55,5 @@ public class FilialController {
         filialService.deletar(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 
 }

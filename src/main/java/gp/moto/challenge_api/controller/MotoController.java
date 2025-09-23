@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/moto")
+@RequestMapping(value = "api/moto")
 public class MotoController {
 
     @Autowired
@@ -32,6 +34,16 @@ public class MotoController {
     @GetMapping("/filial/{idFilial}/paginados/")
     public ResponseEntity<Page<MotoProjection>> getPageMotosFilial(@PathVariable Long idFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
         return ResponseEntity.ok(motoService.listarTodasPaginadasFilial(idFilial, pagina, quantidade));
+    }
+
+    @GetMapping("/filial/{idFilial}/paginados/inteiras")
+    public ResponseEntity<Page<Moto>> getPageMotosFilialFull(@PathVariable Long idFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
+        return ResponseEntity.ok(motoService.listarTodasPaginadasFilialFull(idFilial, pagina, quantidade));
+    }
+
+    @GetMapping("/secao-filial/{idSecaoFilial}")
+    public ResponseEntity<Page<Moto>> getPageMotoBySecaoFilial(@PathVariable Long idSecaoFilial, @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade, @RequestParam(required = false) String search) {
+        return ResponseEntity.ok(motoService.listarTodasPaginadasSecaoFilial(idSecaoFilial, search, pagina, quantidade));
     }
 
     @GetMapping("/page")

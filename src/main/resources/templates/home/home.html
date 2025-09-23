@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Lista motos')}" />
+
+  <body>
+    <div class="container">
+        <div class="row justify-between">
+            <h1>Lista de motos</h1>
+            <a th:href="@{/view/filial/{idFilial}(idFilial = ${idFilial})}">Filial</a>
+            <a th:href="@{/view/qrcode/{idFilial}(idFilial = ${idFilial})}">Identificadores</a>
+            <form th:replace="~{fragmentos :: form-logout}" />
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Identificador</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Condições de Manutenção</th>
+                            <th scope="col">Tipo Moto</th>
+                            <th scope="col">Seção/Filial</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="moto : ${motos}">
+                            <th class="col-2" scope="row" th:text="${moto.idMoto}">A</th>
+                            <td class="col-2" th:text="${moto.identificador}">B</td>
+                            <td class="col-2" th:text="${moto.status}">C</td>
+                            <td class="col-2" th:text="${moto.condicoesManutencao}">D</td>
+                            <td class="col-2" th:text="${moto.idTipoMoto != null ? moto.idTipoMoto.nmTipo : 'N/A'}">E</td>
+                            <td class="col-2" th:text="${moto.idSecaoFilial != null ? moto.idSecaoFilial.idTipoSecao.nmSecao : 'N/A'}">F</td>
+                            <td class="col-2"><a th:href="@{/view/moto/editar/{idMoto}(idMoto = ${moto.idMoto})}">Editar</a></td>
+                            <td class="col-2"><a th:href="@{/view/moto/remover/{idMoto}(idMoto = ${moto.idMoto})}">Remover</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <a href="/view/moto/nova">Cadastrar uma Nova moto</a>
+        </div>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+  </body>
+</html>

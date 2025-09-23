@@ -5,8 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "select user from Usuario user where user.idFilial.idFilial = :idFilial")
     List<Usuario> findAllByFilial(Long idFilial);
+
+
+    Optional<Usuario> findByNmUsuario(String nmUsuario);
 }

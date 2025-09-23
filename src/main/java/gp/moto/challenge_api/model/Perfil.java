@@ -17,7 +17,8 @@ public class Perfil {
 
     @NotEmpty(message = "Valor inválido para tipo de perfil")
     @Length(max = 100, message = "Valor inválido para tipo de perfil. O valor deve ter no máximo 100 caracteres")
-    private String nmPerfil;
+    @Enumerated(EnumType.STRING)
+    private PerfilEnum nmPerfil;
 
 
 }

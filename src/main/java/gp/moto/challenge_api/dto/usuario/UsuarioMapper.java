@@ -11,15 +11,21 @@ public interface UsuarioMapper {
     @Mapping(target = "idUsuario", ignore = true)
     @Mapping(target = "nmUsuario", source = "nome")
     @Mapping(target = "nmEmail", source = "email")
+    @Mapping(target = "idFilial", source = "idFilial")
+    @Mapping(target = "idPerfil", source = "idPerfil")
     Usuario toEntity(UsuarioDto dto);
 
     @Mapping(target = "nome", source = "nmUsuario")
     @Mapping(target = "email", source = "nmEmail")
+    @Mapping(target = "idFilial", source = "idFilial")
+    @Mapping(target = "idPerfil", source = "idPerfil")
     UsuarioDto toDto(Usuario entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "nmUsuario", source = "nome")
     @Mapping(target = "nmEmail", source = "email")
+    @Mapping(target = "idFilial", source = "idFilial")
+    @Mapping(target = "idPerfil", source = "idPerfil")
     void updateEntityFromDto(UsuarioDto dto, @MappingTarget Usuario usuario);
 
 
@@ -44,6 +50,4 @@ public interface UsuarioMapper {
     default Long mapFilialToId(Filial filial){
         return filial != null ? filial.getIdFilial() : null;
     }
-
-
 }

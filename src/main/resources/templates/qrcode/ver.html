@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Lista Qrcodes')}" />
+
+<body>
+    <div class="container">
+        <div class="row justify-between">
+            <h1>Lista de Qrcodes</h1>
+            
+            <a th:href="@{/view/filial/{idFilial}(idFilial = ${filial.idFilial})}">Filial</a>
+            <a th:href="@{/login/index}">Voltar para Motos</a>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID Qrcode</th>
+                            <th scope="col">Valor Qrcode</th>
+                            <th scope="col">Moto Associada</th>
+                            <th scope="col">Identificador da Moto</th>
+                            <th scope="col">Status da Moto</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="qrcode : ${qrcodes}">
+                            <th class="col-2" scope="row" th:text="${qrcode.idQrcode}">A</th>
+                            <td class="col-2" th:text="${qrcode.vlQrcode}">B</td>
+                            <td class="col-2" th:text="${qrcode.moto != null ? qrcode.moto.idMoto : 'Sem Moto'}">C</td>
+                            <td class="col-2" th:text="${qrcode.moto != null ? qrcode.moto.identificador : 'N/A'}">D</td>
+                            <td class="col-2" th:text="${qrcode.moto != null ? qrcode.moto.status : 'N/A'}">E</td>
+                            <td class="col-2"><a th:href="@{/view/qrcode/editar/{idQrcode}(idQrcode = ${qrcode.idQrcode})}">Editar</a></td>
+                            <td class="col-2"><a th:href="@{/view/qrcode/remover/{idQrcode}(idQrcode = ${qrcode.idQrcode})}">Remover</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <a th:href="@{/view/qrcode/novo/{idFilial}(idFilial = ${filial.idFilial})}">Cadastrar um Novo Qrcode</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</body>
+</html>

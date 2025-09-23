@@ -1,0 +1,29 @@
+# Arquivos e pastas que não precisam ir para o Docker
+target/
+.git/
+.gitignore
+README.md
+.env
+.idea/
+*.iml
+*.log
+
+# Arquivos de configuração local
+.vscode/
+.settings/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*~
+
+# Cache do Maven local
+.m2/
+
+# Arquivos do Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Assets não necessários para build
+assets/

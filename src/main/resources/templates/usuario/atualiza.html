@@ -1,0 +1,49 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragmentos :: cabecalho('Atualizar Usuário')}" />
+<body>
+    <div class="container mt-5">
+        <h2>Atualizar Usuário</h2>
+
+        <!-- Bloco para exibir todos os erros -->
+        <div th:if="${errors}" class="alert alert-danger">
+            <ul>
+                <li th:each="err : ${errors}" th:text="${err.defaultMessage}"></li>
+            </ul>
+        </div>
+
+        <form th:action="@{/view/usuario/editar/{id}(id=${idUsuario})}" id="form" th:object="${usuario}" method="post">
+
+            <div class="mb-3">
+                <label for="nmUsuario" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nmUsuario" th:field="*{nome}" maxlength="200" required>
+                <div class="text-danger" th:errors="*{nome}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="nmEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="nmEmail" th:field="*{email}" maxlength="200" required>
+                <div class="text-danger" th:errors="*{email}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="senha" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="senha" th:field="*{senha}" maxlength="200">
+                <small class="form-text text-muted">Preencha apenas se deseja alterar a senha.</small>
+                <div class="text-danger" th:errors="*{senha}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="idPerfil" class="form-label">Perfil</label>
+                <select class="form-select" id="idPerfil" th:field="*{idPerfil}" required>
+                    <option th:each="perfil : ${perfis}" th:value="${perfil.idPerfil}" th:text="${perfil.nmPerfil}" th:selected="${perfil.idPerfil == usuario.idPerfil}"></option>                
+                </select>
+                <div class="text-danger" th:errors="*{idPerfil}"></div>
+            </div>
+            <input type="hidden" th:field="*{idFilial}" th:value="${idFilial}" />
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a th:href="@{/usuario/lista/{idFilial}(idFilial=${idFilial})}" class="btn btn-outline-secondary me-md-2">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
