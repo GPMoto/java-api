@@ -3,6 +3,7 @@
 Este é um projeto de API em desenvolvimento com **Java** utilizando o framework **Spring Boot**. 
 A aplicação é um sistema geral de análise de motos, incluindo rastreamento, associação entre dispositivos qrcode e relatórios.
 
+<img width="929" height="1309" alt="image" src="https://github.com/user-attachments/assets/f8f3572d-fdc5-492c-9b54-a42dbbf1d74d" />
 
 
 [Challenge Api - Vìdeo demonstrativo](https://www.youtube.com/watch?v=INf0R-hfaD0)
@@ -24,11 +25,6 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 - **SQL SERVER** 
 - **Spring Data JPA**
 - **Spring Cache**
-## Challenge API - GpsMottu
-
-Projeto backend em **Java 21 / Spring Boot** usado no Challenge GPMoto (API de gestão/análise de motos, qrcode, relatórios e autenticação).
-
-![](assets/gps-mottu-diagramaV2.drawio.png)
 
 Este README descreve passo-a-passo como executar o projeto localmente, utilizando Docker/docker-compose, criar a imagem Docker e também informações sobre o script de deploy para Azure.  
 Vou destacar variáveis editáveis importantes (por exemplo: "nomegrupo") encontradas em `deploy.example.sh` e outras configurações.
