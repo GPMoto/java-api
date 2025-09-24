@@ -3,7 +3,7 @@
 Este é um projeto de API em desenvolvimento com **Java** utilizando o framework **Spring Boot**. 
 A aplicação é um sistema geral de análise de motos, incluindo rastreamento, associação entre dispositivos qrcode e relatórios.
 
-![alt text](<assets/gps-mottu-diagramaV2.drawio.png>)
+
 
 [Challenge Api - Vìdeo demonstrativo](https://www.youtube.com/watch?v=INf0R-hfaD0)
 
@@ -21,7 +21,7 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 - **Java 21**
 - **Spring Boot**
 - **Maven**
-- **H2 Database** (banco de dados em memória)
+- **SQL SERVER** 
 - **Spring Data JPA**
 - **Spring Cache**
 ## Challenge API - GpsMottu
