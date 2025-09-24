@@ -154,9 +154,9 @@ Como o script cria recursos e configura o deploy via GitHub Actions, revise as v
 
 ## Endpoints úteis
 
-- API root: http://localhost:8080/
+- Aplicação Thymeleaf: http://localhost:8080/
+- API Root: http://localhost:8080/
 - Swagger (OpenAPI): http://localhost:8080/swagger-ui.html
-- H2 Console (se ativo): http://localhost:8080/h2-console
 
 Observação: dependendo da configuração de `application.properties` e das variáveis de ambiente, o H2 pode não ser usado em execução real com SQL Server.
 
