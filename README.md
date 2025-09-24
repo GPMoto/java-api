@@ -24,158 +24,153 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 - **H2 Database** (banco de dados em memória)
 - **Spring Data JPA**
 - **Spring Cache**
-- **OpenAPI/Swagger** (documentação da API)
-- **Mapstruct**
+## Challenge API - GpsMottu
 
-## Configuração do Ambiente
+Projeto backend em **Java 21 / Spring Boot** usado no Challenge GPMoto (API de gestão/análise de motos, qrcode, relatórios e autenticação).
 
----
+![](assets/gps-mottu-diagramaV2.drawio.png)
 
-## 1. Criando a VM na Azure
+Este README descreve passo-a-passo como executar o projeto localmente, utilizando Docker/docker-compose, criar a imagem Docker e também informações sobre o script de deploy para Azure.  
+Vou destacar variáveis editáveis importantes (por exemplo: "nomegrupo") encontradas em `deploy.example.sh` e outras configurações.
 
-Você pode executar com
+## Sumário
 
-```bash
+- Requisitos
+- Executar localmente (com SQL Server em Docker)
+- Build e execução com JAR
+- Build e execução com Docker
+- Executando via docker-compose (SQL Server)
+- Deploy Azure (script `deploy.example.sh`) — onde alterar `nomegrupo`
+- Endpoints úteis
 
-chmod +x ./create-vm-azure.sh
-./create-vm-azure.sh
+## Requisitos
 
-```
+- Java 21 (recomendado) — o projeto é compilado com Java 21
+- Maven (ou use o wrapper `./mvnw` incluído)
+- Docker (opcional, para rodar SQL Server e/ou a imagem da API)
+- docker-compose (opcional)
 
-Ou execute os comandos abaixo: 
+## Variáveis de ambiente importantes
 
-```bash
-# Crie o grupo de recursos
-az group create --location brazilsouth --resource-group rg-gpsmottu
+O arquivo `src/main/resources/application.properties` usa variáveis de ambiente para a conexão ao banco:
 
-# Crie a VM Ubuntu 22.04
-az vm create \
-  --resource-group rg-gpsmottu \
-  --name vm-ubuntu \
-  --image Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest \
-  --size Standard_B2s \
-  --vnet-name nnet-linux \
-  --nsg nsgsr-linux \
-  --public-ip-address pip-ubuntu \
-  --authentication-type password \
-  --admin-username admlnx \
-  --admin-password Gps@mottu329
+- SPRING_DATASOURCE_URL - JDBC URL (ex.: jdbc:sqlserver://localhost:1433;database=nome-db)
+- SPRING_DATASOURCE_USERNAME - usuário do banco
+- SPRING_DATASOURCE_PASSWORD - senha do banco
 
-# Libere a porta 8080 para acesso externo
-az network nsg rule create \
-  --resource-group rg-gpsmottu \
-  --nsg-name nsgsr-linux \
-  --name port_8080 \
-  --protocol tcp \
-  --priority 1100 \
-  --destination-port-range 8080
-```
+Sem essas variáveis, a aplicação tentará usar Flyway (configurado) e pode falhar na inicialização se não houver um datasource válido.
 
----
+## Executar localmente (com SQL Server via Docker)
 
-## 2. Conectando via SSH
-
-Pegue o IP público da VM no portal Azure ou com:
+1) Inicie o banco SQL Server usando o `docker-compose.yaml` já presente no repositório:
 
 ```bash
-az vm show -d -g rg-gpsmottu -n vm-ubuntu --query publicIps -o tsv
+# inicia apenas o serviço de banco (mcr.microsoft.com/mssql/server:latest)
+docker compose up -d sqlserver
 ```
 
-Conecte:
+O `docker-compose.yaml` do projeto expõe a porta 1433 e já possui uma senha de exemplo. Para conectar a partir da aplicação, defina as variáveis de ambiente necessárias.
+
+2) Exportar variáveis de ambiente (exemplo):
 
 ```bash
-ssh admlnx@<IP_DA_VM>
+export SPRING_DATASOURCE_URL="jdbc:sqlserver://localhost:1433;database=javaapidb"
+export SPRING_DATASOURCE_USERNAME="sa"
+export SPRING_DATASOURCE_PASSWORD="verYs3cret"
 ```
 
----
-
-## 3. Baixando o Projeto do GitHub
+3) Executar a aplicação com Maven (usar o wrapper `./mvnw`):
 
 ```bash
-git clone https://github.com/GPMoto/java-api
-cd java-api
+./mvnw spring-boot:run
 ```
 
----
-
-## 4. Configurando Docker na VM
-
-Execute com os seguintes comandos:
+Ou construir o JAR e executar diretamente:
 
 ```bash
-chmod +x ./configure-docker.sh
-./configure-docker.sh
-
+./mvnw -DskipTests package
+java -jar target/java-api-0.0.1-SNAPSHOT.jar
 ```
 
-Ou execute esses comandos:
+Observação: se preferir usar outra base (MySQL, Azure SQL, etc.), ajuste `SPRING_DATASOURCE_URL` e credenciais conforme necessário.
+
+## Build e execução com Docker (imagem da aplicação)
+
+1) Build da imagem (usa `Dockerfile` do projeto):
 
 ```bash
-# Atualize os pacotes
-sudo apt-get update
-
-# Instale dependências e Docker
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-
-# Habilite e inicie o serviço Docker
-sudo systemctl enable docker
-sudo systemctl start docker
-
-# Adicione seu usuário ao grupo docker (relogin necessário)
-sudo usermod -aG docker $USER
-
-#Execute para que já faça os efeitos necessários sem sair do terminal
-newgrp docker
+docker build -t gp-moto/java-api:latest .
 ```
 
-
-
----
-
-## 5. Buildando a Imagem Docker
+2) Executar a imagem e passar as variáveis de ambiente necessárias para a conexão com o banco:
 
 ```bash
-docker build -t api-gpsmottu .
+docker run --rm -d -p 8080:8080 \
+  -e SPRING_DATASOURCE_URL="jdbc:sqlserver://host.docker.internal:1433;database=javaapidb" \
+  -e SPRING_DATASOURCE_USERNAME=sa \
+  -e SPRING_DATASOURCE_PASSWORD=verYs3cret \
+  --name api-java gp-moto/java-api:latest
 ```
 
----
+Nota: em Linux, `host.docker.internal` pode não resolver; use a rede adequada do Docker ou conecte o container da API à rede do container do SQL Server.
 
-## 6. Executando a API em Container
+## Executar com docker-compose (API + SQL Server) — exemplo manual
+
+O repositório contém apenas um `docker-compose.yaml` com o serviço `sqlserver`. Para orquestrar API + banco, você pode criar um `docker-compose.override.yml` simples ou rodar o SQL Server com o `docker-compose.yaml` e depois executar a imagem da API ligada à mesma rede.
+
+Exemplo rápido (iniciar SQL Server e, em seguida, executar o JAR localmente):
 
 ```bash
-docker container run --rm -d -p 8080:8080 --name api-java api-gpsmottu
+docker compose up -d sqlserver
+./mvnw -DskipTests package
+SPRING_DATASOURCE_URL="jdbc:sqlserver://localhost:1433;database=javaapidb" \
+SPRING_DATASOURCE_USERNAME=sa \
+SPRING_DATASOURCE_PASSWORD=verYs3cret \
+java -jar target/java-api-0.0.1-SNAPSHOT.jar
 ```
 
-Acesse a API em:  
-http://<IP_DA_VM>:8080
+## Deploy no Azure — o que editar (variável "nomegrupo")
 
-Acesse o console H2 em:  
-http://<IP_DA_VM>:8080/h2-console
+O script `deploy.example.sh` contém várias variáveis no topo que **devem ser ajustadas** antes do uso. O projeto usa o placeholder "nomegrupo" em várias variáveis; troque por um identificador do seu time/projeto.
 
----
-
-## 7. Documentação da API
-
-Acesse:  
-http://<IP_DA_VM>:8080/swagger-ui.html
-
-
-### Informações adicionais
-
-*Ps: Caso queira deletar tudo, execute o seguinte comando na vm:
+Principais variáveis em `deploy.example.sh` (exemplo):
 
 ```bash
-az group delete --name rg-gpsmottu --yes --no-wait
+RESOURCE_GROUP_NAME="rg-nomegrupo"        # RG para a aplicação web
+WEBAPP_NAME="nomegrupo-api"               # nome do WebApp (aplicação)
+APP_SERVICE_PLAN="nomegrupo-service-plan" # plano de App Service
+RG_DB_NAME="rg-sql-nomegrupo"            # RG do SQL
+DB_USERNAME="nomegrupo-user"              # usuário SQL admin (você pode alterar)
+DB_NAME="nomegrupo-db"                    # nome do banco
+SERVER_NAME="sql-server-nomegrupo-eastus2"# nome do servidor SQL
+APP_INSIGHTS_NAME="ai-nomegrupo-adicional"# Application Insights
 ```
 
+Destaque: a string `nomegrupo` é apenas um exemplo e **deve ser trocada** por um identificador apropriado (por exemplo: `rg-acme`, `acme-api`, etc.). Além disso, ajuste `GITHUB_REPO_NAME` e `BRANCH` para seu repositório/branch reais.
 
+O script também configura as Application Settings do Azure WebApp com as variáveis:
+
+- SPRING_DATASOURCE_URL
+- SPRING_DATASOURCE_USERNAME
+- SPRING_DATASOURCE_PASSWORD
+
+Como o script cria recursos e configura o deploy via GitHub Actions, revise as variáveis e segredos antes de executar em uma conta/assinatura real.
+
+## Endpoints úteis
+
+- API root: http://localhost:8080/
+- Swagger (OpenAPI): http://localhost:8080/swagger-ui.html
+- H2 Console (se ativo): http://localhost:8080/h2-console
+
+Observação: dependendo da configuração de `application.properties` e das variáveis de ambiente, o H2 pode não ser usado em execução real com SQL Server.
+
+## Dicas rápidas e troubleshooting
+
+- Se a aplicação não subir, verifique os logs (maven ou container) para problemas de conexão com o banco e Flyway.
+- Para logs do Docker container:
+
+```bash
+docker logs -f api-java
+```
+
+- Se usar o SQL Server em container, garanta que a senha atenda às políticas do SQL Server (complexidade e comprimento).
