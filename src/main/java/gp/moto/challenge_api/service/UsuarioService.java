@@ -42,6 +42,9 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JWTUtil jwtUtil;
+
     @Transactional(readOnly = true)
     @Cacheable(value = "findAllUsuario")
     public List<Usuario> findAll() {
@@ -55,14 +58,13 @@ public class UsuarioService {
         return usuarioRepository.findAll(pageable);
     }
 
-    public Usuario findByToken() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    @Transactional(readOnly = true)
+    public Usuario findByToken(HttpServletRequest request) {
+        String username = JWTUtil.getNameFromRequest(request);
 
-        if (auth == null || !auth.isAuthenticated()) {
+        if (username == null) {
             throw new InvalidTokenException("Não autenticado");
         };
-
-        String username = auth.getName();
 
         return usuarioRepository.findByNmUsuario(username)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
