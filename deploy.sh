@@ -4,21 +4,21 @@ set -e  # para parar caso dê erro
 # ============================
 # VARIÁVEIS
 # ============================
-RESOURCE_GROUP_NAME="rg-nomegrupo"
-WEBAPP_NAME="nomegrupo-api"
-APP_SERVICE_PLAN="nomegrupo-service-plan"
+RESOURCE_GROUP_NAME="rg-gpsmottu-mvc"
+WEBAPP_NAME="gpsmottu-api"
+APP_SERVICE_PLAN="gpsmottu-mvc"
 LOCATION="brazilsouth"
 RUNTIME="JAVA:21-java21"
 
-RG_DB_NAME="rg-sql-nomegrupo"
-DB_USERNAME="nomegrupo-user"
-DB_NAME="nomegrupo-db"
-DB_PASSWORD="S@nh@Ultr1aS3c$t@!"
-SERVER_NAME="sql-server-nomegrupo-eastus2"
+RG_DB_NAME="rg-sql-gpsmottu"
+DB_USERNAME="gpsmottu-admin"
+DB_NAME="gpsmottu-db"
+DB_PASSWORD="Gps@M0ttu!#"
+SERVER_NAME="sql-server-gpsmottu-eastus2"
 
-GITHUB_REPO_NAME="ORGANIZACAO/PROJETO"
+GITHUB_REPO_NAME="GPMoto/java-api"
 BRANCH="main"
-APP_INSIGHTS_NAME="ai-nomegrupo-adicional"
+APP_INSIGHTS_NAME="ai-gpsmottu-mvc"
 
 # ============================
 # PROVIDERS E EXTENSÕES
