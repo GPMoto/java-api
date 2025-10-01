@@ -3,7 +3,8 @@
 Este é um projeto de API em desenvolvimento com **Java** utilizando o framework **Spring Boot**. 
 A aplicação é um sistema geral de análise de motos, incluindo rastreamento, associação entre dispositivos qrcode e relatórios.
 
-![alt text](<assets/gps-mottu-diagramaV2.drawio.png>)
+<img width="929" height="1309" alt="image" src="https://github.com/user-attachments/assets/f8f3572d-fdc5-492c-9b54-a42dbbf1d74d" />
+
 
 [Challenge Api - Vìdeo demonstrativo](https://www.youtube.com/watch?v=INf0R-hfaD0)
 
@@ -23,13 +24,9 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 - **Maven**
 - **Flyway SQLSERVER**
 - **Thymeleaf**
+- **SQL SERVER** 
 - **Spring Data JPA**
 - **Spring Cache**
-## Challenge API - GpsMottu
-
-Projeto backend em **Java 21 / Spring Boot** usado no Challenge GPMoto (API de gestão/análise de motos, qrcode, relatórios e autenticação).
-
-![](assets/gps-mottu-diagramaV2.drawio.png)
 
 Este README descreve passo-a-passo como executar o projeto localmente, utilizando Docker/docker-compose, criar a imagem Docker e também informações sobre o script de deploy para Azure.  
 
@@ -213,11 +210,6 @@ Teste no banco
 ```sql
 SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
 ```
-
-
-
-
-
 
 
 ## Executar localmente (com SQL Server via Docker)
