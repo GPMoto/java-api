@@ -84,11 +84,10 @@ curl -X GET "http://gpsmottu-api.azurewebsites.net/api/autenticacao/login?userna
 Pegue o token e insira-o nas seguintes requisições.
 
 ```bash
-curl -X POST "http://gpsmottu-api.azurewebsites.net/api/moto/" \
+curl -X POST "http://gpsmottu-api.azurewebsites.net/api/moto" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <TOKEN_AQUI>" \
   -d '{
-    "idMoto": <ID_DA_MOTO>,
     "status": "Disponível",
     "condicoesManutencao": "Saudável",
     "idTipoMoto": 1,
@@ -99,7 +98,7 @@ curl -X POST "http://gpsmottu-api.azurewebsites.net/api/moto/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 Get by id
@@ -112,7 +111,7 @@ curl -X GET "http://gpsmottu-api.azurewebsites.net/api/moto/{ID_DA_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 Update
@@ -133,7 +132,7 @@ curl -X PUT "http://gpsmottu-api.azurewebsites.net/api/moto/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 
@@ -146,7 +145,7 @@ curl -X DELETE "http://gpsmottu-api.azurewebsites.net/api/moto/{ID_DA_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 
@@ -164,7 +163,7 @@ curl -X POST "http://gpsmottu-api.azurewebsites.net/api/pais/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 Get by id
@@ -177,7 +176,7 @@ curl -X GET "http://gpsmottu-api.azurewebsites.net/api/pais/{ID_DA_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 Alterar um país
@@ -196,7 +195,7 @@ curl -X POST "http://gpsmottu-api.azurewebsites.net/api/pais/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 ```bash
@@ -208,7 +207,7 @@ curl -X DELETE "http://gpsmottu-api.azurewebsites.net/api/pais/{ID_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 
