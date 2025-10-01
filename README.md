@@ -10,18 +10,19 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 ### Equipe
 
 
-- Gustavo Dias da Silva Cruz - RM556448
+- Gustavo Dias da Silva Cruz - RM556448 - 2TDSPH
 
-- Júlia Medeiros Angelozi - RM556364
+- Júlia Medeiros Angelozi - RM556364 - 2TDSPH
 
-- Felipe Ribeiro Tardochi da Silva - RM555100
+- Felipe Ribeiro Tardochi da Silva - RM555100 - 2TDSPH
 
 ## Tecnologias Utilizadas
 
 - **Java 21**
 - **Spring Boot**
 - **Maven**
-- **H2 Database** (banco de dados em memória)
+- **Flyway SQLSERVER**
+- **Thymeleaf**
 - **Spring Data JPA**
 - **Spring Cache**
 ## Challenge API - GpsMottu
@@ -31,7 +32,7 @@ Projeto backend em **Java 21 / Spring Boot** usado no Challenge GPMoto (API de g
 ![](assets/gps-mottu-diagramaV2.drawio.png)
 
 Este README descreve passo-a-passo como executar o projeto localmente, utilizando Docker/docker-compose, criar a imagem Docker e também informações sobre o script de deploy para Azure.  
-Vou destacar variáveis editáveis importantes (por exemplo: "nomegrupo") encontradas em `deploy.example.sh` e outras configurações.
+
 
 ## Sumário
 
@@ -40,25 +41,184 @@ Vou destacar variáveis editáveis importantes (por exemplo: "nomegrupo") encont
 - Build e execução com JAR
 - Build e execução com Docker
 - Executando via docker-compose (SQL Server)
-- Deploy Azure (script `deploy.example.sh`) — onde alterar `nomegrupo`
+- Deploy Azure (script `deploy.sh`)
 - Endpoints úteis
 
-## Requisitos
+## DevOps
 
-- Java 21 (recomendado) — o projeto é compilado com Java 21
-- Maven (ou use o wrapper `./mvnw` incluído)
-- Docker (opcional, para rodar SQL Server e/ou a imagem da API)
-- docker-compose (opcional)
+1. Baixe o arquivo deploy.sh
 
-## Variáveis de ambiente importantes
+2. Mande para o CloudShell da Azure
 
-O arquivo `src/main/resources/application.properties` usa variáveis de ambiente para a conexão ao banco:
+3. Execute `chmod +x ./deploy.sh`
 
-- SPRING_DATASOURCE_URL - JDBC URL (ex.: jdbc:sqlserver://localhost:1433;database=nome-db)
-- SPRING_DATASOURCE_USERNAME - usuário do banco
-- SPRING_DATASOURCE_PASSWORD - senha do banco
+4. Execute o script `./deploy.sh`
 
-Sem essas variáveis, a aplicação tentará usar Flyway (configurado) e pode falhar na inicialização se não houver um datasource válido.
+5. Ao aparecer o link da verificação do Github, faça o processo de verificação com código
+
+6. Vá em Settings do projeto > Secrets > Actions e adicione as seguintes credenciais
+
+```bash
+SPRING_DATASOURCE_USERNAME=gpsmottu-admin
+SPRING_DATASOURCE_PASSWORD=Gps@M0ttu!#
+SPRING_DATASOURCE_URL=(capture o valor do azure sql server)
+
+```
+Os valores de username e password estarão no script como `gpsmottu-admin` e `Gps@M0ttu!#`, já a url deve ser captura à partir do banco na azure.
+
+7. Edite o yaml(workflow) gerado pela azure para colocar as seguintes variáveis de ambiente:
+
+```
+env: 
+  SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+  SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+  SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+```
+
+8. Dê commit e push das alterações
+
+9. Ao término das operações acima, deve-se realizar os seguintes testes com CURL ou Swagger (abaixo seguem-se testes com curl).
+
+Autenticação 
+```bash
+curl -X GET "http://gpsmottu-api.azurewebsites.net/api/autenticacao/login?username=Admin%20SP&password=admin123"
+```
+
+Pegue o token e insira-o nas seguintes requisições.
+
+```bash
+curl -X POST "http://gpsmottu-api.azurewebsites.net/api/moto/" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN_AQUI>" \
+  -d '{
+    "idMoto": <ID_DA_MOTO>,
+    "status": "Disponível",
+    "condicoesManutencao": "Saudável",
+    "idTipoMoto": 1,
+    "idSecaoFilial": 1,
+    "identificador": "LADF2345"
+  }'
+```
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+```
+
+Get by id
+
+```bash
+curl -X GET "http://gpsmottu-api.azurewebsites.net/api/moto/{ID_DA_MOTO}" \
+  -H "Authorization: Bearer <TOKEN_AQUI>"
+```
+
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+```
+
+Update
+
+```bash
+curl -X PUT "http://gpsmottu-api.azurewebsites.net/api/moto/" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN_AQUI>" \
+  -d '{
+    "idMoto": <ID_DA_MOTO>,
+    "status": "Manutenção",
+    "condicoesManutencao": "Em manutenção",
+    "idTipoMoto": 1,
+    "idSecaoFilial": 1,
+    "identificador": "LADF2345"
+  }'
+```
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+```
+
+
+Delete
+
+```bash
+curl -X DELETE "http://gpsmottu-api.azurewebsites.net/api/moto/{ID_DA_MOTO}" \
+  -H "Authorization: Bearer <TOKEN_AQUI>"
+```
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+```
+
+
+Adicione um país
+
+```bash
+curl -X POST "http://gpsmottu-api.azurewebsites.net/api/pais/" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN_AQUI>" \
+  -d '{
+    "nmPais": "Austrália"
+  }'
+```
+
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+```
+
+Get by id
+
+```bash
+curl -X GET "http://gpsmottu-api.azurewebsites.net/api/pais/{ID_DA_MOTO}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN_AQUI>" \
+```
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+```
+
+Alterar um país
+
+
+```bash
+curl -X POST "http://gpsmottu-api.azurewebsites.net/api/pais/" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN_AQUI>" \
+  -d '{
+    "idPais": <ID_PAIS>,
+    "nmPais": "Austrália"
+  }'
+```
+
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+```
+
+```bash
+curl -X DELETE "http://gpsmottu-api.azurewebsites.net/api/pais/{ID_MOTO}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <TOKEN_AQUI>" \
+```
+
+Teste no banco
+
+```sql
+SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+```
+
+
+
+
+
+
 
 ## Executar localmente (com SQL Server via Docker)
 
@@ -74,7 +234,7 @@ O `docker-compose.yaml` do projeto expõe a porta 1433 e já possui uma senha de
 2) Exportar variáveis de ambiente (exemplo):
 
 ```bash
-export SPRING_DATASOURCE_URL="jdbc:sqlserver://localhost:1433;database=javaapidb"
+export SPRING_DATASOURCE_URL="jdbc:sqlserver://localhost:1433;database=master"
 export SPRING_DATASOURCE_USERNAME="sa"
 export SPRING_DATASOURCE_PASSWORD="verYs3cret"
 ```
@@ -94,83 +254,3 @@ java -jar target/java-api-0.0.1-SNAPSHOT.jar
 
 Observação: se preferir usar outra base (MySQL, Azure SQL, etc.), ajuste `SPRING_DATASOURCE_URL` e credenciais conforme necessário.
 
-## Build e execução com Docker (imagem da aplicação)
-
-1) Build da imagem (usa `Dockerfile` do projeto):
-
-```bash
-docker build -t gp-moto/java-api:latest .
-```
-
-2) Executar a imagem e passar as variáveis de ambiente necessárias para a conexão com o banco:
-
-```bash
-docker run --rm -d -p 8080:8080 \
-  -e SPRING_DATASOURCE_URL="jdbc:sqlserver://host.docker.internal:1433;database=javaapidb" \
-  -e SPRING_DATASOURCE_USERNAME=sa \
-  -e SPRING_DATASOURCE_PASSWORD=verYs3cret \
-  --name api-java gp-moto/java-api:latest
-```
-
-Nota: em Linux, `host.docker.internal` pode não resolver; use a rede adequada do Docker ou conecte o container da API à rede do container do SQL Server.
-
-## Executar com docker-compose (API + SQL Server) — exemplo manual
-
-O repositório contém apenas um `docker-compose.yaml` com o serviço `sqlserver`. Para orquestrar API + banco, você pode criar um `docker-compose.override.yml` simples ou rodar o SQL Server com o `docker-compose.yaml` e depois executar a imagem da API ligada à mesma rede.
-
-Exemplo rápido (iniciar SQL Server e, em seguida, executar o JAR localmente):
-
-```bash
-docker compose up -d sqlserver
-./mvnw -DskipTests package
-SPRING_DATASOURCE_URL="jdbc:sqlserver://localhost:1433;database=javaapidb" \
-SPRING_DATASOURCE_USERNAME=sa \
-SPRING_DATASOURCE_PASSWORD=verYs3cret \
-java -jar target/java-api-0.0.1-SNAPSHOT.jar
-```
-
-## Deploy no Azure — o que editar (variável "nomegrupo")
-
-O script `deploy.example.sh` contém várias variáveis no topo que **devem ser ajustadas** antes do uso. O projeto usa o placeholder "nomegrupo" em várias variáveis; troque por um identificador do seu time/projeto.
-
-Principais variáveis em `deploy.example.sh` (exemplo):
-
-```bash
-RESOURCE_GROUP_NAME="rg-nomegrupo"        # RG para a aplicação web
-WEBAPP_NAME="nomegrupo-api"               # nome do WebApp (aplicação)
-APP_SERVICE_PLAN="nomegrupo-service-plan" # plano de App Service
-RG_DB_NAME="rg-sql-nomegrupo"            # RG do SQL
-DB_USERNAME="nomegrupo-user"              # usuário SQL admin (você pode alterar)
-DB_NAME="nomegrupo-db"                    # nome do banco
-SERVER_NAME="sql-server-nomegrupo-eastus2"# nome do servidor SQL
-APP_INSIGHTS_NAME="ai-nomegrupo-adicional"# Application Insights
-```
-
-Destaque: a string `nomegrupo` é apenas um exemplo e **deve ser trocada** por um identificador apropriado (por exemplo: `rg-acme`, `acme-api`, etc.). Além disso, ajuste `GITHUB_REPO_NAME` e `BRANCH` para seu repositório/branch reais.
-
-O script também configura as Application Settings do Azure WebApp com as variáveis:
-
-- SPRING_DATASOURCE_URL
-- SPRING_DATASOURCE_USERNAME
-- SPRING_DATASOURCE_PASSWORD
-
-Como o script cria recursos e configura o deploy via GitHub Actions, revise as variáveis e segredos antes de executar em uma conta/assinatura real.
-
-## Endpoints úteis
-
-- API root: http://localhost:8080/
-- Swagger (OpenAPI): http://localhost:8080/swagger-ui.html
-- H2 Console (se ativo): http://localhost:8080/h2-console
-
-Observação: dependendo da configuração de `application.properties` e das variáveis de ambiente, o H2 pode não ser usado em execução real com SQL Server.
-
-## Dicas rápidas e troubleshooting
-
-- Se a aplicação não subir, verifique os logs (maven ou container) para problemas de conexão com o banco e Flyway.
-- Para logs do Docker container:
-
-```bash
-docker logs -f api-java
-```
-
-- Se usar o SQL Server em container, garanta que a senha atenda às políticas do SQL Server (complexidade e comprimento).
