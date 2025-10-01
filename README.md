@@ -6,7 +6,7 @@ A aplicação é um sistema geral de análise de motos, incluindo rastreamento, 
 <img width="929" height="1309" alt="image" src="https://github.com/user-attachments/assets/f8f3572d-fdc5-492c-9b54-a42dbbf1d74d" />
 
 
-[Challenge Api - Vìdeo demonstrativo](https://www.youtube.com/watch?v=INf0R-hfaD0)
+[Challenge Api - Vìdeo demonstrativo na AZURE](https://www.youtube.com/watch?v=iPmjPbi-ZJg)
 
 ### Equipe
 
