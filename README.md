@@ -4,7 +4,9 @@
 <img width="929" height="1309" alt="image" src="https://github.com/user-attachments/assets/f8f3572d-fdc5-492c-9b54-a42dbbf1d74d" />
 
 
-[Challenge Api - Vìdeo demonstrativo na AZURE](https://www.youtube.com/watch?v=iPmjPbi-ZJg)
+[Challenge Api - Vìdeo de deploy na AZURE - DEVOPS](https://www.youtube.com/watch?v=iPmjPbi-ZJg)
+
+[Challenge Api - Vìdeo demonstrativo - JAVA ADVANCED](https://youtu.be/ir8tQdRJ4yk)
 
 ## Descrição da Solução:
 O Java API - Gestão de Motos é uma aplicação desenvolvida em Java com foco em auxiliar operadores e gestores de filiais no controle e monitoramento de motos, funcionários e setores da empresa.
