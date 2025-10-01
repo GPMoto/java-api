@@ -50,7 +50,7 @@ public class FilialControllerView {
     @GetMapping("/{id}")
     public ModelAndView viewFilial(@PathVariable("id") Long id){
 
-        ModelAndView mv = new ModelAndView("/filial/ver");
+        ModelAndView mv = new ModelAndView("filial/ver");
 
         try{
             mv.addObject("filial", filialService.buscarPorId(id));

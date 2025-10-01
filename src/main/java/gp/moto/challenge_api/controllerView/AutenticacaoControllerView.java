@@ -79,7 +79,7 @@ public class AutenticacaoControllerView {
 
     @GetMapping("/index")
     public ModelAndView index() {
-        ModelAndView mv = new ModelAndView("/home/home");
+        ModelAndView mv = new ModelAndView("home/home");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
