@@ -1,31 +1,35 @@
 services:
   sqlserver:
-    image: 'mcr.microsoft.com/mssql/server:latest'
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
-      - 'ACCEPT_EULA=yes'
-      - 'MSSQL_PID=express'
-      - 'MSSQL_SA_PASSWORD=verYs3cret'
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=verYs3cret
+      - SA_PASSWORD=verYs3cret
+      - MSSQL_PID=Express
     restart: unless-stopped
     ports:
-      - '1433:1433'
-    networks:
-      - mynetwork  # Associando à rede personalizada
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql/data
+    # networks:
+    #   - mynetwork  # Associando à rede personalizada
+#   app:
+#     build:
+#       context: .
+#     environment:
+#       - SPRING_DATASOURCE_URL=jdbc:sqlserver://sqlserver:1433;databaseName=master;encrypt=false;trustServerCertificate=true
+#       - SPRING_DATASOURCE_USERNAME=sa
+#       - SPRING_DATASOURCE_PASSWORD=verYs3cret
+#     depends_on:
+#       - sqlserver
+#     ports:
+#       - '8080:8080'
+#     restart: unless-stopped
+#     networks:
+#       - mynetwork  # Associando à rede personalizada
 
-  app:
-    build:
-      context: .
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:sqlserver://sqlserver:1433;databaseName=master;encrypt=false;trustServerCertificate=true
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=verYs3cret
-    depends_on:
-      - sqlserver
-    ports:
-      - '8080:8080'
-    restart: unless-stopped
-    networks:
-      - mynetwork  # Associando à rede personalizada
-
-networks:
-  mynetwork:
-    driver: bridge  # Pode usar "bridge" ou outro tipo de rede se necessário
+# networks:
+#   mynetwork:
+#     driver: bridge  # Pode usar "bridge" ou outro tipo de rede se necessário
+volumes:
+  sqlserver-data:
