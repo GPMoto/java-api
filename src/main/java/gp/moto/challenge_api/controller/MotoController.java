@@ -4,15 +4,12 @@ import gp.moto.challenge_api.dto.moto.MotoDTO;
 import gp.moto.challenge_api.dto.moto.MotoProjection;
 import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.service.MotoCachingService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/moto")
@@ -27,7 +24,9 @@ public class MotoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MotoProjection> findById(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<MotoProjection> findById(
+        @PathVariable(value = "id") Long id
+    ) {
         return ResponseEntity.ok(motoService.buscarPorIdProjection(id));
     }
 
@@ -37,40 +36,70 @@ public class MotoController {
     }
 
     @GetMapping("/filial/{idFilial}/paginados/")
-    public ResponseEntity<Page<MotoProjection>> getPageMotosFilial(@PathVariable Long idFilial,
-            @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade) {
-        return ResponseEntity.ok(motoService.listarTodasPaginadasFilial(idFilial, pagina, quantidade));
+    public ResponseEntity<Page<MotoProjection>> getPageMotosFilial(
+        @PathVariable Long idFilial,
+        @RequestParam(defaultValue = "0") Integer pagina,
+        @RequestParam(defaultValue = "10") Integer quantidade
+    ) {
+        return ResponseEntity.ok(
+            motoService.listarTodasPaginadasFilial(idFilial, pagina, quantidade)
+        );
     }
 
     @GetMapping("/filial/{idFilial}/paginados/full")
-    public ResponseEntity<Page<Moto>> getPageMotosFilialInteiras(@PathVariable Long idFilial,
-            @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade,
-            @RequestParam(required = false) String search) {
-        return ResponseEntity.ok(motoService.listarTodasPaginadasFilialFull(idFilial, search, pagina, quantidade));
+    public ResponseEntity<Page<Moto>> getPageMotosFilialInteiras(
+        @PathVariable Long idFilial,
+        @RequestParam(defaultValue = "0") Integer pagina,
+        @RequestParam(defaultValue = "10") Integer quantidade,
+        @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(
+            motoService.listarTodasPaginadasFilialFull(
+                idFilial,
+                search,
+                pagina,
+                quantidade
+            )
+        );
     }
 
-
     @GetMapping("/secao-filial/{idSecaoFilial}")
-    public ResponseEntity<Page<Moto>> getPageMotoBySecaoFilial(@PathVariable Long idSecaoFilial,
-            @RequestParam(defaultValue = "0") Integer pagina, @RequestParam(defaultValue = "10") Integer quantidade,
-            @RequestParam(required = false) String search) {
-        return ResponseEntity
-                .ok(motoService.listarTodasPaginadasSecaoFilial(idSecaoFilial, search, pagina, quantidade));
+    public ResponseEntity<Page<Moto>> getPageMotoBySecaoFilial(
+        @PathVariable Long idSecaoFilial,
+        @RequestParam(defaultValue = "0") Integer pagina,
+        @RequestParam(defaultValue = "10") Integer quantidade,
+        @RequestParam(required = false) String search
+    ) {
+        return ResponseEntity.ok(
+            motoService.listarTodasPaginadasSecaoFilial(
+                idSecaoFilial,
+                search,
+                pagina,
+                quantidade
+            )
+        );
     }
 
     @GetMapping("/page")
-    public ResponseEntity<Page<Moto>> getPageMotos(@RequestParam(value = "pagina", defaultValue = "0") Integer page,
-            @RequestParam(value = "quantidade", defaultValue = "10") Integer size) {
+    public ResponseEntity<Page<Moto>> getPageMotos(
+        @RequestParam(value = "pagina", defaultValue = "0") Integer page,
+        @RequestParam(value = "quantidade", defaultValue = "10") Integer size
+    ) {
         return ResponseEntity.ok(motoService.paginarMoto(page, size));
     }
 
     @PostMapping
     public ResponseEntity<Moto> post(@RequestBody MotoDTO motoDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(motoService.criar(motoDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            motoService.criar(motoDTO)
+        );
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Moto> put(@RequestBody MotoDTO motoDTO, @PathVariable Long id) {
+    public ResponseEntity<Moto> put(
+        @RequestBody MotoDTO motoDTO,
+        @PathVariable Long id
+    ) {
         return ResponseEntity.ok(motoService.alterar(id, motoDTO));
     }
 
@@ -79,5 +108,4 @@ public class MotoController {
         motoService.deletar(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }

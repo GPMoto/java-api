@@ -1,7 +1,5 @@
 package gp.moto.challenge_api.dto.endereco.pais;
 
-import gp.moto.challenge_api.dto.endereco.EnderecoDto;
-import gp.moto.challenge_api.model.Endereco;
 import gp.moto.challenge_api.model.Pais;
 import org.mapstruct.*;
 
@@ -14,6 +12,8 @@ public interface PaisMapper {
     @Mapping(target = "nmPais", source = "nmPais")
     PaisDto toDto(Pais entity);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @BeanMapping(
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+    )
     void updateEntityFromDto(PaisDto paisDto, @MappingTarget Pais pais);
 }
