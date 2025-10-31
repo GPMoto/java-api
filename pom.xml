@@ -43,6 +43,12 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.flanchanxwo/expo-server-sdk-java -->
+        <dependency>
+            <groupId>io.github.flanchanxwo</groupId>
+            <artifactId>expo-server-sdk-java</artifactId>
+            <version>0.1.1</version>
+        </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-sqlserver</artifactId>
