@@ -1,9 +1,15 @@
 package gp.moto.challenge_api.service;
 
+import gp.moto.challenge_api.dto.moto.MotoDTO;
+import gp.moto.challenge_api.dto.moto.MotoMapper;
+import gp.moto.challenge_api.dto.moto.MotoProjection;
+import gp.moto.challenge_api.exception.ResourceNotFoundException;
+import gp.moto.challenge_api.model.Moto;
+import gp.moto.challenge_api.model.Qrcode;
+import gp.moto.challenge_api.repository.MotoRepository;
+import gp.moto.challenge_api.repository.QrcodeRepository;
 import java.util.List;
 import java.util.Optional;
-
-import gp.moto.challenge_api.model.Qrcode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -12,14 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import gp.moto.challenge_api.dto.moto.MotoDTO;
-import gp.moto.challenge_api.dto.moto.MotoMapper;
-import gp.moto.challenge_api.dto.moto.MotoProjection;
-import gp.moto.challenge_api.exception.ResourceNotFoundException;
-import gp.moto.challenge_api.model.Moto;
-import gp.moto.challenge_api.repository.MotoRepository;
-import gp.moto.challenge_api.repository.QrcodeRepository;
 
 @Service
 public class MotoCachingService {
@@ -33,38 +31,61 @@ public class MotoCachingService {
     @Autowired
     private MotoMapper motoMapper;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @Transactional
     public Moto criar(MotoDTO motoDTO) {
         limparCache();
-        return motoRepository.save(motoMapper.toMoto(motoDTO));
+        Moto resultado = motoRepository.save(motoMapper.toMoto(motoDTO));
+        usuarioService.sendNotificationToAdmins(
+            resultado.getIdSecaoFilial().getIdFilial().getIdFilial(),
+            "Moto entrou na filial!",
+            "Moto " +
+                resultado.getIdTipoMoto().getNmTipo() +
+                ", de placa " +
+                resultado.getIdentificador() +
+                " entrou na filial!"
+        );
+        return resultado;
     }
 
     @Transactional(readOnly = true)
     @Cacheable(value = "listarTodosMotos")
     public List<MotoProjection> listarTodos() {
-        return motoRepository.findAll()
-                .stream()
-                .map(moto -> motoMapper.toProjection(moto))
-                .toList();
+        return motoRepository
+            .findAll()
+            .stream()
+            .map(moto -> motoMapper.toProjection(moto))
+            .toList();
     }
 
     @Transactional(readOnly = true)
     @Cacheable(value = "buscarPorIdProjectionMoto", key = "#id")
-    public MotoProjection buscarPorIdProjection(Long id) throws ResourceNotFoundException {
-        return motoMapper.toProjection(motoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada")));
+    public MotoProjection buscarPorIdProjection(Long id)
+        throws ResourceNotFoundException {
+        return motoMapper.toProjection(
+            motoRepository
+                .findById(id)
+                .orElseThrow(() ->
+                    new ResourceNotFoundException("Moto não encontrada")
+                )
+        );
     }
-
 
     @Transactional(readOnly = true)
     @Cacheable(value = "buscarPorIdMoto", key = "#id")
     public Moto buscarPorId(Long id) throws ResourceNotFoundException {
-        return motoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Moto não encontrada"));
+        return motoRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Moto não encontrada")
+            );
     }
 
     @Transactional
-    public Moto alterar(Long id, MotoDTO motoDTO) throws ResourceNotFoundException {
+    public Moto alterar(Long id, MotoDTO motoDTO)
+        throws ResourceNotFoundException {
         Moto moto = buscarPorId(id);
         motoMapper.updateEntityFromDto(motoDTO, moto);
         limparCache();
@@ -73,8 +94,11 @@ public class MotoCachingService {
 
     @Transactional
     public boolean deletar(Long id) throws ResourceNotFoundException {
-        Moto moto = motoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("moto não encontrada"));
+        Moto moto = motoRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("moto não encontrada")
+            );
 
         Optional<Qrcode> uwb = qrcodeRepository.findByIdMoto(moto);
         if (uwb.isPresent()) {
@@ -94,48 +118,81 @@ public class MotoCachingService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "listarTodosPaginadasMoto", key = "#idFilial + '-' + #page + '-' + #size")
-    public Page<MotoProjection> listarTodasPaginadasFilial(Long idFilial, Integer page, Integer size) {
+    @Cacheable(
+        value = "listarTodosPaginadasMoto",
+        key = "#idFilial + '-' + #page + '-' + #size"
+    )
+    public Page<MotoProjection> listarTodasPaginadasFilial(
+        Long idFilial,
+        Integer page,
+        Integer size
+    ) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Moto> motos = motoRepository.findAllByFilial(pageable, idFilial);
         return motoMapper.toProjection(motos);
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "listarTodosPaginadasMotoFull", key = "#idFilial + '-' + #search + '-' + #page + '-' + #size")
-    public Page<Moto> listarTodasPaginadasFilialFull(Long idFilial, String search, Integer page, Integer size) {
+    @Cacheable(
+        value = "listarTodosPaginadasMotoFull",
+        key = "#idFilial + '-' + #search + '-' + #page + '-' + #size"
+    )
+    public Page<Moto> listarTodasPaginadasFilialFull(
+        Long idFilial,
+        String search,
+        Integer page,
+        Integer size
+    ) {
         Pageable pageable = PageRequest.of(page, size);
-        
+
         if (search != null && !search.trim().isEmpty()) {
-            return motoRepository.findAllByFilialWithSearch(pageable, idFilial, search.trim());
+            return motoRepository.findAllByFilialWithSearch(
+                pageable,
+                idFilial,
+                search.trim()
+            );
         }
-        
+
         return motoRepository.findAllByFilial(pageable, idFilial);
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "listarTodasPaginadasMotoSecaoFilial", key = "#idFilial + '-' + #page + '-' + #size")
-    public Page<Moto> listarTodasPaginadasSecaoFilial(Long idSecaoFilial, String search, Integer page, Integer size) {
+    @Cacheable(
+        value = "listarTodasPaginadasMotoSecaoFilial",
+        key = "#idFilial + '-' + #page + '-' + #size"
+    )
+    public Page<Moto> listarTodasPaginadasSecaoFilial(
+        Long idSecaoFilial,
+        String search,
+        Integer page,
+        Integer size
+    ) {
         Pageable pageable = PageRequest.of(page, size);
 
         if (search != null && !search.trim().isEmpty()) {
-            return motoRepository.findByIdSecaoFilialWithSearch(pageable, idSecaoFilial, search.trim());
+            return motoRepository.findByIdSecaoFilialWithSearch(
+                pageable,
+                idSecaoFilial,
+                search.trim()
+            );
         }
 
         return motoRepository.findByIdSecaoFilial(pageable, idSecaoFilial);
     }
 
-    @CacheEvict(value = {
-        "listarTodosMotos",
-        "buscarPorIdProjectionMoto",
-        "buscarPorIdMoto",
-        "paginarMoto",
-        "listarTodosPaginadasMoto",
-        "listarTodosPaginadasMotoFull",
-        "listarTodasPaginadasMotoSecaoFilial"
-    }, allEntries = true)
+    @CacheEvict(
+        value = {
+            "listarTodosMotos",
+            "buscarPorIdProjectionMoto",
+            "buscarPorIdMoto",
+            "paginarMoto",
+            "listarTodosPaginadasMoto",
+            "listarTodosPaginadasMotoFull",
+            "listarTodasPaginadasMotoSecaoFilial",
+        },
+        allEntries = true
+    )
     public void limparCache() {
         System.out.println("Limpando cache...");
     }
-
 }

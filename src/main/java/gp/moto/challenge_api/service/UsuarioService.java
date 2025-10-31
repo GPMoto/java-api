@@ -1,8 +1,23 @@
 package gp.moto.challenge_api.service;
 
+import com.github.flanchanowo.response.enums.Status;
+import gp.moto.challenge_api.dto.usuario.UsuarioDto;
+import gp.moto.challenge_api.dto.usuario.UsuarioMapper;
+import gp.moto.challenge_api.exception.InvalidTokenException;
+import gp.moto.challenge_api.exception.ResourceNotFoundException;
+import gp.moto.challenge_api.model.ExpoPushTokenUser;
+import gp.moto.challenge_api.model.PerfilEnum;
+import gp.moto.challenge_api.model.Usuario;
+import gp.moto.challenge_api.repository.UsuarioRepository;
+import gp.moto.challenge_api.security.JWTUtil;
+import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.http.HttpRequest;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,24 +32,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import gp.moto.challenge_api.dto.usuario.UsuarioDto;
-import gp.moto.challenge_api.dto.usuario.UsuarioMapper;
-import gp.moto.challenge_api.exception.InvalidTokenException;
-import gp.moto.challenge_api.exception.ResourceNotFoundException;
-import gp.moto.challenge_api.model.Usuario;
-import gp.moto.challenge_api.repository.UsuarioRepository;
-import gp.moto.challenge_api.security.JWTUtil;
-import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.log4j.Log4j2;
-
 @Log4j2
 @Service
 public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
 
     @Autowired
     private UsuarioMapper usuarioMapper;
@@ -43,7 +46,36 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JWTUtil jwtUtil;
+    private PushNotificationService pushNotificationService;
+
+    @Transactional(readOnly = true)
+    public void sendNotificationToAdmins(
+        Long filialId,
+        String title,
+        String message
+    ) {
+        List<Usuario> usuarios = usuarioRepository.findByPerfilAndFilial(
+            PerfilEnum.ADMINISTRADOR.toString(),
+            filialId
+        );
+
+        List<Optional<Map<String, Status>>> results = usuarios
+            .stream()
+            .map(user ->
+                pushNotificationService.sendNotification(
+                    user.getExpoPushTokenUsers(),
+                    title,
+                    message
+                )
+            )
+            .collect(Collectors.toList());
+
+        results.forEach(result -> {
+            result.ifPresent(status -> {
+                log.info("Notification sent to user: {}", status);
+            });
+        });
+    }
 
     @Transactional(readOnly = true)
     @Cacheable(value = "findAllUsuario")
@@ -64,10 +96,13 @@ public class UsuarioService {
 
         if (username == null) {
             throw new InvalidTokenException("Não autenticado");
-        };
+        }
 
-        return usuarioRepository.findByNmUsuario(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return usuarioRepository
+            .findByNmUsuario(username)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado")
+            );
     }
 
     @Transactional
@@ -90,8 +125,11 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     @Cacheable(value = "findByIdUsuario", key = "#id")
     public Usuario findById(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return usuarioRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado")
+            );
     }
 
     @Transactional(readOnly = true)
@@ -109,9 +147,15 @@ public class UsuarioService {
     }
 
     @Transactional
-    @CacheEvict(value = {
-            "findAllUsuario", "findAllPageUsuario", "findByIdUsuario", "findAllByFilialUsuario"
-    }, allEntries = true)
+    @CacheEvict(
+        value = {
+            "findAllUsuario",
+            "findAllPageUsuario",
+            "findByIdUsuario",
+            "findAllByFilialUsuario",
+        },
+        allEntries = true
+    )
     public void limparCache() {
         System.out.println("Limpando cache...");
     }
