@@ -1,16 +1,13 @@
 package gp.moto.challenge_api.controller;
 
-import com.github.flanchanowo.request.PushNotification;
 import gp.moto.challenge_api.dto.notification.ExpoPushTokenUserDto;
 import gp.moto.challenge_api.dto.usuario.UsuarioDto;
 import gp.moto.challenge_api.model.ExpoPushTokenUser;
 import gp.moto.challenge_api.model.Usuario;
-import gp.moto.challenge_api.security.JWTUtil;
 import gp.moto.challenge_api.service.PushNotificationService;
 import gp.moto.challenge_api.service.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

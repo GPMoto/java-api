@@ -68,6 +68,16 @@ public class PushNotificationService {
     }
 
     public ExpoPushTokenUser saveTokenForUser(Usuario usuario, String token) {
+        Optional<ExpoPushTokenUser> existingToken =
+            expoPushTokenUserRepository.findByTokenAndUserId(
+                token,
+                usuario.getIdUsuario()
+            );
+
+        if (existingToken.isPresent()) {
+            return existingToken.get();
+        }
+
         ExpoPushTokenUser tokenUser = new ExpoPushTokenUser();
         tokenUser.setUserId(usuario);
         tokenUser.setToken(token);

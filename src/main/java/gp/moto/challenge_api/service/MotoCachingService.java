@@ -38,13 +38,15 @@ public class MotoCachingService {
     public Moto criar(MotoDTO motoDTO) {
         limparCache();
         Moto resultado = motoRepository.save(motoMapper.toMoto(motoDTO));
+        Moto fullResult = buscarPorId(resultado.getIdMoto());
+
         usuarioService.sendNotificationToAdmins(
-            resultado.getIdSecaoFilial().getIdFilial().getIdFilial(),
+            fullResult.getIdSecaoFilial().getIdFilial().getIdFilial(),
             "Moto entrou na filial!",
             "Moto " +
-                resultado.getIdTipoMoto().getNmTipo() +
+                fullResult.getIdTipoMoto().getNmTipo() +
                 ", de placa " +
-                resultado.getIdentificador() +
+                fullResult.getIdentificador() +
                 " entrou na filial!"
         );
         return resultado;

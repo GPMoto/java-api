@@ -1,5 +1,6 @@
 package gp.moto.challenge_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,11 +13,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "t_gpMottu_token_push")
+@Table(name = "t_gp_mottu_token_push")
 public class ExpoPushTokenUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_token_push")
     private Long id;
 
@@ -24,5 +25,6 @@ public class ExpoPushTokenUser {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private Usuario userId;
 }

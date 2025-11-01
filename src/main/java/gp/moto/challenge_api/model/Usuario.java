@@ -1,5 +1,6 @@
 package gp.moto.challenge_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -46,7 +47,7 @@ public class Usuario {
     @JoinColumn(name = "id_perfil")
     private Perfil idPerfil;
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     @Nullable
     private List<ExpoPushTokenUser> expoPushTokenUsers;
 }

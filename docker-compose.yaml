@@ -4,13 +4,10 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=verYs3cret
-      - SA_PASSWORD=verYs3cret
       - MSSQL_PID=Express
     restart: unless-stopped
     ports:
       - "1433:1433"
-    volumes:
-      - sqlserver-data:/var/opt/mssql/data
     # networks:
     #   - mynetwork  # Associando à rede personalizada
 #   app:
@@ -31,5 +28,3 @@ services:
 # networks:
 #   mynetwork:
 #     driver: bridge  # Pode usar "bridge" ou outro tipo de rede se necessário
-volumes:
-  sqlserver-data:
