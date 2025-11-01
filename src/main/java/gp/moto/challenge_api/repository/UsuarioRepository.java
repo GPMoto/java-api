@@ -13,7 +13,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findAllByFilial(Long idFilial);
 
     @Query(
-        value = "select user from Usuario user where user.idPerfil.nmPerfil = :perfilEnum and user.idFilial.idFilial = :filialId"
+        value = "select user from Usuario user where user.idFilial.idFilial = :filialId"
     )
     List<Usuario> findByPerfilAndFilial(String perfilEnum, Long filialId);
 

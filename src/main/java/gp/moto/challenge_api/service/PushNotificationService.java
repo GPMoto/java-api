@@ -4,7 +4,6 @@ import com.github.flanchanowo.ExpoPushNotificationClient;
 import com.github.flanchanowo.request.PushNotification;
 import com.github.flanchanowo.response.TicketResponse;
 import com.github.flanchanowo.response.enums.Status;
-import gp.moto.challenge_api.dto.notification.ExpoPushTokenUserDto;
 import gp.moto.challenge_api.model.ExpoPushTokenUser;
 import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.repository.ExpoPushTokenUserRepository;

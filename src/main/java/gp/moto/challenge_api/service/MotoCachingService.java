@@ -38,17 +38,27 @@ public class MotoCachingService {
     public Moto criar(MotoDTO motoDTO) {
         limparCache();
         Moto resultado = motoRepository.save(motoMapper.toMoto(motoDTO));
-        Moto fullResult = buscarPorId(resultado.getIdMoto());
+        Moto fullResult = motoRepository
+            .findByIdWithRelations(resultado.getIdMoto())
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Moto não encontrada")
+            );
 
-        usuarioService.sendNotificationToAdmins(
-            fullResult.getIdSecaoFilial().getIdFilial().getIdFilial(),
-            "Moto entrou na filial!",
-            "Moto " +
-                fullResult.getIdTipoMoto().getNmTipo() +
-                ", de placa " +
-                fullResult.getIdentificador() +
-                " entrou na filial!"
-        );
+        // Verificação null-safe antes de enviar notificação
+        if (
+            fullResult.getIdSecaoFilial() != null &&
+            fullResult.getIdSecaoFilial().getIdFilial() != null
+        ) {
+            usuarioService.sendNotificationToAdmins(
+                fullResult.getIdSecaoFilial().getIdFilial().getIdFilial(),
+                "Moto entrou na filial!",
+                "Moto " +
+                    fullResult.getIdTipoMoto().getNmTipo() +
+                    ", de placa " +
+                    fullResult.getIdentificador() +
+                    " entrou na filial!"
+            );
+        }
         return resultado;
     }
 
