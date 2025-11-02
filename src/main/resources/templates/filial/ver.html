@@ -1,18 +1,19 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Informações da Filial')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{filial.title})}" />
 
     <body>
         <main>
             <nav>
                 <ul>
-                    <li><strong>Informações da Filial</strong></li>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
                 </ul>
                 <ul>
+                    
                     <li>
-                        <a th:href="@{/login/index}"
-                            >Voltar para Lista de Motos</a
-                        >
+                        <a th:href="@{/login/index}" th:text="#{filial.back}">Voltar para Lista de Motos</a>
                     </li>
                     <li>
                         <form th:replace="~{fragmentos :: form-logout}" />
@@ -22,23 +23,23 @@
 
             <article>
                 <header>
-                    <h3>Dados da Filial</h3>
+                    <h3 th:text="#{filial.data.header}">Dados da Filial</h3>
                 </header>
 
                 <table>
                     <tbody>
                         <tr>
-                            <td><strong>ID:</strong></td>
+                            <td><strong th:text="#{filial.field.id} + ':'">ID:</strong></td>
                             <td th:text="${filial.idFilial}">1</td>
                         </tr>
                         <tr>
-                            <td><strong>CNPJ:</strong></td>
+                            <td><strong th:text="#{filial.field.cnpj} + ':'">CNPJ:</strong></td>
                             <td th:text="${filial.cnpjFilial}">
                                 12.345.678/0001-90
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Endereço:</strong></td>
+                            <td><strong th:text="#{filial.field.endereco} + ':'">Endereço:</strong></td>
                             <td
                                 th:text="${filial.idEndereco != null ? filial.idEndereco.nmLogradouro + ', ' + filial.idEndereco.idCidade.nmCidade : 'N/A'}"
                             >
@@ -46,7 +47,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>CEP:</strong></td>
+                            <td><strong th:text="#{filial.field.cep} + ':'">CEP:</strong></td>
                             <td
                                 th:text="${filial.idEndereco != null ? filial.idEndereco.cep : 'N/A'}"
                             >
@@ -54,7 +55,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Telefone:</strong></td>
+                            <td><strong th:text="#{filial.field.telefone} + ':'">Telefone:</strong></td>
                             <td
                                 th:text="${filial.idContato != null ? '(' + filial.idContato.idTelefone.ddd + ') ' + filial.idContato.idTelefone.numero : 'N/A'}"
                             >
@@ -62,7 +63,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Nome do dono:</strong></td>
+                            <td><strong th:text="#{filial.field.dono} + ':'">Nome do dono:</strong></td>
                             <td
                                 th:text="${filial.idContato != null ? filial.idContato.nmDono : 'N/A'}"
                             >
@@ -76,17 +77,19 @@
                     <a
                         th:href="@{/view/filial/editar/{id}(id=${filial.idFilial})}"
                         role="button"
+                        th:text="#{filial.action.update}"
                         >Atualizar Filial</a
                     >
                 </p>
             </article>
 
-            <h2>Usuários da Filial</h2>
+            <h2 th:text="#{filial.users.header}">Usuários da Filial</h2>
 
             <p>
                 <a
                     th:href="@{/view/usuario/novo/{idFilial}(idFilial=${filial.idFilial})}"
                     role="button"
+                    th:text="#{filial.users.create}"
                 >
                     Criar Novo Usuário
                 </a>
@@ -95,11 +98,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Perfil</th>
-                        <th>Ações</th>
+                        <th th:text="#{filial.users.table.id}">ID</th>
+                        <th th:text="#{filial.users.table.nome}">Nome</th>
+                        <th th:text="#{filial.users.table.email}">Email</th>
+                        <th th:text="#{filial.users.table.perfil}">Perfil</th>
+                        <th th:text="#{filial.users.table.acoes}">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,6 +115,7 @@
                             <a
                                 th:href="@{/view/usuario/editar/{id}(id=${usuario.idUsuario})}"
                                 role="button"
+                                th:text="#{filial.users.action.edit}"
                                 >Editar</a
                             >
                         </td>

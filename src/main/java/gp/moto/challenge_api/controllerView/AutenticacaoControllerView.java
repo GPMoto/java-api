@@ -8,6 +8,8 @@ import gp.moto.challenge_api.security.JWTUtil;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +38,9 @@ public class AutenticacaoControllerView {
 
     @Autowired
     private UsuarioRepository userRep;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @PostMapping
     public ModelAndView gerarTokenValidoView(
@@ -84,7 +89,12 @@ public class AutenticacaoControllerView {
                     e.getMessage()
             );
             mv.setViewName("redirect:/login/index");
-            mv.addObject("errorMsg", "Usuário ou senha inválidos");
+            String errorMsg = messageSource.getMessage(
+                "login.error.invalid",
+                null,
+                LocaleContextHolder.getLocale()
+            );
+            mv.addObject("errorMsg", errorMsg);
             return mv;
         }
     }
@@ -140,15 +150,25 @@ public class AutenticacaoControllerView {
             return mv;
         }
 
-        mv.addObject("titulo", "Acesso Negado");
-        mv.addObject(
-            "mensagem",
-            "Você não tem permissão para acessar esta página ou realizar esta operação."
+        String titulo = messageSource.getMessage(
+            "login.error.title",
+            null,
+            LocaleContextHolder.getLocale()
         );
-        mv.addObject(
-            "submensagem",
-            "Entre em contato com o administrador do sistema se acredita que deveria ter acesso."
+        String mensagem = messageSource.getMessage(
+            "login.error.message",
+            null,
+            LocaleContextHolder.getLocale()
         );
+        String submensagem = messageSource.getMessage(
+            "login.error.submessage",
+            null,
+            LocaleContextHolder.getLocale()
+        );
+
+        mv.addObject("titulo", titulo);
+        mv.addObject("mensagem", mensagem);
+        mv.addObject("submensagem", submensagem);
 
         return mv;
     }

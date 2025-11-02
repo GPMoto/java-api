@@ -7,14 +7,25 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.jade.min.css"
         />
-        <title>Login</title>
+        <title th:text="#{login.title}">Login</title>
     </head>
     <body>
         <main>
-            <h2>Login</h2>
+            <nav>
+                <ul>
+                    <li><strong th:text="#{login.header}">Login</strong></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                </ul>
+            </nav>
+
+            <h2 th:text="#{login.header}">Login</h2>
 
             <div th:if="${param.falha != null and param.falha[0] == 'true'}">
-                <strong>Falha no login!</strong> Usuário ou senha incorretos.
+                <strong th:text="#{login.failure}">Falha no login! Usuário ou senha incorretos.</strong>
             </div>
 
             <div th:if="${errorMessage}">
@@ -22,7 +33,7 @@
             </div>
 
             <div th:if="${errors != null and !errors.empty}">
-                <strong>Erros de validação:</strong>
+                <strong th:text="#{login.validation.errors}">Erros de validação:</strong>
                 <ul>
                     <li
                         th:each="error : ${errors}"
@@ -31,20 +42,20 @@
                 </ul>
             </div>
 
-            <div th:if="${param.logout}">Logout realizado com sucesso!</div>
+            <div th:if="${param.logout}" th:text="#{login.logout.success}">Logout realizado com sucesso!</div>
 
-            <div th:if="${param.erro == 'nao_autenticado'}">
+            <div th:if="${param.erro == 'nao_autenticado'}" th:text="#{login.auth.required}">
                 É necessário fazer login para acessar esta página.
             </div>
 
             <form th:action="@{/login}" method="post" id="loginForm">
                 <label for="username">
-                    Usuário
+                    <span th:text="#{login.username}">Usuário</span>
                     <input type="text" id="username" name="username" required />
                 </label>
 
                 <label for="password">
-                    Senha
+                    <span th:text="#{login.password}">Senha</span>
                     <input
                         type="password"
                         id="password"
@@ -53,7 +64,7 @@
                     />
                 </label>
 
-                <button type="submit">Entrar</button>
+                <button type="submit" th:text="#{login.submit}">Entrar</button>
             </form>
 
             <div id="errorMsg"></div>

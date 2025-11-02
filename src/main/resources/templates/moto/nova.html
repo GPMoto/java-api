@@ -1,25 +1,30 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Inserir moto')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{moto.new.title})}" />
     <body>
         <main>
-            <header
-                style="
-                    display: grid;
-                    grid-template-columns: 1fr auto;
-                    align-items: center;
-                "
-            >
-                <h2>Cadastrar Nova Moto</h2>
-                <a th:href="@{/login/index}" role="button">Voltar</a>
-            </header>
+            <nav>
+                <ul>
+                    <li><strong th:text="#{moto.new.header}">Cadastrar Nova Moto</strong></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                    <li>
+                        <a th:href="@{/login/index}" role="button" th:text="#{moto.back}">Voltar</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h2 th:text="#{moto.new.header}">Cadastrar Nova Moto</h2>
 
             <div th:if="${errorMessage}">
                 <span th:text="${errorMessage}"></span>
             </div>
 
             <div th:if="${errors != null and !errors.empty}">
-                <strong>Erros de validação:</strong>
+                <strong th:text="#{moto.validation.errors}">Erros de validação:</strong>
                 <ul>
                     <li
                         th:each="error : ${errors}"
@@ -30,7 +35,7 @@
 
             <form th:action="@{/view/moto}" th:object="${moto}" method="post">
                 <label for="identificador">
-                    Identificador
+                    <span th:text="#{moto.field.identificador}">Identificador</span>
                     <input
                         type="text"
                         id="identificador"
@@ -41,7 +46,7 @@
                 </label>
 
                 <label for="status">
-                    Status
+                    <span th:text="#{moto.field.status}">Status</span>
                     <input
                         type="text"
                         id="status"
@@ -52,7 +57,7 @@
                 </label>
 
                 <label for="condicoesManutencao">
-                    Condições de Manutenção
+                    <span th:text="#{moto.field.condicoesManutencao}">Condições de Manutenção</span>
                     <input
                         type="text"
                         id="condicoesManutencao"
@@ -63,7 +68,7 @@
                 </label>
 
                 <label for="idTipoMoto">
-                    Tipo da Moto
+                    <span th:text="#{moto.field.tipoMoto}">Tipo da Moto</span>
                     <select id="idTipoMoto" th:field="*{idTipoMoto}" required>
                         <option
                             th:each="tipo : ${tiposMoto}"
@@ -74,7 +79,7 @@
                 </label>
 
                 <label for="idSecaoFilial">
-                    Seção/Filial
+                    <span th:text="#{moto.field.secaoFilial}">Seção/Filial</span>
                     <select
                         id="idSecaoFilial"
                         th:field="*{idSecaoFilial}"
@@ -88,7 +93,7 @@
                     </select>
                 </label>
 
-                <button type="submit">Cadastrar</button>
+                <button type="submit" th:text="#{moto.submit}">Cadastrar</button>
             </form>
         </main>
     </body>

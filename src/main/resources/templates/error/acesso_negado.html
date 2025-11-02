@@ -1,15 +1,22 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Acesso Negado')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{error.access.title})}" />
 
     <body>
         <main>
             <nav th:if="${usuario != null}">
                 <ul>
-                    <li><a th:href="@{/login/index}">Início</a></li>
+                    <li><strong th:text="#{error.access.title}">Acesso Negado</strong></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                    <li><a th:href="@{/login/index}" th:text="#{nav.home}">Início</a></li>
                     <li>
                         <a
                             th:href="@{/view/qrcode/{idFilial}(idFilial = ${idFilial})}"
+                            th:text="#{nav.identificadores}"
                             >QR Codes</a
                         >
                     </li>
@@ -32,21 +39,19 @@
                 </p>
 
                 <footer>
-                    <button onclick="history.back()">Voltar</button>
-                    <a th:href="@{/login/index}" role="button"
-                        >Ir para Início</a
-                    >
+                    <button onclick="history.back()" th:text="#{error.access.back}">Voltar</button>
+                    <a th:href="@{/login/index}" role="button" th:text="#{error.access.home}">Ir para Início</a>
                     <div th:if="${usuario == null}">
-                        <a th:href="@{/login}" role="button">Fazer Login</a>
+                        <a th:href="@{/login}" role="button" th:text="#{error.access.login}">Fazer Login</a>
                     </div>
                 </footer>
 
                 <aside th:if="${usuario != null}">
                     <p>
                         <small>
-                            <strong>Usuário logado:</strong>
+                            <strong th:text="#{error.access.user.logged} + ':'">Usuário logado:</strong>
                             <span th:text="${usuario.nmUsuario}"></span><br />
-                            <strong>Perfil:</strong>
+                            <strong th:text="#{error.access.user.profile} + ':'">Perfil:</strong>
                             <span
                                 th:text="${usuario.idPerfil?.nmPerfil}"
                             ></span>

@@ -1,38 +1,45 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Lista Qrcodes')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{qrcode.title})}" />
 
     <body>
         <main>
             <nav>
                 <ul>
-                    <li><strong>Lista de Qrcodes</strong></li>
+                    <li><strong th:text="#{qrcode.header}">Lista de Qrcodes</strong></li>
                 </ul>
                 <ul>
                     <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                    <li>
                         <a
                             th:href="@{/view/filial/{idFilial}(idFilial = ${filial.idFilial})}"
+                            th:text="#{nav.filial}"
                             >Filial</a
                         >
                     </li>
                     <li>
-                        <a th:href="@{/login/index}">Voltar para Motos</a>
+                        <a th:href="@{/login/index}" th:text="#{qrcode.back}">Voltar para Motos</a>
+                    </li>
+                    <li>
+                        <form th:replace="~{fragmentos :: form-logout}" />
                     </li>
                 </ul>
             </nav>
 
-            <h1>Lista de Qrcodes</h1>
+            <h1 th:text="#{qrcode.header}">Lista de Qrcodes</h1>
 
             <table>
                 <thead>
                     <tr>
-                        <th scope="col">ID Qrcode</th>
-                        <th scope="col">Valor Qrcode</th>
-                        <th scope="col">Moto Associada</th>
-                        <th scope="col">Identificador da Moto</th>
-                        <th scope="col">Status da Moto</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Remover</th>
+                        <th scope="col" th:text="#{qrcode.table.id}">ID Qrcode</th>
+                        <th scope="col" th:text="#{qrcode.table.valor}">Valor Qrcode</th>
+                        <th scope="col" th:text="#{qrcode.table.moto}">Moto Associada</th>
+                        <th scope="col" th:text="#{qrcode.table.identificador}">Identificador da Moto</th>
+                        <th scope="col" th:text="#{qrcode.table.status}">Status da Moto</th>
+                        <th scope="col" th:text="#{qrcode.table.editar}">Editar</th>
+                        <th scope="col" th:text="#{qrcode.table.remover}">Remover</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +47,7 @@
                         <th scope="row" th:text="${qrcode.idQrcode}">A</th>
                         <td th:text="${qrcode.vlQrcode}">B</td>
                         <td
-                            th:text="${qrcode.moto != null ? qrcode.moto.idMoto : 'Sem Moto'}"
+                            th:text="${qrcode.moto != null ? qrcode.moto.idMoto : #{qrcode.no.moto}}"
                         >
                             C
                         </td>
@@ -57,12 +64,14 @@
                         <td>
                             <a
                                 th:href="@{/view/qrcode/editar/{idQrcode}(idQrcode = ${qrcode.idQrcode})}"
+                                th:text="#{qrcode.table.editar}"
                                 >Editar</a
                             >
                         </td>
                         <td>
                             <a
                                 th:href="@{/view/qrcode/remover/{idQrcode}(idQrcode = ${qrcode.idQrcode})}"
+                                th:text="#{qrcode.table.remover}"
                                 >Remover</a
                             >
                         </td>
@@ -73,6 +82,7 @@
             <p>
                 <a
                     th:href="@{/view/qrcode/novo/{idFilial}(idFilial = ${filial.idFilial})}"
+                    th:text="#{qrcode.action.create}"
                     >Cadastrar um Novo Qrcode</a
                 >
             </p>
