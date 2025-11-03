@@ -1,18 +1,37 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Atualizar moto')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{moto.update.title})}" />
     <body>
         <main>
-            <header
-                style="
-                    display: grid;
-                    grid-template-columns: 1fr auto;
-                    align-items: center;
-                "
-            >
-                <h2>Atualizar Moto</h2>
-                <a th:href="@{/login/index}" role="button">Voltar</a>
-            </header>
+            <nav>
+                <ul>
+                    <li><strong th:text="#{moto.update.header}">Atualizar Moto</strong></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                    <li>
+                        <a th:href="@{/login/index}" role="button" th:text="#{moto.back}">Voltar</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h2 th:text="#{moto.update.header}">Atualizar Moto</h2>
+
+            <div th:if="${errorMessage}">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <div th:if="${errors != null and !errors.empty}">
+                <strong th:text="#{moto.validation.errors}">Erros de validação:</strong>
+                <ul>
+                    <li
+                        th:each="error : ${errors}"
+                        th:text="${error.defaultMessage}"
+                    ></li>
+                </ul>
+            </div>
 
             <form
                 th:action="@{/view/moto/{idMoto}(idMoto = ${moto.idMoto})}"
@@ -21,7 +40,7 @@
                 method="post"
             >
                 <label for="identificador">
-                    Identificador
+                    <span th:text="#{moto.field.identificador}">Identificador</span>
                     <input
                         type="text"
                         th:value="${moto.identificador}"
@@ -33,7 +52,7 @@
                 </label>
 
                 <label for="status">
-                    Status
+                    <span th:text="#{moto.field.status}">Status</span>
                     <input
                         type="text"
                         th:value="${moto.status}"
@@ -45,7 +64,7 @@
                 </label>
 
                 <label for="condicoesManutencao">
-                    Condições de Manutenção
+                    <span th:text="#{moto.field.condicoesManutencao}">Condições de Manutenção</span>
                     <input
                         type="text"
                         th:value="${moto.condicoesManutencao}"
@@ -57,7 +76,7 @@
                 </label>
 
                 <label for="idTipoMoto">
-                    Tipo da Moto
+                    <span th:text="#{moto.field.tipoMoto}">Tipo da Moto</span>
                     <select
                         th:value="${moto.idTipoMoto.nmTipo}"
                         id="idTipoMoto"
@@ -73,7 +92,7 @@
                 </label>
 
                 <label for="idSecaoFilial">
-                    Seção/Filial
+                    <span th:text="#{moto.field.secaoFilial}">Seção/Filial</span>
                     <select
                         id="idSecaoFilial"
                         th:value="${moto.idSecaoFilial.idTipoSecao.nmSecao}"
@@ -88,7 +107,7 @@
                     </select>
                 </label>
 
-                <button type="submit">Editar</button>
+                <button type="submit" th:text="#{moto.submit.update}">Editar</button>
             </form>
         </main>
     </body>
