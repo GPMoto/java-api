@@ -25,8 +25,8 @@ public class PushNotificationService {
 
     public Optional<Map<String, Status>> sendNotification(
         List<ExpoPushTokenUser> toList,
-        String message,
-        String title
+        String title,
+        String message
     ) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             ExpoPushNotificationClient client =

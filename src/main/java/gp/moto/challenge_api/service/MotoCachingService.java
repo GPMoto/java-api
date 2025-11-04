@@ -8,11 +8,14 @@ import gp.moto.challenge_api.model.Moto;
 import gp.moto.challenge_api.model.Qrcode;
 import gp.moto.challenge_api.repository.MotoRepository;
 import gp.moto.challenge_api.repository.QrcodeRepository;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Log4j2
 public class MotoCachingService {
 
     @Autowired
@@ -34,6 +38,9 @@ public class MotoCachingService {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @Transactional
     public Moto criar(MotoDTO motoDTO) {
         limparCache();
@@ -44,21 +51,29 @@ public class MotoCachingService {
                 new ResourceNotFoundException("Moto não encontrada")
             );
 
-        // Verificação null-safe antes de enviar notificação
-        if (
-            fullResult.getIdSecaoFilial() != null &&
-            fullResult.getIdSecaoFilial().getIdFilial() != null
-        ) {
-            usuarioService.sendNotificationToAdmins(
-                fullResult.getIdSecaoFilial().getIdFilial().getIdFilial(),
-                "Moto entrou na filial!",
-                "Moto " +
-                    fullResult.getIdTipoMoto().getNmTipo() +
-                    ", de placa " +
-                    fullResult.getIdentificador() +
-                    " entrou na filial!"
-            );
-        }
+        LinkedHashMap<String, List<Object>> params = new LinkedHashMap<>();
+
+        params.put(
+            "messageParameters",
+            List.of(
+                fullResult.getIdTipoMoto().getNmTipo(),
+                fullResult.getIdentificador()
+            )
+        );
+
+        log.info("messageParameters: {}", params.get("messageParameters"));
+
+        log.info(
+            "filialId: {}",
+            fullResult.getIdSecaoFilial().getIdFilial().getIdFilial()
+        );
+
+        usuarioService.sendNotificationToAdmins(
+            fullResult.getIdSecaoFilial().getIdFilial().getIdFilial(),
+            "notification.moto.entered",
+            "notification.moto.details",
+            params
+        );
         return resultado;
     }
 

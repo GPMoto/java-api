@@ -50,4 +50,8 @@ public class Usuario {
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     @Nullable
     private List<ExpoPushTokenUser> expoPushTokenUsers;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "idiom", nullable = true)
+    private LanguageEnumPreferences languageEnumPreference;
 }

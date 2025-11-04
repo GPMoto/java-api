@@ -1,1 +1,0 @@
--- alter table t_gp_mottu_usuario add
