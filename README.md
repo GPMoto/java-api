@@ -1,12 +1,27 @@
 # Challenge API - GpsMottu
 
-Este é um projeto de API em desenvolvimento com **Java** utilizando o framework **Spring Boot**. 
-A aplicação é um sistema geral de análise de motos, incluindo rastreamento, associação entre dispositivos qrcode e relatórios.
 
 <img width="929" height="1309" alt="image" src="https://github.com/user-attachments/assets/f8f3572d-fdc5-492c-9b54-a42dbbf1d74d" />
 
 
-[Challenge Api - Vìdeo demonstrativo](https://www.youtube.com/watch?v=INf0R-hfaD0)
+[Challenge Api - Vìdeo de deploy na AZURE - DEVOPS](https://www.youtube.com/watch?v=iPmjPbi-ZJg)
+
+[Challenge Api - Vìdeo demonstrativo - JAVA ADVANCED](https://youtu.be/ir8tQdRJ4yk)
+
+## Descrição da Solução:
+O Java API - Gestão de Motos é uma aplicação desenvolvida em Java com foco em auxiliar operadores e gestores de filiais no controle e monitoramento de motos, funcionários e setores da empresa.
+O sistema oferece funcionalidades para:
+-	Gestão de motos: cadastro, atualização de status e rastreamento em diferentes filiais.
+-	Controle via QR Code: associação de motos a QR Codes, permitindo rápida identificação e verificação no momento de entrada, saída ou movimentação.
+-	Mapeamento de setores e filiais: estruturação de áreas internas da empresa para facilitar a localização e organização.
+-	Gestão de funcionários: registro de colaboradores vinculados a cada filial, integrando informações relevantes para a operação.
+
+## Benefícios para o Negócio
+Com essas funcionalidades, a empresa consegue implementar um controle mais eficiente sobre as motos e sua localização, alcançando objetivos estratégicos como:
+-	Redução de perdas e prejuízos: evitar que motos sejam extraviadas ou deixem de ser monitoradas.
+-	Melhor comunicação interna: facilitar a troca de informações sobre a frota entre funcionários e gestores.
+-	Maior rastreabilidade: garantir que cada moto esteja sempre associada a uma filial, setor e responsável.
+
 
 ### Equipe
 
@@ -84,11 +99,10 @@ curl -X GET "http://gpsmottu-api.azurewebsites.net/api/autenticacao/login?userna
 Pegue o token e insira-o nas seguintes requisições.
 
 ```bash
-curl -X POST "http://gpsmottu-api.azurewebsites.net/api/moto/" \
+curl -X POST "http://gpsmottu-api.azurewebsites.net/api/moto" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <TOKEN_AQUI>" \
   -d '{
-    "idMoto": <ID_DA_MOTO>,
     "status": "Disponível",
     "condicoesManutencao": "Saudável",
     "idTipoMoto": 1,
@@ -99,7 +113,7 @@ curl -X POST "http://gpsmottu-api.azurewebsites.net/api/moto/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 Get by id
@@ -112,7 +126,7 @@ curl -X GET "http://gpsmottu-api.azurewebsites.net/api/moto/{ID_DA_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 Update
@@ -133,7 +147,7 @@ curl -X PUT "http://gpsmottu-api.azurewebsites.net/api/moto/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 
@@ -146,7 +160,7 @@ curl -X DELETE "http://gpsmottu-api.azurewebsites.net/api/moto/{ID_DA_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_moto];
+SELECT * FROM [dbo].[t_gp_mottu_moto];
 ```
 
 
@@ -164,7 +178,7 @@ curl -X POST "http://gpsmottu-api.azurewebsites.net/api/pais/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 Get by id
@@ -177,7 +191,7 @@ curl -X GET "http://gpsmottu-api.azurewebsites.net/api/pais/{ID_DA_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 Alterar um país
@@ -196,7 +210,7 @@ curl -X POST "http://gpsmottu-api.azurewebsites.net/api/pais/" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 ```bash
@@ -208,7 +222,7 @@ curl -X DELETE "http://gpsmottu-api.azurewebsites.net/api/pais/{ID_MOTO}" \
 Teste no banco
 
 ```sql
-SELECT * FROM [master].[dbo].[t_gp_mottu_pais];
+SELECT * FROM [dbo].[t_gp_mottu_pais];
 ```
 
 

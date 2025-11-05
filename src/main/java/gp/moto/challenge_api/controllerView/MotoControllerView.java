@@ -3,13 +3,18 @@ package gp.moto.challenge_api.controllerView;
 import gp.moto.challenge_api.dto.moto.MotoDTO;
 import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.model.Moto;
+import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.repository.MotoRepository;
+import gp.moto.challenge_api.repository.UsuarioRepository;
 import gp.moto.challenge_api.service.MotoCachingService;
 import gp.moto.challenge_api.service.SecaoFilialService;
 import gp.moto.challenge_api.service.TipoMotoService;
 import gp.moto.challenge_api.service.UsuarioService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

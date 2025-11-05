@@ -127,4 +127,14 @@ public class QrcodeControllerView {
         }
     }
 
+    @GetMapping("remover/{id}")
+    public ModelAndView deleteQrcode(@PathVariable("id") Long id) {
+        try {
+            QrcodeService.delete(id);
+            return new ModelAndView("redirect:/login/index");
+        } catch (Exception e) {
+            return new ModelAndView("redirect:/login/index");
+        }
+    }
+
 }
