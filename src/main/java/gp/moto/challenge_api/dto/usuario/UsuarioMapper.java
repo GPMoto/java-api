@@ -7,47 +7,54 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
-
     @Mapping(target = "idUsuario", ignore = true)
     @Mapping(target = "nmUsuario", source = "nome")
     @Mapping(target = "nmEmail", source = "email")
     @Mapping(target = "idFilial", source = "idFilial")
     @Mapping(target = "idPerfil", source = "idPerfil")
+    @Mapping(target = "languageEnumPreference", ignore = true)
+    @Mapping(target = "expoPushTokenUsers", ignore = true)
+    @Mapping(target = "senha", ignore = true)
     Usuario toEntity(UsuarioDto dto);
 
     @Mapping(target = "nome", source = "nmUsuario")
     @Mapping(target = "email", source = "nmEmail")
     @Mapping(target = "idFilial", source = "idFilial")
     @Mapping(target = "idPerfil", source = "idPerfil")
+    @Mapping(target = "senha", source = "senha")
     UsuarioDto toDto(Usuario entity);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @BeanMapping(
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+    )
     @Mapping(target = "nmUsuario", source = "nome")
     @Mapping(target = "nmEmail", source = "email")
     @Mapping(target = "idFilial", source = "idFilial")
     @Mapping(target = "idPerfil", source = "idPerfil")
+    @Mapping(target = "languageEnumPreference", ignore = true)
+    @Mapping(target = "expoPushTokenUsers", ignore = true)
+    @Mapping(target = "idUsuario", ignore = true)
     void updateEntityFromDto(UsuarioDto dto, @MappingTarget Usuario usuario);
 
-
-    default Perfil mapIdToPerfil(Long id){
+    default Perfil mapIdToPerfil(Long id) {
         if (id == null) return null;
         Perfil perfil = new Perfil();
         perfil.setIdPerfil(id);
         return perfil;
     }
 
-    default Long mapPerfilToId(Perfil perfil){
+    default Long mapPerfilToId(Perfil perfil) {
         return perfil != null ? perfil.getIdPerfil() : null;
     }
 
-    default Filial mapIdToFilial(Long id){
+    default Filial mapIdToFilial(Long id) {
         if (id == null) return null;
         Filial filial = new Filial();
         filial.setIdFilial(id);
         return filial;
     }
 
-    default Long mapFilialToId(Filial filial){
+    default Long mapFilialToId(Filial filial) {
         return filial != null ? filial.getIdFilial() : null;
     }
 }

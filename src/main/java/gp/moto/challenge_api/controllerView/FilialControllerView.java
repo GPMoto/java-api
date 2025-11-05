@@ -5,12 +5,8 @@ import gp.moto.challenge_api.dto.contato.ContatoDTO;
 import gp.moto.challenge_api.dto.endereco.EnderecoDto;
 import gp.moto.challenge_api.dto.filial.FilialDTO;
 import gp.moto.challenge_api.dto.filial.FilialFormDTO;
-import gp.moto.challenge_api.dto.moto.MotoDTO;
 import gp.moto.challenge_api.dto.telefone.TelefoneDTO;
-import gp.moto.challenge_api.model.Contato;
-import gp.moto.challenge_api.model.Endereco;
 import gp.moto.challenge_api.model.Filial;
-import gp.moto.challenge_api.model.Telefone;
 import gp.moto.challenge_api.service.*;
 import jakarta.validation.Valid;
 
@@ -96,7 +92,7 @@ public class FilialControllerView {
         try {
 
             Filial filialAtual = filialService.buscarPorId(id);
-            
+
 
             if (filialAtual.getIdEndereco() != null) {
                 EnderecoDto enderecoDto = new EnderecoDto(
@@ -107,7 +103,7 @@ public class FilialControllerView {
                 );
                 enderecoService.update(filialAtual.getIdEndereco().getIdEndereco(), enderecoDto);
             }
-            
+
 
             if (filialAtual.getIdContato() != null) {
                 ContatoDTO contatoDto = new ContatoDTO(
@@ -116,29 +112,29 @@ public class FilialControllerView {
                     filialAtual.getIdContato().getIdTelefone().getId_telefone()
                 );
                 contatoService.alterar(filialAtual.getIdContato().getIdContato(), contatoDto);
-                
+
 
                 if (filialAtual.getIdContato().getIdTelefone() != null) {
                     TelefoneDTO telefoneDto = new TelefoneDTO(
-                        filialAtual.getIdContato().getIdTelefone().getDdi(), 
+                        filialAtual.getIdContato().getIdTelefone().getDdi(),
                         filialFormDTO.ddd(),
                         filialFormDTO.numero()
                     );
                     telefoneService.alterar(filialAtual.getIdContato().getIdTelefone().getId_telefone(), telefoneDto);
                 }
             }
-            
+
             FilialDTO filialDTO = new FilialDTO(
                 filialFormDTO.cnpjFilial(),
                 filialFormDTO.senhaFilial(),
                 filialAtual.getIdEndereco().getIdEndereco(),
                 filialAtual.getIdContato().getIdContato()
             );
-            
+
             filialService.alterar(id, filialDTO);
-            
+
             return new ModelAndView("redirect:/view/filial/" + id);
-            
+
         } catch (Exception e) {
             return new ModelAndView("redirect:/view/filial/editar/" + id + "?erro=true");
         }

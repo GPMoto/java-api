@@ -1,18 +1,21 @@
 package gp.moto.challenge_api.controller;
 
+import gp.moto.challenge_api.dto.notification.ExpoPushTokenUserDto;
+import gp.moto.challenge_api.dto.usuario.LanguagePreferenceDto;
 import gp.moto.challenge_api.dto.usuario.UsuarioDto;
+import gp.moto.challenge_api.model.ExpoPushTokenUser;
 import gp.moto.challenge_api.model.Usuario;
-import gp.moto.challenge_api.security.JWTUtil;
+import gp.moto.challenge_api.service.PushNotificationService;
 import gp.moto.challenge_api.service.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/usuario")
@@ -21,7 +24,10 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping()
+    @Autowired
+    private PushNotificationService pushNotificationService;
+
+    @GetMapping
     public ResponseEntity<List<Usuario>> findAll() {
         return ResponseEntity.ok(usuarioService.findAll());
     }
@@ -44,17 +50,44 @@ public class UsuarioController {
     }
 
     @GetMapping("/filial/{idFilial}")
-    public ResponseEntity<List<Usuario>> findAllByFilial(@PathVariable Long idFilial) {
+    public ResponseEntity<List<Usuario>> findAllByFilial(
+            @PathVariable Long idFilial) {
         return ResponseEntity.ok(usuarioService.findAllByFilial(idFilial));
     }
 
     @PostMapping
     public ResponseEntity<Usuario> save(@RequestBody UsuarioDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                usuarioService.save(dto));
+    }
+
+    @PostMapping("/token")
+    public ResponseEntity<ExpoPushTokenUser> saveToken(
+            @RequestBody ExpoPushTokenUserDto dto,
+            HttpServletRequest request) {
+        Usuario usuario = usuarioService.findByToken(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                pushNotificationService.saveTokenForUser(usuario, dto.getToken()));
+    }
+
+    @PostMapping("language")
+    public ResponseEntity<Map<String, String>> saveLanguagePreference(@RequestBody LanguagePreferenceDto dto,
+            HttpServletRequest request) {
+
+        boolean result = usuarioService.saveLanguagePreference(dto.getLanguage(), request);
+
+        if (!result) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "No changes were made"));
+        }
+
+        return ResponseEntity.ok().body(Map.of("message", "Language preference changed to " + dto.getLanguage()));
+
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody UsuarioDto dto) {
+    public ResponseEntity<Usuario> update(
+            @PathVariable Long id,
+            @RequestBody UsuarioDto dto) {
         return ResponseEntity.ok(usuarioService.update(id, dto));
     }
 
@@ -63,5 +96,4 @@ public class UsuarioController {
         usuarioService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }

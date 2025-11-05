@@ -1,6 +1,5 @@
 package gp.moto.challenge_api.controllerView;
 
-
 import gp.moto.challenge_api.dto.moto.MotoDTO;
 import gp.moto.challenge_api.dto.moto.MotoMapper;
 import gp.moto.challenge_api.model.Moto;
@@ -10,7 +9,7 @@ import gp.moto.challenge_api.repository.UsuarioRepository;
 import gp.moto.challenge_api.service.MotoCachingService;
 import gp.moto.challenge_api.service.SecaoFilialService;
 import gp.moto.challenge_api.service.TipoMotoService;
-
+import gp.moto.challenge_api.service.UsuarioService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 
@@ -42,66 +41,67 @@ public class MotoControllerView {
     private SecaoFilialService secaoFilialService;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-
-
+    private UsuarioService usuarioService;
 
     @GetMapping("/nova")
-    public ModelAndView viewMoto(){
-
+    public ModelAndView viewMoto() {
         ModelAndView mv = new ModelAndView("moto/nova");
 
-        try{
+        Authentication auth =
+            SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        var user = usuarioService.findByUsername(username);
+
+        try {
             mv.addObject("moto", new Moto());
 
             mv.addObject("tiposMoto", tipoMotoService.findAll());
-
-            Authentication authorization = SecurityContextHolder.getContext().getAuthentication();
-
-            Optional<Usuario> opUser = usuarioRepository.findByNmUsuario(authorization.getName());
-
-            if(opUser.isEmpty()){
-                throw new RuntimeException("Erro ao chamar usuário");
-            }
-
-            Usuario usuario = opUser.get();
-
-            mv.addObject("secoesFilial", secaoFilialService.findAllByFilial(usuario.getIdFilial().getIdFilial()));
+            mv.addObject(
+                "secoesFilial",
+                secaoFilialService.findAllByFilial(
+                    user.getIdFilial().getIdFilial()
+                )
+            );
 
             return mv;
-        }catch(Exception e){
-
-
+        } catch (Exception e) {
             return mv;
         }
-
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView viewMotoAtualizar(@PathVariable("id") Long id){
-
+    public ModelAndView viewMotoAtualizar(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView("moto/atualiza");
 
-        try{
+        Authentication auth =
+            SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        var user = usuarioService.findByUsername(username);
+
+        try {
             mv.addObject("moto", motoService.buscarPorId(id));
 
             mv.addObject("tiposMoto", tipoMotoService.findAll());
-            mv.addObject("secoesFilial", secaoFilialService.findAll());
+            mv.addObject(
+                "secoesFilial",
+                secaoFilialService.findAllByFilial(
+                    user.getIdFilial().getIdFilial()
+                )
+            );
 
             return mv;
-        }catch(Exception e){
-
-
+        } catch (Exception e) {
             return mv;
         }
-
     }
 
-
     @PostMapping
-    public ModelAndView salvarMoto(@Valid MotoDTO motoDTO, BindingResult bindingResult) {
-
+    public ModelAndView salvarMoto(
+        @Valid MotoDTO motoDTO,
+        BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors()) {
             ModelAndView mv = new ModelAndView("moto/nova");
             mv.addObject("moto", motoDTO);
@@ -111,28 +111,33 @@ public class MotoControllerView {
             return mv;
         }
 
-        try{
+        try {
             ModelAndView mv = new ModelAndView("redirect:/login/index");
             motoService.criar(motoDTO);
             return mv;
-        }catch(Exception e){
+        } catch (Exception e) {
             ModelAndView mvMoto = new ModelAndView("moto/nova?erro=true");
             mvMoto.addObject("moto", motoDTO);
-            mvMoto.addObject("tiposMoto", tipoMotoService.findAll()); 
-            mvMoto.addObject("secoesFilial", secaoFilialService.findAll()); 
-            mvMoto.addObject("errorMessage", "Erro ao salvar moto: " + e.getMessage()); 
+            mvMoto.addObject("tiposMoto", tipoMotoService.findAll());
+            mvMoto.addObject("secoesFilial", secaoFilialService.findAll());
+            mvMoto.addObject(
+                "errorMessage",
+                "Erro ao salvar moto: " + e.getMessage()
+            );
             return mvMoto;
         }
     }
 
     @PostMapping("{id}")
-    public ModelAndView editarMoto(@Valid MotoDTO motoDTO, @PathVariable("id") Long id) {
+    public ModelAndView editarMoto(
+        @Valid MotoDTO motoDTO,
+        @PathVariable("id") Long id
+    ) {
         ModelAndView mv = new ModelAndView("redirect:/login/index");
-        try{
-
-            motoService.alterar(id,motoDTO);
+        try {
+            motoService.alterar(id, motoDTO);
             return mv;
-        }catch(Exception e){
+        } catch (Exception e) {
             return mv;
         }
     }
@@ -140,13 +145,11 @@ public class MotoControllerView {
     @GetMapping("remover/{id}")
     public ModelAndView deleteMoto(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView("redirect:/login/index");
-        try{
-
+        try {
             motoService.deletar(id);
             return mv;
-        }catch(Exception e){
+        } catch (Exception e) {
             return mv;
         }
     }
-
 }

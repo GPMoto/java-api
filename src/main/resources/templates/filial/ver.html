@@ -1,97 +1,130 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: cabecalho(#{filial.title})}" />
 
-<head th:replace="~{fragmentos :: cabecalho('Informações da Filial')}" />
+    <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
+        <main>
+            <div th:replace="~{fragmentos :: logo}" />
+            <nav>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                </ul>
+                <ul>
+                    
+                    <li>
+                        <a th:href="@{/login/index}" th:text="#{filial.back}">Voltar para Lista de Motos</a>
+                    </li>
+                    <li>
+                        <form th:replace="~{fragmentos :: form-logout}" />
+                    </li>
+                </ul>
+            </nav>
 
-<body>
-    <div class="container">
-        <div class="row justify-between">
-            <h1>Informações da Filial</h1>
-            <a th:href="@{/login/index}">Voltar para Lista de Motos</a>
-            <form th:replace="~{fragmentos :: form-logout}" />
-        </div>
-        
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Dados da Filial</h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-borderless">
-                            <tbody>
-                                <tr>
-                                    <td><strong>ID:</strong></td>
-                                    <td th:text="${filial.idFilial}">1</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>CNPJ:</strong></td>
-                                    <td th:text="${filial.cnpjFilial}">12.345.678/0001-90</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Endereço:</strong></td>
-                                    <td th:text="${filial.idEndereco != null ? filial.idEndereco.nmLogradouro + ', ' + filial.idEndereco.idCidade.nmCidade : 'N/A'}">Rua ABC, São Paulo</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>CEP:</strong></td>
-                                    <td th:text="${filial.idEndereco != null ? filial.idEndereco.cep : 'N/A'}">01234-567</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Telefone:</strong></td>
-                                    <td th:text="${filial.idContato != null ? '(' + filial.idContato.idTelefone.ddd + ') ' + filial.idContato.idTelefone.numero : 'N/A'}">11 99999-9999</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Nome do dono:</strong></td>
-                                    <td th:text="${filial.idContato != null ? filial.idContato.nmDono : 'N/A'}">Gerson bragantino</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row mt-3">
-            <div class="col-12">
-                <a th:href="@{/view/filial/editar/{id}(id=${filial.idFilial})}" class="btn btn-primary">Atualizar Filial</a>
-            </div>
-        </div>
+            <article>
+                <header>
+                    <h3 th:text="#{filial.data.header}">Dados da Filial</h3>
+                </header>
 
-        <div class="container mt-5">
-        <h2>Usuários da Filial</h2>
-        <div class="mb-3">
-            <a th:href="@{/view/usuario/novo/{idFilial}(idFilial=${filial.idFilial})}" class="btn btn-primary">
-                Criar Novo Usuário
-            </a>
-        </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Perfil</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="usuario : ${usuarios}">
-                    <td th:text="${usuario.idUsuario}">1</td>
-                    <td th:text="${usuario.nmUsuario}">Nome</td>
-                    <td th:text="${usuario.nmEmail}">email@email.com</td>
-                    <td th:text="${usuario.idPerfil.nmPerfil}">Perfil</td>
-                    <td>
-                        <a th:href="@{/view/usuario/editar/{id}(id=${usuario.idUsuario})}" class="btn btn-primary btn-sm">Editar</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><strong th:text="#{filial.field.id} + ':'">ID:</strong></td>
+                            <td th:text="${filial.idFilial}">1</td>
+                        </tr>
+                        <tr>
+                            <td><strong th:text="#{filial.field.cnpj} + ':'">CNPJ:</strong></td>
+                            <td th:text="${filial.cnpjFilial}">
+                                12.345.678/0001-90
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong th:text="#{filial.field.endereco} + ':'">Endereço:</strong></td>
+                            <td
+                                th:text="${filial.idEndereco != null ? filial.idEndereco.nmLogradouro + ', ' + filial.idEndereco.idCidade.nmCidade : 'N/A'}"
+                            >
+                                Rua ABC, São Paulo
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong th:text="#{filial.field.cep} + ':'">CEP:</strong></td>
+                            <td
+                                th:text="${filial.idEndereco != null ? filial.idEndereco.cep : 'N/A'}"
+                            >
+                                01234-567
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong th:text="#{filial.field.telefone} + ':'">Telefone:</strong></td>
+                            <td
+                                th:text="${filial.idContato != null ? '(' + filial.idContato.idTelefone.ddd + ') ' + filial.idContato.idTelefone.numero : 'N/A'}"
+                            >
+                                11 99999-9999
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong th:text="#{filial.field.dono} + ':'">Nome do dono:</strong></td>
+                            <td
+                                th:text="${filial.idContato != null ? filial.idContato.nmDono : 'N/A'}"
+                            >
+                                Gerson bragantino
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    </div>
-        
-    </div>
+                <p>
+                    <a
+                        th:href="@{/view/filial/editar/{id}(id=${filial.idFilial})}"
+                        role="button"
+                        th:text="#{filial.action.update}"
+                        >Atualizar Filial</a
+                    >
+                </p>
+            </article>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+            <h2 th:text="#{filial.users.header}">Usuários da Filial</h2>
 
-</body>
+            <p>
+                <a
+                    th:href="@{/view/usuario/novo/{idFilial}(idFilial=${filial.idFilial})}"
+                    role="button"
+                    th:text="#{filial.users.create}"
+                >
+                    Criar Novo Usuário
+                </a>
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th th:text="#{filial.users.table.id}">ID</th>
+                        <th th:text="#{filial.users.table.nome}">Nome</th>
+                        <th th:text="#{filial.users.table.email}">Email</th>
+                        <th th:text="#{filial.users.table.perfil}">Perfil</th>
+                        <th th:text="#{filial.users.table.acoes}">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.idUsuario}">1</td>
+                        <td th:text="${usuario.nmUsuario}">Nome</td>
+                        <td th:text="${usuario.nmEmail}">email@email.com</td>
+                        <td th:text="${usuario.idPerfil.nmPerfil}">Perfil</td>
+                        <td>
+                            <a
+                                th:href="@{/view/usuario/editar/{id}(id=${usuario.idUsuario})}"
+                                role="button"
+                                th:text="#{filial.users.action.edit}"
+                                >Editar</a
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:replace="~{fragmentos :: rodape}"></div>
+        </main>
+    </body>
 </html>

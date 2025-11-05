@@ -1,39 +1,118 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: cabecalho(#{moto.update.title})}" />
+    <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
+        <main>
+            <div th:replace="~{fragmentos :: logo}" />
+            <nav>
+                <ul>
+                    <li><strong th:text="#{moto.update.header}">Atualizar Moto</strong></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                    <li>
+                        <a th:href="@{/login/index}" role="button" th:text="#{moto.back}">Voltar</a>
+                    </li>
+                </ul>
+            </nav>
 
-<head th:replace="~{fragmentos :: cabecalho('Atualizar moto')}" />
-<body>
-    <div class="container mt-5">
-        <h2>Atualizar Moto</h2>
-        <form th:action="@{/view/moto/{idMoto}(idMoto = ${moto.idMoto})}" id="form" th:object="${moto}" method="post">
+            <h2 th:text="#{moto.update.header}">Atualizar Moto</h2>
 
-            <div class="mb-3">
-                <label for="identificador" class="form-label">Identificador</label>
-                <input type="text" th:value="${moto.identificador}" class="form-control" id="identificador" th:field="*{identificador}" maxlength="50" required>
+            <div th:if="${errorMessage}">
+                <span th:text="${errorMessage}"></span>
             </div>
-            <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <input type="text" th:value="${moto.status}" class="form-control" id="status" th:field="*{status}" maxlength="50" required>
-            </div>
-            <div class="mb-3">
-                <label for="condicoesManutencao" class="form-label">Condições de Manutenção</label>
-                <input type="text" th:value="${moto.condicoesManutencao}" class="form-control" id="condicoesManutencao" th:field="*{condicoesManutencao}" maxlength="200" required>
-            </div>
-            <div class="mb-3">
-                <label for="idTipoMoto" class="form-label">Tipo da Moto</label>
-                <select class="form-select" th:value="${moto.idTipoMoto.nmTipo}" id="idTipoMoto" th:field="*{idTipoMoto}" required>
-                    <option th:each="tipo : ${tiposMoto}" th:value="${tipo.id_tipo_moto}" th:text="${tipo.nmTipo}"></option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="idSecaoFilial" class="form-label">Seção/Filial</label>
-                <select class="form-select" id="idSecaoFilial" th:value="${moto.idSecaoFilial.idTipoSecao.nmSecao}" th:field="*{idSecaoFilial}" required>
-                    <option th:each="secao : ${secoesFilial}" th:value="${secao.idTipoSecao.idTipoSecao}" th:text="${secao.idTipoSecao.nmSecao}"></option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Editar</button>
-        </form>
-    </div>
 
-</body>
+            <div th:if="${errors != null and !errors.empty}">
+                <strong th:text="#{moto.validation.errors}">Erros de validação:</strong>
+                <ul>
+                    <li
+                        th:each="error : ${errors}"
+                        th:text="${error.defaultMessage}"
+                    ></li>
+                </ul>
+            </div>
+
+            <form
+                th:action="@{/view/moto/{idMoto}(idMoto = ${moto.idMoto})}"
+                id="form"
+                th:object="${moto}"
+                method="post"
+            >
+                <label for="identificador">
+                    <span th:text="#{moto.field.identificador}">Identificador</span>
+                    <input
+                        type="text"
+                        th:value="${moto.identificador}"
+                        id="identificador"
+                        th:field="*{identificador}"
+                        maxlength="50"
+                        required
+                    />
+                </label>
+
+                <label for="status">
+                    <span th:text="#{moto.field.status}">Status</span>
+                    <input
+                        type="text"
+                        th:value="${moto.status}"
+                        id="status"
+                        th:field="*{status}"
+                        maxlength="50"
+                        required
+                    />
+                </label>
+
+                <label for="condicoesManutencao">
+                    <span th:text="#{moto.field.condicoesManutencao}">Condições de Manutenção</span>
+                    <input
+                        type="text"
+                        th:value="${moto.condicoesManutencao}"
+                        id="condicoesManutencao"
+                        th:field="*{condicoesManutencao}"
+                        maxlength="200"
+                        required
+                    />
+                </label>
+
+                <label for="idTipoMoto">
+                    <span th:text="#{moto.field.tipoMoto}">Tipo da Moto</span>
+                    <select
+                        th:value="${moto.idTipoMoto.nmTipo}"
+                        id="idTipoMoto"
+                        th:field="*{idTipoMoto}"
+                        required
+                    >
+                        <option
+                            th:each="tipo : ${tiposMoto}"
+                            th:value="${tipo.id_tipo_moto}"
+                            th:text="${tipo.nmTipo}"
+                        ></option>
+                    </select>
+                </label>
+
+                <label for="idSecaoFilial">
+                    <span th:text="#{moto.field.secaoFilial}">Seção/Filial</span>
+                    <select
+                        id="idSecaoFilial"
+                        th:value="${moto.idSecaoFilial.idTipoSecao.nmSecao}"
+                        th:field="*{idSecaoFilial}"
+                        required
+                    >
+                        <option
+                            th:each="secao : ${secoesFilial}"
+                            th:value="${secao.idTipoSecao.idTipoSecao}"
+                            th:text="${secao.idTipoSecao.nmSecao}"
+                        ></option>
+                    </select>
+                </label>
+
+                <button type="submit" th:text="#{moto.submit.update}">Editar</button>
+            </form>
+            <div th:replace="~{fragmentos :: rodape}"></div>
+
+        </main>
+    </body>
 </html>

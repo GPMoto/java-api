@@ -1,53 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2>Login</h2>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.jade.min.css"
+        />
+        <title th:text="#{login.title}">Login</title>
+    </head>
+    <body>
+        <main>
+            <nav>
+                <ul>
+                    <li><strong th:text="#{login.header}">Login</strong></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                </ul>
+            </nav>
 
-        <div th:if="${param.falha != null and param.falha[0] == 'true'}" class="alert alert-danger" role="alert">
-            <i class="bi bi-exclamation-triangle"></i>
-            <strong>Falha no login!</strong> Usuário ou senha incorretos.
-        </div>
+            <h2 th:text="#{login.header}">Login</h2>
 
-        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-            <i class="bi bi-exclamation-triangle"></i>
-            <span th:text="${errorMessage}"></span>
-        </div>
-
-        <div th:if="${errors != null and !errors.empty}" class="alert alert-warning" role="alert">
-            <i class="bi bi-exclamation-circle"></i>
-            <strong>Erros de validação:</strong>
-            <ul class="mb-0 mt-2">
-                <li th:each="error : ${errors}" th:text="${error.defaultMessage}"></li>
-            </ul>
-        </div>
-
-        <div th:if="${param.logout}" class="alert alert-success" role="alert">
-            <i class="bi bi-check-circle"></i>
-            Logout realizado com sucesso!
-        </div>
-
-        <div th:if="${param.erro == 'nao_autenticado'}" class="alert alert-info" role="alert">
-            <i class="bi bi-info-circle"></i>
-            É necessário fazer login para acessar esta página.
-        </div>
-
-        <form th:action="@{/login}" method="post" id="loginForm">
-            <div class="mb-3">
-                <label for="username" class="form-label">Usuário</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+            <div th:if="${param.falha != null and param.falha[0] == 'true'}">
+                <strong th:text="#{login.failure}">Falha no login! Usuário ou senha incorretos.</strong>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+
+            <div th:if="${errorMessage}">
+                <span th:text="${errorMessage}"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Entrar</button>
-        </form>
-        <div id="errorMsg" class="text-danger mt-2"></div>
-    </div>
-</body>
+
+            <div th:if="${errors != null and !errors.empty}">
+                <strong th:text="#{login.validation.errors}">Erros de validação:</strong>
+                <ul>
+                    <li
+                        th:each="error : ${errors}"
+                        th:text="${error.defaultMessage}"
+                    ></li>
+                </ul>
+            </div>
+
+            <div th:if="${param.logout}" th:text="#{login.logout.success}">Logout realizado com sucesso!</div>
+
+            <div th:if="${param.erro == 'nao_autenticado'}" th:text="#{login.auth.required}">
+                É necessário fazer login para acessar esta página.
+            </div>
+
+            <form th:action="@{/login}" method="post" id="loginForm">
+                <label for="username">
+                    <span th:text="#{login.username}">Usuário</span>
+                    <input type="text" id="username" name="username" required />
+                </label>
+
+                <label for="password">
+                    <span th:text="#{login.password}">Senha</span>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    />
+                </label>
+
+                <button type="submit" th:text="#{login.submit}">Entrar</button>
+            </form>
+
+            <div id="errorMsg"></div>
+        </main>
+    </body>
 </html>

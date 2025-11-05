@@ -9,17 +9,19 @@ import lombok.Data;
 @Table(name = "t_gpMottu_secoes_filial")
 public class SecaoFilial {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSecao;
 
     @NotNull(message = "Valor inválido para o lado 1")
     private double lado1;
+
     @NotNull(message = "Valor inválido para o lado 2")
     private double lado2;
+
     @NotNull(message = "Valor inválido para o lado 3")
     private double lado3;
+
     @NotNull(message = "Valor inválido para o lado 4")
     private double lado4;
 
@@ -29,7 +31,7 @@ public class SecaoFilial {
     private TipoSecao idTipoSecao;
 
     // Não sei se ta certo, Many To One olhar isso
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_filial")
     private Filial idFilial;
 }

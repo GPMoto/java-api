@@ -1,14 +1,36 @@
 package gp.moto.challenge_api.service;
 
+import com.github.flanchanowo.response.enums.Status;
+import gp.moto.challenge_api.dto.usuario.UsuarioDto;
+import gp.moto.challenge_api.dto.usuario.UsuarioMapper;
+import gp.moto.challenge_api.exception.InvalidTokenException;
+import gp.moto.challenge_api.exception.ResourceNotFoundException;
+import gp.moto.challenge_api.model.ExpoPushTokenUser;
+import gp.moto.challenge_api.model.LanguageEnumPreferences;
+import gp.moto.challenge_api.model.PerfilEnum;
+import gp.moto.challenge_api.model.Usuario;
+import gp.moto.challenge_api.repository.UsuarioRepository;
+import gp.moto.challenge_api.security.JWTUtil;
+import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.http.HttpRequest;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -17,24 +39,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import gp.moto.challenge_api.dto.usuario.UsuarioDto;
-import gp.moto.challenge_api.dto.usuario.UsuarioMapper;
-import gp.moto.challenge_api.exception.InvalidTokenException;
-import gp.moto.challenge_api.exception.ResourceNotFoundException;
-import gp.moto.challenge_api.model.Usuario;
-import gp.moto.challenge_api.repository.UsuarioRepository;
-import gp.moto.challenge_api.security.JWTUtil;
-import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.log4j.Log4j2;
-
 @Log4j2
 @Service
 public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
 
     @Autowired
     private UsuarioMapper usuarioMapper;
@@ -43,7 +53,97 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JWTUtil jwtUtil;
+    private PushNotificationService pushNotificationService;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Transactional(readOnly = true)
+    public void sendNotificationToAdmins(
+        Long filialId,
+        String titleKey,
+        String messageKey,
+        LinkedHashMap<String, List<Object>> additionalParameters
+    ) {
+        List<Usuario> usuarios = usuarioRepository.findByPerfilAndFilial(
+            PerfilEnum.ADMINISTRADOR.toString(),
+            filialId
+        );
+
+        List<Usuario> usuariosComTokens = usuarios
+            .stream()
+            .filter(
+                user ->
+                    user.getExpoPushTokenUsers() != null &&
+                    !user.getExpoPushTokenUsers().isEmpty()
+            )
+            .collect(Collectors.toList());
+
+        if (usuariosComTokens.isEmpty()) {
+            log.warn(
+                "Nenhum admin encontrado na filial: {}",
+                filialId
+            );
+            return;
+        }
+
+        List<Optional<Map<String, Status>>> results = usuariosComTokens
+            .stream()
+            .map(user -> {
+                Locale locale = getLocaleFromLanguageEnum(
+                    user.getLanguageEnumPreference()
+                );
+
+                Object[] titleParams = additionalParameters.containsKey(
+                        "titleParameters"
+                    )
+                    ? additionalParameters.get("titleParameters").toArray()
+                    : new Object[0];
+
+                Object[] messageParams = additionalParameters.containsKey(
+                        "messageParameters"
+                    )
+                    ? additionalParameters.get("messageParameters").toArray()
+                    : new Object[0];
+
+                String translatedTitle = messageSource.getMessage(
+                    titleKey,
+                    titleParams,
+                    locale
+                );
+
+                log.info("title: {}", translatedTitle);
+
+                String translatedMessage = messageSource.getMessage(
+                    messageKey,
+                    messageParams,
+                    locale
+                );
+
+                log.info("message: {}", translatedMessage);
+
+                List<ExpoPushTokenUser> tokens = user.getExpoPushTokenUsers();
+                log.info(
+                    "tokens do user: {} tokens encontrados",
+                    tokens != null ? tokens.size() : 0
+                );
+
+                log.info("tokens: {}", tokens);
+
+                return pushNotificationService.sendNotification(
+                    tokens,
+                    translatedTitle,
+                    translatedMessage
+                );
+            })
+            .collect(Collectors.toList());
+
+        results.forEach(result -> {
+            result.ifPresent(status -> {
+                log.info("Notification sent to user: {}", status);
+            });
+        });
+    }
 
     @Transactional(readOnly = true)
     @Cacheable(value = "findAllUsuario")
@@ -64,10 +164,22 @@ public class UsuarioService {
 
         if (username == null) {
             throw new InvalidTokenException("Não autenticado");
-        };
+        }
 
-        return usuarioRepository.findByNmUsuario(username)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return usuarioRepository
+            .findByNmUsuario(username)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado")
+            );
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario findByUsername(String username) {
+        return usuarioRepository
+            .findByNmUsuario(username)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado")
+            );
     }
 
     @Transactional
@@ -75,14 +187,29 @@ public class UsuarioService {
         String senhaDto = dto.senha();
         Usuario usuario = usuarioMapper.toEntity(dto);
         usuario.setSenha(passwordEncoder.encode(senhaDto));
+
+        // Define PTBR como padrão para novos usuários
+        usuario.setLanguageEnumPreference(LanguageEnumPreferences.PTBR);
+
         limparCache();
         return usuarioRepository.save(usuario);
+    }
+
+    public boolean saveLanguagePreference(
+        LanguageEnumPreferences language,
+        HttpServletRequest request
+    ) {
+        Usuario usuario = findByToken(request);
+        usuario.setLanguageEnumPreference(language);
+        usuarioRepository.save(usuario);
+        return true;
     }
 
     @Transactional
     public Usuario update(Long id, UsuarioDto dto) {
         Usuario usuario = findById(id);
         usuarioMapper.updateEntityFromDto(dto, usuario);
+        // languageEnumPreference não é atualizado via DTO, use o endpoint /language
         limparCache();
         return usuarioRepository.save(usuario);
     }
@@ -90,8 +217,11 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     @Cacheable(value = "findByIdUsuario", key = "#id")
     public Usuario findById(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return usuarioRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado")
+            );
     }
 
     @Transactional(readOnly = true)
@@ -108,10 +238,36 @@ public class UsuarioService {
         return true;
     }
 
+    private Locale getLocaleFromLanguageEnum(LanguageEnumPreferences language) {
+        if (language == null) {
+            return new Locale("pt", "BR"); // Padrão
+        }
+
+        return switch (language) {
+            case PTBR -> new Locale("pt", "BR");
+            case EN -> new Locale("en", "US");
+            case ES -> new Locale("es", "ES");
+        };
+    }
+
+    private String getMessage(
+        @NonNull String key,
+        @NonNull Locale locale,
+        Object... args
+    ) {
+        return messageSource.getMessage(key, args, locale);
+    }
+
     @Transactional
-    @CacheEvict(value = {
-            "findAllUsuario", "findAllPageUsuario", "findByIdUsuario", "findAllByFilialUsuario"
-    }, allEntries = true)
+    @CacheEvict(
+        value = {
+            "findAllUsuario",
+            "findAllPageUsuario",
+            "findByIdUsuario",
+            "findAllByFilialUsuario",
+        },
+        allEntries = true
+    )
     public void limparCache() {
         System.out.println("Limpando cache...");
     }

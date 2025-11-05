@@ -1,53 +1,248 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragmentos :: cabecalho('Lista motos')}" />
+<head th:replace="~{fragmentos :: cabecalho(#{home.title})}" />
 
-  <body>
-    <div class="container">
-        <div class="row justify-between">
-            <h1>Lista de motos</h1>
-            <a th:href="@{/view/filial/{idFilial}(idFilial = ${idFilial})}">Filial</a>
-            <a th:href="@{/view/qrcode/{idFilial}(idFilial = ${idFilial})}">Identificadores</a>
-            <form th:replace="~{fragmentos :: form-logout}" />
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Identificador</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Condições de Manutenção</th>
-                            <th scope="col">Tipo Moto</th>
-                            <th scope="col">Seção/Filial</th>
-                            <th scope="col">Editar</th>
-                            <th scope="col">Remover</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="moto : ${motos}">
-                            <th class="col-2" scope="row" th:text="${moto.idMoto}">A</th>
-                            <td class="col-2" th:text="${moto.identificador}">B</td>
-                            <td class="col-2" th:text="${moto.status}">C</td>
-                            <td class="col-2" th:text="${moto.condicoesManutencao}">D</td>
-                            <td class="col-2" th:text="${moto.idTipoMoto != null ? moto.idTipoMoto.nmTipo : 'N/A'}">E</td>
-                            <td class="col-2" th:text="${moto.idSecaoFilial != null ? moto.idSecaoFilial.idTipoSecao.nmSecao : 'N/A'}">F</td>
-                            <td class="col-2"><a th:href="@{/view/moto/editar/{idMoto}(idMoto = ${moto.idMoto})}">Editar</a></td>
-                            <td class="col-2"><a th:href="@{/view/moto/remover/{idMoto}(idMoto = ${moto.idMoto})}">Remover</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+<body>
+    <style th:replace="~{fragmentos :: footer-styles}"></style>
+
+    <main>
+        <div th:replace="~{fragmentos :: logo}" />
+
+        <nav>
+            <ul>
+                <li>
+                    <div th:replace="~{fragmentos :: language-selector}" />
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a th:href="@{/view/filial/{idFilial}(idFilial = ${idFilial})}" th:text="#{nav.filial}">Filial</a>
+                </li>
+                <li>
+                    <a href="/view/secao-filial" th:text="#{nav.secoes}">Seções da Filial</a>
+                </li>
+                <li>
+                    <form th:replace="~{fragmentos :: form-logout}" />
+                </li>
+            </ul>
+        </nav>
+
+        <h1 th:text="#{home.header}">Lista de motos</h1>
+
+        <!-- Cards de Estatísticas -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>📊 Total de Motos</h3>
+                <p class="stat-number" th:text="${#lists.size(motos)}">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>🔍 Rápido Acesso</h3>
+                <p class="stat-desc">Use a busca abaixo</p>
+            </div>
+            <div class="stat-card">
+                <h3>⚡ Status</h3>
+                <p class="stat-desc">Gerencie suas motos</p>
             </div>
         </div>
-        <div class="row">
-            <a href="/view/moto/nova">Cadastrar uma Nova moto</a>
+
+        <!-- Campo de Busca -->
+        <div class="search-container">
+            <label for="searchInput">
+                🔍 <span th:text="#{home.search}">Buscar moto</span>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Digite o identificador, status ou tipo..."
+                    onkeyup="filterTable()"
+                />
+            </label>
         </div>
-    </div>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <table id="motosTable">
+            <thead>
+                <tr>
+                    <th scope="col" th:text="#{table.id}">ID</th>
+                    <th scope="col" th:text="#{table.identificador}">Identificador</th>
+                    <th scope="col" th:text="#{table.status}">Status</th>
+                    <th scope="col" th:text="#{table.condicoesManutencao}">Condições de Manutenção</th>
+                    <th scope="col" th:text="#{table.tipoMoto}">Tipo Moto</th>
+                    <th scope="col" th:text="#{table.secaoFilial}">Seção/Filial</th>
+                    <th scope="col" th:text="#{table.editar}">Editar</th>
+                    <th scope="col" th:text="#{table.remover}">Remover</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="moto : ${motos}">
+                    <th scope="row" th:text="${moto.idMoto}">A</th>
+                    <td th:text="${moto.identificador}">B</td>
+                    <td>
+                        <span class="status-badge" th:text="${moto.status}" th:data-status="${moto.status}">Status</span>
+                    </td>
+                    <td th:text="${moto.condicoesManutencao}">D</td>
+                    <td th:text="${moto.idTipoMoto != null ? moto.idTipoMoto.nmTipo : 'N/A'}">E</td>
+                    <td th:text="${moto.idSecaoFilial != null and moto.idSecaoFilial.idTipoSecao != null ? moto.idSecaoFilial.idTipoSecao.nmSecao : 'N/A'}">F</td>
+                    <td>
+                        <a th:href="@{/view/moto/editar/{idMoto}(idMoto = ${moto.idMoto})}" th:text="#{action.editar}">Editar</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/view/moto/remover/{idMoto}(idMoto = ${moto.idMoto})}" th:text="#{action.remover}">Remover</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-  </body>
+        <p>
+            <a href="/view/moto/nova" role="button" th:text="#{action.cadastrarNova}">Cadastrar uma Nova moto</a>
+        </p>
+
+        <div th:replace="~{fragmentos :: rodape}"></div>
+
+        <style>
+            /* Cards de Estatísticas */
+            .stats-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .stat-card {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 1.5rem;
+                border-radius: 12px;
+                text-align: center;
+                color: white;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .stat-card h3 {
+                margin: 0 0 0.5rem 0;
+                font-size: 1rem;
+                opacity: 0.9;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            .stat-desc {
+                font-size: 0.9rem;
+                margin: 0;
+                opacity: 0.9;
+            }
+
+            /* Campo de Busca */
+            .search-container {
+                margin: 2rem 0;
+            }
+
+            .search-container input {
+                width: 100%;
+            }
+
+            /* Badges de Status - Base */
+            .status-badge {
+                display: inline-block;
+                padding: 0.4rem 0.9rem;
+                border-radius: 16px;
+                font-weight: 600;
+                font-size: 0.875rem;
+                text-transform: capitalize;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            .status-badge:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+        </style>
+
+        <script>
+            // Array de cores vibrantes para os badges (fundo e texto)
+            const statusColors = [
+                { bg: '#d4edda', text: '#155724' },  // Verde suave
+                { bg: '#cfe2ff', text: '#084298' },  // Azul suave
+                { bg: '#fff3cd', text: '#856404' },  // Amarelo suave
+                { bg: '#f8d7da', text: '#721c24' },  // Vermelho suave
+                { bg: '#e2e3e5', text: '#383d41' },  // Cinza suave
+                { bg: '#d1ecf1', text: '#0c5460' },  // Ciano suave
+                { bg: '#f5c6cb', text: '#721c24' },  // Rosa suave
+                { bg: '#c3e6cb', text: '#155724' },  // Verde limão
+                { bg: '#bee5eb', text: '#0c5460' },  // Azul claro
+                { bg: '#ffeaa7', text: '#6c5b0d' },  // Amarelo ouro
+                { bg: '#dfe6e9', text: '#2d3436' },  // Azul acinzentado
+                { bg: '#fdcb6e', text: '#6c5b0d' },  // Laranja suave
+                { bg: '#fab1a0', text: '#741f1f' },  // Coral
+                { bg: '#a29bfe', text: '#2e1f73' },  // Roxo suave
+                { bg: '#74b9ff', text: '#0a3d62' },  // Azul céu
+            ];
+
+            // Função hash simples para gerar um número a partir de uma string
+            function hashString(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Converte para 32bit integer
+                }
+                return Math.abs(hash);
+            }
+
+            // Função para obter cor baseada no texto do status
+            function getColorForStatus(status) {
+                const index = hashString(status.toLowerCase()) % statusColors.length;
+                return statusColors[index];
+            }
+
+            // Aplicar cores aos badges quando a página carregar
+            document.addEventListener('DOMContentLoaded', function() {
+                const badges = document.querySelectorAll('.status-badge');
+                
+                badges.forEach(badge => {
+                    const status = badge.getAttribute('data-status') || badge.textContent.trim();
+                    const colors = getColorForStatus(status);
+                    
+                    badge.style.backgroundColor = colors.bg;
+                    badge.style.color = colors.text;
+                });
+            });
+
+            // Função de filtro de tabela em tempo real
+            function filterTable() {
+                const input = document.getElementById('searchInput');
+                const filter = input.value.toUpperCase();
+                const table = document.getElementById('motosTable');
+                const tr = table.getElementsByTagName('tr');
+
+                for (let i = 1; i < tr.length; i++) {
+                    let display = false;
+                    const td = tr[i].getElementsByTagName('td');
+
+                    for (let j = 0; j < td.length; j++) {
+                        if (td[j]) {
+                            const textValue = td[j].textContent || td[j].innerText;
+                            if (textValue.toUpperCase().indexOf(filter) > -1) {
+                                display = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    tr[i].style.display = display ? '' : 'none';
+                }
+            }
+        </script>
+    </main>
+</body>
+
 </html>
