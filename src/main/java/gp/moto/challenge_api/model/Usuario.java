@@ -55,7 +55,7 @@ public class Usuario {
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
     @Nullable
-    private List<ExpoPushTokenUser> expoPushTokenUsers;
+    private List<PushToken> pushTokens;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "idiom", nullable = true)

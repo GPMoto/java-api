@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(exclude = "userId")
 @Entity
 @Table(name = "t_gp_mottu_token_push")
-public class ExpoPushTokenUser {
+public class PushToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

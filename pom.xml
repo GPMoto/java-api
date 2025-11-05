@@ -43,6 +43,18 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.7.0</version>
+        </dependency>
+        <!-- Fix para compatibilidade com Firebase Admin SDK -->
+        <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-oauth2-http</artifactId>
+            <version>1.35.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/io.github.flanchanxwo/expo-server-sdk-java -->
         <dependency>
             <groupId>io.github.flanchanxwo</groupId>

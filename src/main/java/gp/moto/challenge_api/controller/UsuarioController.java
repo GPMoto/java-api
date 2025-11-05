@@ -3,7 +3,7 @@ package gp.moto.challenge_api.controller;
 import gp.moto.challenge_api.dto.notification.ExpoPushTokenUserDto;
 import gp.moto.challenge_api.dto.usuario.LanguagePreferenceDto;
 import gp.moto.challenge_api.dto.usuario.UsuarioDto;
-import gp.moto.challenge_api.model.ExpoPushTokenUser;
+import gp.moto.challenge_api.model.PushToken;
 import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.service.PushNotificationService;
 import gp.moto.challenge_api.service.UsuarioService;
@@ -62,7 +62,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/token")
-    public ResponseEntity<ExpoPushTokenUser> saveToken(
+    public ResponseEntity<PushToken> saveToken(
             @RequestBody ExpoPushTokenUserDto dto,
             HttpServletRequest request) {
         Usuario usuario = usuarioService.findByToken(request);

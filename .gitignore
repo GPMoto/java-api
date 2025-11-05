@@ -2,3 +2,5 @@ target/
 .idea/
 .vscode/
 .env
+
+src/main/resources/gpsmottu-firebase*.json

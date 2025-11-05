@@ -13,7 +13,7 @@ public interface UsuarioMapper {
     @Mapping(target = "idFilial", source = "idFilial")
     @Mapping(target = "idPerfil", source = "idPerfil")
     @Mapping(target = "languageEnumPreference", ignore = true)
-    @Mapping(target = "expoPushTokenUsers", ignore = true)
+    @Mapping(target = "pushTokens", ignore = true)
     @Mapping(target = "senha", ignore = true)
     Usuario toEntity(UsuarioDto dto);
 
@@ -32,7 +32,7 @@ public interface UsuarioMapper {
     @Mapping(target = "idFilial", source = "idFilial")
     @Mapping(target = "idPerfil", source = "idPerfil")
     @Mapping(target = "languageEnumPreference", ignore = true)
-    @Mapping(target = "expoPushTokenUsers", ignore = true)
+    @Mapping(target = "pushTokens", ignore = true)
     @Mapping(target = "idUsuario", ignore = true)
     void updateEntityFromDto(UsuarioDto dto, @MappingTarget Usuario usuario);
 

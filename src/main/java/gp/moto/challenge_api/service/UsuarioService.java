@@ -5,9 +5,9 @@ import gp.moto.challenge_api.dto.usuario.UsuarioDto;
 import gp.moto.challenge_api.dto.usuario.UsuarioMapper;
 import gp.moto.challenge_api.exception.InvalidTokenException;
 import gp.moto.challenge_api.exception.ResourceNotFoundException;
-import gp.moto.challenge_api.model.ExpoPushTokenUser;
 import gp.moto.challenge_api.model.LanguageEnumPreferences;
 import gp.moto.challenge_api.model.PerfilEnum;
+import gp.moto.challenge_api.model.PushToken;
 import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.repository.UsuarioRepository;
 import gp.moto.challenge_api.security.JWTUtil;
@@ -56,6 +56,9 @@ public class UsuarioService {
     private PushNotificationService pushNotificationService;
 
     @Autowired
+    private FirebaseMessagingService firebaseMessagingService;
+
+    @Autowired
     private MessageSource messageSource;
 
     @Transactional(readOnly = true)
@@ -74,22 +77,18 @@ public class UsuarioService {
             .stream()
             .filter(
                 user ->
-                    user.getExpoPushTokenUsers() != null &&
-                    !user.getExpoPushTokenUsers().isEmpty()
+                    user.getPushTokens() != null &&
+                    !user.getPushTokens().isEmpty()
             )
             .collect(Collectors.toList());
 
         if (usuariosComTokens.isEmpty()) {
-            log.warn(
-                "Nenhum admin encontrado na filial: {}",
-                filialId
-            );
+            log.warn("Nenhum admin encontrado na filial: {}", filialId);
             return;
         }
 
-        List<Optional<Map<String, Status>>> results = usuariosComTokens
-            .stream()
-            .map(user -> {
+        usuariosComTokens.forEach(user -> {
+            try {
                 Locale locale = getLocaleFromLanguageEnum(
                     user.getLanguageEnumPreference()
                 );
@@ -122,7 +121,7 @@ public class UsuarioService {
 
                 log.info("message: {}", translatedMessage);
 
-                List<ExpoPushTokenUser> tokens = user.getExpoPushTokenUsers();
+                List<PushToken> tokens = user.getPushTokens();
                 log.info(
                     "tokens do user: {} tokens encontrados",
                     tokens != null ? tokens.size() : 0
@@ -130,18 +129,24 @@ public class UsuarioService {
 
                 log.info("tokens: {}", tokens);
 
-                return pushNotificationService.sendNotification(
+                firebaseMessagingService.sendNotification(
                     tokens,
                     translatedTitle,
                     translatedMessage
                 );
-            })
-            .collect(Collectors.toList());
 
-        results.forEach(result -> {
-            result.ifPresent(status -> {
-                log.info("Notification sent to user: {}", status);
-            });
+                log.info(
+                    "Notificação enviada com sucesso para o usuário: {}",
+                    user.getNmUsuario()
+                );
+            } catch (Exception e) {
+                log.error(
+                    "Erro ao enviar notificação para o usuário: {}. Erro: {}",
+                    user.getNmUsuario(),
+                    e.getMessage(),
+                    e
+                );
+            }
         });
     }
 

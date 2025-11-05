@@ -5,7 +5,7 @@ import com.github.flanchanowo.request.PushNotification;
 import com.github.flanchanowo.request.PushNotification.Priority;
 import com.github.flanchanowo.response.TicketResponse;
 import com.github.flanchanowo.response.enums.Status;
-import gp.moto.challenge_api.model.ExpoPushTokenUser;
+import gp.moto.challenge_api.model.PushToken;
 import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.repository.ExpoPushTokenUserRepository;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class PushNotificationService {
     private final ExpoPushTokenUserRepository expoPushTokenUserRepository;
 
     public Optional<Map<String, Status>> sendNotification(
-        List<ExpoPushTokenUser> toList,
+        List<PushToken> toList,
         String title,
         String message
     ) {
@@ -46,7 +46,7 @@ public class PushNotificationService {
 
             List<String> tokens = toList
                 .stream()
-                .map(ExpoPushTokenUser::getToken)
+                .map(PushToken::getToken)
                 .filter(token -> token != null && !token.trim().isEmpty())
                 .collect(Collectors.toList());
 
@@ -87,8 +87,8 @@ public class PushNotificationService {
         }
     }
 
-    public ExpoPushTokenUser saveTokenForUser(Usuario usuario, String token) {
-        Optional<ExpoPushTokenUser> existingToken =
+    public PushToken saveTokenForUser(Usuario usuario, String token) {
+        Optional<PushToken> existingToken =
             expoPushTokenUserRepository.findByTokenAndUserId(
                 token,
                 usuario.getIdUsuario()
@@ -98,7 +98,7 @@ public class PushNotificationService {
             return existingToken.get();
         }
 
-        ExpoPushTokenUser tokenUser = new ExpoPushTokenUser();
+        PushToken tokenUser = new PushToken();
         tokenUser.setUserId(usuario);
         tokenUser.setToken(token);
         return expoPushTokenUserRepository.save(tokenUser);
