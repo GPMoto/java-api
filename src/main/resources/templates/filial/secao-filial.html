@@ -1,0 +1,85 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: cabecalho(#{secaofilial.title})}" />
+
+    <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
+        
+        <main>
+            <div th:replace="~{fragmentos :: logo}" />
+            
+            <nav>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a
+                            th:href="@{/view/filial/{idFilial}(idFilial = ${idFilial})}"
+                            th:text="#{nav.filial}"
+                            >Voltar para Filial</a
+                        >
+                    </li>
+                    <li>
+                        <a th:href="@{/login/index}" th:text="#{nav.home}">Home</a>
+                    </li>
+                    <li>
+                        <form th:replace="~{fragmentos :: form-logout}" />
+                    </li>
+                </ul>
+            </nav>
+
+            <h1 th:text="#{secaofilial.header}">Lista de Seções da Filial</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col" th:text="#{secaofilial.table.id}">ID</th>
+                        <th scope="col" th:text="#{secaofilial.table.secao}">Seção</th>
+                        <th scope="col" th:text="#{secaofilial.table.filial}">Filial</th>
+                        <th scope="col" th:text="#{secaofilial.table.editar}">Editar</th>
+                        <th scope="col" th:text="#{secaofilial.table.remover}">Remover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="secao : ${secoes}">
+                        <th scope="row" th:text="${secao.idSecao}">1</th>
+                        <td th:text="${secao.idTipoSecao != null ? secao.idTipoSecao.nmSecao : 'N/A'}">
+                            Nome da Seção
+                        </td>
+                        <td th:text="${secao.idFilial != null ? secao.idFilial.cnpjFilial : 'N/A'}">
+                            12.345.678/0001-90
+                        </td>
+                        <td>
+                            <a
+                                th:href="@{/view/secao-filial/editar/{idSecaoFilial}(idSecaoFilial = ${secao.idSecao})}"
+                                th:text="#{secaofilial.table.editar}"
+                                >Editar</a
+                            >
+                        </td>
+                        <td>
+                            <a
+                                th:href="@{/view/secao-filial/remover/{idSecaoFilial}(idSecaoFilial = ${secao.idSecao})}"
+                                th:text="#{secaofilial.table.remover}"
+                                >Remover</a
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                <a
+                    th:href="@{/view/secao-filial/nova/{idFilial}(idFilial = ${idFilial})}"
+                    role="button"
+                    th:text="#{secaofilial.action.create}"
+                    >Cadastrar Nova Seção</a
+                >
+            </p>
+            
+            <div th:replace="~{fragmentos :: rodape}"></div>
+        </main>
+    </body>
+</html>

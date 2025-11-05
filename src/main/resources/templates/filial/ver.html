@@ -3,7 +3,9 @@
     <head th:replace="~{fragmentos :: cabecalho(#{filial.title})}" />
 
     <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
         <main>
+            <div th:replace="~{fragmentos :: logo}" />
             <nav>
                 <ul>
                     <li>
@@ -122,6 +124,7 @@
                     </tr>
                 </tbody>
             </table>
+            <div th:replace="~{fragmentos :: rodape}"></div>
         </main>
     </body>
 </html>

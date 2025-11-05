@@ -25,5 +25,14 @@ public class DevConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("classpath:/static/js/")
                 .setCacheControl(CacheControl.noCache());
+
+        // Imagens e assets
+        registry.addResourceHandler("/assets/**")
+                .addResourceLocations("classpath:/assets/")
+                .setCacheControl(CacheControl.noCache());
+
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("classpath:/assets/images/")
+                .setCacheControl(CacheControl.noCache());
     }
 }

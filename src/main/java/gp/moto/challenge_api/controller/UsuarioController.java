@@ -4,7 +4,6 @@ import gp.moto.challenge_api.dto.notification.ExpoPushTokenUserDto;
 import gp.moto.challenge_api.dto.usuario.LanguagePreferenceDto;
 import gp.moto.challenge_api.dto.usuario.UsuarioDto;
 import gp.moto.challenge_api.model.ExpoPushTokenUser;
-import gp.moto.challenge_api.model.LanguageEnumPreferences;
 import gp.moto.challenge_api.model.Usuario;
 import gp.moto.challenge_api.service.PushNotificationService;
 import gp.moto.challenge_api.service.UsuarioService;
@@ -15,7 +14,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,7 +75,7 @@ public class UsuarioController {
             HttpServletRequest request) {
 
         boolean result = usuarioService.saveLanguagePreference(dto.getLanguage(), request);
-        
+
         if (!result) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "No changes were made"));
         }

@@ -150,6 +150,15 @@ public class UsuarioService {
             );
     }
 
+    @Transactional(readOnly = true)
+    public Usuario findByUsername(String username) {
+        return usuarioRepository
+            .findByNmUsuario(username)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado")
+            );
+    }
+
     @Transactional
     public Usuario save(UsuarioDto dto) {
         String senhaDto = dto.senha();

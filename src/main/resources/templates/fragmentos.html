@@ -5,7 +5,32 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.jade.min.css"
     />
+    <link rel="icon" type="image/png" href="/assets/images/logo.png" />
     <title th:text="${titulo}"></title>
+    <style>
+        .logo-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 200, 150, 0.05) 100%);
+            border-bottom: 2px solid rgba(0, 123, 255, 0.1);
+        }
+        .logo-header img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        .logo-header h2 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 
 <form th:fragment="form-logout" th:action="@{/logout}" method="post">
@@ -22,3 +47,78 @@
         </ul>
     </details>
 </div>
+
+<div th:fragment="logo">
+    <div class="logo-header">
+        <img src="/assets/images/logo.png" alt="Logo GpsMottu" />
+        <h2>GpsMottu</h2>
+    </div>
+</div>
+
+<footer th:fragment="rodape" class="app-footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>🏍️ GpsMottu</h4>
+            <p>Sistema de Gerenciamento de Motos</p>
+        </div>
+        <div class="footer-section">
+            <h4>📞 Contato</h4>
+            <p>suporte@gpsmottu.com</p>
+        </div>
+        <div class="footer-section">
+            <h4>🕒 Horário</h4>
+            <p>24/7 - Sempre disponível</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2024 GpsMottu - Todos os direitos reservados</p>
+    </div>
+</footer>
+
+<style th:fragment="footer-styles">
+    /* Footer */
+    .app-footer {
+        margin-top: 4rem;
+        padding: 3rem 2rem 1.5rem 2rem;
+        border-top: 2px solid rgba(0, 123, 255, 0.1);
+        background: linear-gradient(135deg, rgba(0, 123, 255, 0.03) 0%, rgba(0, 200, 150, 0.03) 100%);
+        text-align: center;
+    }
+    
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 1rem;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-section h4 {
+        margin-top: 0;
+        color: #667eea;
+        font-size: 1.1rem;
+    }
+    
+    .footer-section p {
+        margin: 0.5rem 0;
+        color: #666;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        color: #888;
+        font-size: 0.875rem;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

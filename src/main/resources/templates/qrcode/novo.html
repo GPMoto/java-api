@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragmentos :: cabecalho('Cadastrar Qrcode')}" />
     <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
         <main>
+            <div th:replace="~{fragmentos :: logo}" />
             <header
                 style="
                     display: grid;
@@ -56,6 +58,8 @@
 
                 <button type="submit">Cadastrar Qrcode</button>
             </form>
+            <div th:replace="~{fragmentos :: rodape}"></div>
+
         </main>
     </body>
 </html>

@@ -3,7 +3,9 @@
     <head th:replace="~{fragmentos :: cabecalho(#{qrcode.title})}" />
 
     <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
         <main>
+            <div th:replace="~{fragmentos :: logo}" />
             <nav>
                 <ul>
                     <li><strong th:text="#{qrcode.header}">Lista de Qrcodes</strong></li>
@@ -86,6 +88,7 @@
                     >Cadastrar um Novo Qrcode</a
                 >
             </p>
+            <div th:replace="~{fragmentos :: rodape}"></div>
         </main>
     </body>
 </html>

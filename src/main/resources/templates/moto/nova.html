@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragmentos :: cabecalho(#{moto.new.title})}" />
     <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
         <main>
+            <div th:replace="~{fragmentos :: logo}" />
             <nav>
                 <ul>
                     <li><strong th:text="#{moto.new.header}">Cadastrar Nova Moto</strong></li>
@@ -95,6 +97,8 @@
 
                 <button type="submit" th:text="#{moto.submit}">Cadastrar</button>
             </form>
+            <div th:replace="~{fragmentos :: rodape}"></div>
+
         </main>
     </body>
 </html>

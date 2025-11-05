@@ -5,7 +5,7 @@
 
 <body>
     <style th:replace="~{fragmentos :: footer-styles}"></style>
-
+    
     <main>
         <div th:replace="~{fragmentos :: logo}" />
 
@@ -77,7 +77,7 @@
                     <th scope="row" th:text="${moto.idMoto}">A</th>
                     <td th:text="${moto.identificador}">B</td>
                     <td>
-                        <span class="status-badge" th:text="${moto.status}" th:data-status="${moto.status}">Status</span>
+                        <span class="status-badge" th:text="${moto.status}" th:classappend="${'status-' + #strings.toLowerCase(moto.status)}">C</span>
                     </td>
                     <td th:text="${moto.condicoesManutencao}">D</td>
                     <td th:text="${moto.idTipoMoto != null ? moto.idTipoMoto.nmTipo : 'N/A'}">E</td>
@@ -149,74 +149,32 @@
                 width: 100%;
             }
 
-            /* Badges de Status - Base */
+            /* Badges de Status */
             .status-badge {
                 display: inline-block;
-                padding: 0.4rem 0.9rem;
-                border-radius: 16px;
-                font-weight: 600;
+                padding: 0.25rem 0.75rem;
+                border-radius: 12px;
+                font-weight: 500;
                 font-size: 0.875rem;
-                text-transform: capitalize;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                transition: all 0.3s ease;
             }
 
-            .status-badge:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            .status-disponível, .status-disponivel {
+                background-color: #d4edda;
+                color: #155724;
+            }
+
+            .status-em.uso, .status-emuso {
+                background-color: #fff3cd;
+                color: #856404;
+            }
+
+            .status-manutenção, .status-manutencao {
+                background-color: #f8d7da;
+                color: #721c24;
             }
         </style>
 
         <script>
-            // Array de cores vibrantes para os badges (fundo e texto)
-            const statusColors = [
-                { bg: '#d4edda', text: '#155724' },  // Verde suave
-                { bg: '#cfe2ff', text: '#084298' },  // Azul suave
-                { bg: '#fff3cd', text: '#856404' },  // Amarelo suave
-                { bg: '#f8d7da', text: '#721c24' },  // Vermelho suave
-                { bg: '#e2e3e5', text: '#383d41' },  // Cinza suave
-                { bg: '#d1ecf1', text: '#0c5460' },  // Ciano suave
-                { bg: '#f5c6cb', text: '#721c24' },  // Rosa suave
-                { bg: '#c3e6cb', text: '#155724' },  // Verde limão
-                { bg: '#bee5eb', text: '#0c5460' },  // Azul claro
-                { bg: '#ffeaa7', text: '#6c5b0d' },  // Amarelo ouro
-                { bg: '#dfe6e9', text: '#2d3436' },  // Azul acinzentado
-                { bg: '#fdcb6e', text: '#6c5b0d' },  // Laranja suave
-                { bg: '#fab1a0', text: '#741f1f' },  // Coral
-                { bg: '#a29bfe', text: '#2e1f73' },  // Roxo suave
-                { bg: '#74b9ff', text: '#0a3d62' },  // Azul céu
-            ];
-
-            // Função hash simples para gerar um número a partir de uma string
-            function hashString(str) {
-                let hash = 0;
-                for (let i = 0; i < str.length; i++) {
-                    const char = str.charCodeAt(i);
-                    hash = ((hash << 5) - hash) + char;
-                    hash = hash & hash; // Converte para 32bit integer
-                }
-                return Math.abs(hash);
-            }
-
-            // Função para obter cor baseada no texto do status
-            function getColorForStatus(status) {
-                const index = hashString(status.toLowerCase()) % statusColors.length;
-                return statusColors[index];
-            }
-
-            // Aplicar cores aos badges quando a página carregar
-            document.addEventListener('DOMContentLoaded', function() {
-                const badges = document.querySelectorAll('.status-badge');
-                
-                badges.forEach(badge => {
-                    const status = badge.getAttribute('data-status') || badge.textContent.trim();
-                    const colors = getColorForStatus(status);
-                    
-                    badge.style.backgroundColor = colors.bg;
-                    badge.style.color = colors.text;
-                });
-            });
-
             // Função de filtro de tabela em tempo real
             function filterTable() {
                 const input = document.getElementById('searchInput');

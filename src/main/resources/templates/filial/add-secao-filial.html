@@ -1,0 +1,106 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: cabecalho(#{secaofilial.new.title})}" />
+    <body>
+        <style th:replace="~{fragmentos :: footer-styles}"></style>
+        <main>
+            <div th:replace="~{fragmentos :: logo}" />
+            <nav>
+                <ul>
+                    <li><strong th:text="#{secaofilial.new.header}">Cadastrar Nova Seção</strong></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div th:replace="~{fragmentos :: language-selector}" />
+                    </li>
+                    <li>
+                        <a th:href="@{/view/secao-filial}" role="button" th:text="#{secaofilial.back}">Voltar</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h2 th:text="#{secaofilial.new.header}">Cadastrar Nova Seção</h2>
+
+            <div th:if="${errorMessage}">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <div th:if="${errors != null and !errors.empty}">
+                <strong th:text="#{secaofilial.validation.errors}">Erros de validação:</strong>
+                <ul>
+                    <li
+                        th:each="error : ${errors}"
+                        th:text="${error.defaultMessage}"
+                    ></li>
+                </ul>
+            </div>
+
+            <form th:action="@{/view/secao-filial/nova/}" th:object="${secaoFilialDto}" method="post">
+                <label for="lado1">
+                    <span th:text="#{secaofilial.field.lado1}">Lado 1 (metros)</span>
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="lado1"
+                        th:field="*{lado1}"
+                        required
+                    />
+                </label>
+
+                <label for="lado2">
+                    <span th:text="#{secaofilial.field.lado2}">Lado 2 (metros)</span>
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="lado2"
+                        th:field="*{lado2}"
+                        required
+                    />
+                </label>
+
+                <label for="lado3">
+                    <span th:text="#{secaofilial.field.lado3}">Lado 3 (metros)</span>
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="lado3"
+                        th:field="*{lado3}"
+                        required
+                    />
+                </label>
+
+                <label for="lado4">
+                    <span th:text="#{secaofilial.field.lado4}">Lado 4 (metros)</span>
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="lado4"
+                        th:field="*{lado4}"
+                        required
+                    />
+                </label>
+
+                <label for="idTipoSecao">
+                    <span th:text="#{secaofilial.field.tipoSecao}">Tipo de Seção</span>
+                    <select id="idTipoSecao" th:field="*{idTipoSecao}" required>
+                        <option
+                            th:each="tipo : ${tiposSecao}"
+                            th:value="${tipo.idTipoSecao}"
+                            th:text="${tipo.nmSecao}"
+                        ></option>
+                    </select>
+                </label>
+
+                <input
+                    type="hidden"
+                    th:field="*{idFilial}"
+                    th:value="${filialId}"
+                />
+
+                <button type="submit" th:text="#{secaofilial.submit}">Cadastrar</button>
+            </form>
+            <div th:replace="~{fragmentos :: rodape}"></div>
+
+        </main>
+    </body>
+</html>
