@@ -9,9 +9,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = "userId")
+@EqualsAndHashCode(exclude = "userId")
 @Entity
 @Table(name = "t_gp_mottu_token_push")
 public class ExpoPushTokenUser {

@@ -70,7 +70,24 @@ public class UsuarioService {
             filialId
         );
 
-        List<Optional<Map<String, Status>>> results = usuarios
+        List<Usuario> usuariosComTokens = usuarios
+            .stream()
+            .filter(
+                user ->
+                    user.getExpoPushTokenUsers() != null &&
+                    !user.getExpoPushTokenUsers().isEmpty()
+            )
+            .collect(Collectors.toList());
+
+        if (usuariosComTokens.isEmpty()) {
+            log.warn(
+                "Nenhum admin encontrado na filial: {}",
+                filialId
+            );
+            return;
+        }
+
+        List<Optional<Map<String, Status>>> results = usuariosComTokens
             .stream()
             .map(user -> {
                 Locale locale = getLocaleFromLanguageEnum(
@@ -105,10 +122,16 @@ public class UsuarioService {
 
                 log.info("message: {}", translatedMessage);
 
-                log.info("tokens do user: {}", user.getExpoPushTokenUsers());
+                List<ExpoPushTokenUser> tokens = user.getExpoPushTokenUsers();
+                log.info(
+                    "tokens do user: {} tokens encontrados",
+                    tokens != null ? tokens.size() : 0
+                );
+
+                log.info("tokens: {}", tokens);
 
                 return pushNotificationService.sendNotification(
-                    user.getExpoPushTokenUsers(),
+                    tokens,
                     translatedTitle,
                     translatedMessage
                 );

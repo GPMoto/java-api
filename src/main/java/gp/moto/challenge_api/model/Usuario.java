@@ -5,10 +5,16 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = "expoPushTokenUsers")
+@EqualsAndHashCode(exclude = "expoPushTokenUsers")
 @Entity
 @Table(name = "t_gpMottu_usuario")
 public class Usuario {
@@ -47,7 +53,7 @@ public class Usuario {
     @JoinColumn(name = "id_perfil")
     private Perfil idPerfil;
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
     @Nullable
     private List<ExpoPushTokenUser> expoPushTokenUsers;
 
