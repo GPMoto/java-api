@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Atualizar Filial')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{filial.update.title})}" />
     <body>
         <style th:replace="~{fragmentos :: footer-styles}"></style>
         <main>
@@ -12,8 +12,8 @@
                     align-items: center;
                 "
             >
-                <h2>Atualizar Filial</h2>
-                <a th:href="@{/login/index}" role="button">Voltar</a>
+                <h2 th:text="#{filial.update.header}">Atualizar Filial</h2>
+                <a th:href="@{/login/index}" role="button" th:text="#{usuario.back}">Voltar</a>
             </header>
 
             <div th:if="${errorMessage}">
@@ -21,12 +21,11 @@
             </div>
 
             <div th:if="${param.erro != null and param.erro[0] == 'true'}">
-                <strong>Erro!</strong> Ocorreu um problema ao atualizar a
-                filial. Tente novamente.
+                <strong th:text="#{filial.update.error}">Erro! Ocorreu um problema ao atualizar a filial. Tente novamente.</strong>
             </div>
 
             <div th:if="${errors != null and !errors.empty}">
-                <strong>Erros de validação:</strong>
+                <strong th:text="#{usuario.validation.errors}">Erros de validação:</strong>
                 <ul>
                     <li
                         th:each="error : ${errors}"
@@ -35,7 +34,7 @@
                 </ul>
             </div>
 
-            <div th:if="${param.sucesso}">Filial atualizada com sucesso!</div>
+            <div th:if="${param.sucesso}" th:text="#{filial.update.success}">Filial atualizada com sucesso!</div>
 
             <form
                 th:action="@{/view/filial/editar/{idFilial}(idFilial = ${filial.idFilial})}"
@@ -58,7 +57,7 @@
                 />
 
                 <label for="cnpjFilial">
-                    CNPJ
+                    <span th:text="#{filial.field.cnpj}">CNPJ</span>
                     <input
                         type="text"
                         name="cnpjFilial"
@@ -70,7 +69,7 @@
                 </label>
 
                 <label for="senhaFilial">
-                    Senha da Filial
+                    <span th:text="#{filial.field.senha}">Senha da Filial</span>
                     <input
                         type="password"
                         name="senhaFilial"
@@ -81,10 +80,10 @@
                     />
                 </label>
 
-                <h4>Endereço</h4>
+                <h4 th:text="#{filial.section.endereco}">Endereço</h4>
 
                 <label for="cep">
-                    CEP
+                    <span th:text="#{filial.field.cep}">CEP</span>
                     <input
                         type="text"
                         name="cep"
@@ -96,7 +95,7 @@
                 </label>
 
                 <label for="nmLogradouro">
-                    Logradouro
+                    <span th:text="#{filial.field.logradouro}">Logradouro</span>
                     <input
                         type="text"
                         name="nmLogradouro"
@@ -108,7 +107,7 @@
                 </label>
 
                 <label for="nrLogradouro">
-                    Número
+                    <span th:text="#{filial.field.numero}">Número</span>
                     <input
                         type="number"
                         name="nrLogradouro"
@@ -120,7 +119,7 @@
                 </label>
 
                 <label for="idCidade">
-                    Cidade
+                    <span th:text="#{filial.field.cidade}">Cidade</span>
                     <select name="idCidade" id="idCidade" required>
                         <option
                             th:each="cidade : ${cidades}"
@@ -131,10 +130,10 @@
                     </select>
                 </label>
 
-                <h4>Contato</h4>
+                <h4 th:text="#{filial.section.contato}">Contato</h4>
 
                 <label for="nmDono">
-                    Nome do Responsável
+                    <span th:text="#{filial.field.responsavel}">Nome do Responsável</span>
                     <input
                         type="text"
                         name="nmDono"
@@ -146,17 +145,19 @@
                 </label>
 
                 <label for="status">
-                    Status do Contato
+                    <span th:text="#{filial.field.status.contato}">Status do Contato</span>
                     <select name="status" id="status" required>
                         <option
                             value="0"
                             th:selected="${filial.idContato != null and filial.idContato.status == 0}"
+                            th:text="#{filial.field.status.inativo}"
                         >
                             Inativo
                         </option>
                         <option
                             value="1"
                             th:selected="${filial.idContato != null and filial.idContato.status == 1}"
+                            th:text="#{filial.field.status.ativo}"
                         >
                             Ativo
                         </option>
@@ -164,7 +165,7 @@
                 </label>
 
                 <label for="ddd">
-                    DDD
+                    <span th:text="#{filial.field.ddd}">DDD</span>
                     <input
                         type="text"
                         name="ddd"
@@ -176,7 +177,7 @@
                 </label>
 
                 <label for="numero">
-                    Telefone
+                    <span th:text="#{filial.field.telefone.numero}">Telefone</span>
                     <input
                         type="text"
                         name="numero"
@@ -187,7 +188,7 @@
                     />
                 </label>
 
-                <button type="submit">Atualizar Filial</button>
+                <button type="submit" th:text="#{filial.submit.update}">Atualizar Filial</button>
             </form>
             <div th:replace="~{fragmentos :: rodape}"></div>
 

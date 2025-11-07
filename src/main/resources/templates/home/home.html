@@ -33,16 +33,16 @@
         <!-- Cards de Estatísticas -->
         <div class="stats-container">
             <div class="stat-card">
-                <h3>📊 Total de Motos</h3>
+                <h3 th:text="#{home.stats.total.title}">📊 Total de Motos</h3>
                 <p class="stat-number" th:text="${#lists.size(motos)}">0</p>
             </div>
             <div class="stat-card">
-                <h3>🔍 Rápido Acesso</h3>
-                <p class="stat-desc">Use a busca abaixo</p>
+                <h3 th:text="#{home.stats.search.title}">🔍 Rápido Acesso</h3>
+                <p class="stat-desc" th:text="#{home.stats.search.desc}">Use a busca abaixo</p>
             </div>
             <div class="stat-card">
-                <h3>⚡ Status</h3>
-                <p class="stat-desc">Gerencie suas motos</p>
+                <h3 th:text="#{home.stats.status.title}">⚡ Status</h3>
+                <p class="stat-desc" th:text="#{home.stats.status.desc}">Gerencie suas motos</p>
             </div>
         </div>
 
@@ -92,7 +92,7 @@
             </tbody>
         </table>
 
-        <p>
+        <p></p>
             <a href="/view/moto/nova" role="button" th:text="#{action.cadastrarNova}">Cadastrar uma Nova moto</a>
         </p>
 
@@ -207,11 +207,11 @@
             // Aplicar cores aos badges quando a página carregar
             document.addEventListener('DOMContentLoaded', function() {
                 const badges = document.querySelectorAll('.status-badge');
-                
+
                 badges.forEach(badge => {
                     const status = badge.getAttribute('data-status') || badge.textContent.trim();
                     const colors = getColorForStatus(status);
-                    
+
                     badge.style.backgroundColor = colors.bg;
                     badge.style.color = colors.text;
                 });

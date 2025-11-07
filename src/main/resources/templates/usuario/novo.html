@@ -1,6 +1,6 @@
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Criar Novo Usuário')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{usuario.new.title})}" />
     <body>
         <style th:replace="~{fragmentos :: footer-styles}"></style>
         <main>
@@ -12,11 +12,12 @@
                     align-items: center;
                 "
             >
-                <h2>Criar Novo Usuário</h2>
-                <a th:href="@{/login/index}" role="button">Voltar</a>
+                <h2 th:text="#{usuario.new.header}">Criar Novo Usuário</h2>
+                <a th:href="@{/login/index}" role="button" th:text="#{usuario.back}">Voltar</a>
             </header>
 
             <div th:if="${errors}">
+                <strong th:text="#{usuario.validation.errors}">Erros de validação:</strong>
                 <ul>
                     <li
                         th:each="err : ${errors}"
@@ -31,7 +32,7 @@
                 method="post"
             >
                 <label for="nmUsuario">
-                    Nome
+                    <span th:text="#{usuario.field.nome}">Nome</span>
                     <input
                         type="text"
                         id="nmUsuario"
@@ -42,7 +43,7 @@
                 </label>
 
                 <label for="nmEmail">
-                    Email
+                    <span th:text="#{usuario.field.email}">Email</span>
                     <input
                         type="email"
                         id="nmEmail"
@@ -53,7 +54,7 @@
                 </label>
 
                 <label for="senha">
-                    Senha
+                    <span th:text="#{usuario.field.senha}">Senha</span>
                     <input
                         type="password"
                         id="senha"
@@ -64,7 +65,7 @@
                 </label>
 
                 <label for="idPerfil">
-                    Perfil
+                    <span th:text="#{usuario.field.perfil}">Perfil</span>
                     <select id="idPerfil" th:field="*{idPerfil}" required>
                         <option
                             th:each="perfil : ${perfis}"
@@ -80,7 +81,7 @@
                     th:value="${idFilial}"
                 />
 
-                <button type="submit">Criar Usuário</button>
+                <button type="submit" th:text="#{usuario.submit}">Criar Usuário</button>
             </form>
             <div th:replace="~{fragmentos :: rodape}"></div>
 

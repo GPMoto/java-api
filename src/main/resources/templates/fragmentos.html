@@ -58,20 +58,20 @@
 <footer th:fragment="rodape" class="app-footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h4>🏍️ GpsMottu</h4>
-            <p>Sistema de Gerenciamento de Motos</p>
+            <h4 th:text="#{footer.title}">🏍️ GpsMottu</h4>
+            <p th:text="#{footer.subtitle}">Sistema de Gerenciamento de Motos</p>
         </div>
         <div class="footer-section">
-            <h4>📞 Contato</h4>
-            <p>suporte@gpsmottu.com</p>
+            <h4 th:text="#{footer.contact.title}">📞 Contato</h4>
+            <p th:text="#{footer.contact.email}">suporte@gpsmottu.com</p>
         </div>
         <div class="footer-section">
-            <h4>🕒 Horário</h4>
-            <p>24/7 - Sempre disponível</p>
+            <h4 th:text="#{footer.schedule.title}">🕒 Horário</h4>
+            <p th:text="#{footer.schedule.text}">24/7 - Sempre disponível</p>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>© 2024 GpsMottu - Todos os direitos reservados</p>
+        <p th:text="#{footer.copyright}">© 2025 GpsMottu - Todos os direitos reservados</p>
     </div>
 </footer>
 
@@ -84,7 +84,7 @@
         background: linear-gradient(135deg, rgba(0, 123, 255, 0.03) 0%, rgba(0, 200, 150, 0.03) 100%);
         text-align: center;
     }
-    
+
     .footer-content {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -95,22 +95,22 @@
         margin-right: auto;
         padding: 0 1rem;
     }
-    
+
     .footer-section {
         text-align: center;
     }
-    
+
     .footer-section h4 {
         margin-top: 0;
         color: #667eea;
         font-size: 1.1rem;
     }
-    
+
     .footer-section p {
         margin: 0.5rem 0;
         color: #666;
     }
-    
+
     .footer-bottom {
         text-align: center;
         padding-top: 1.5rem;
