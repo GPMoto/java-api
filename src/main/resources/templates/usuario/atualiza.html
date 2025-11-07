@@ -1,9 +1,9 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: cabecalho('Atualizar Usuário')}" />
+    <head th:replace="~{fragmentos :: cabecalho(#{usuario.update.title})}" />
     <body>
         <style th:replace="~{fragmentos :: footer-styles}"></style>
-        <main>
+        <main></main>
             <div th:replace="~{fragmentos :: logo}" />
             <header
                 style="
@@ -12,11 +12,12 @@
                     align-items: center;
                 "
             >
-                <h2>Atualizar Usuário</h2>
-                <a th:href="@{/login/index}" role="button">Voltar</a>
+                <h2 th:text="#{usuario.update.header}">Atualizar Usuário</h2>
+                <a th:href="@{/login/index}" role="button" th:text="#{usuario.back}">Voltar</a>
             </header>
 
             <div th:if="${errors}">
+                <strong th:text="#{usuario.validation.errors}">Erros de validação:</strong>
                 <ul>
                     <li
                         th:each="err : ${errors}"
@@ -32,7 +33,7 @@
                 method="post"
             >
                 <label for="nmUsuario">
-                    Nome
+                    <span th:text="#{usuario.field.nome}">Nome</span>
                     <input
                         type="text"
                         id="nmUsuario"
@@ -43,7 +44,7 @@
                 </label>
 
                 <label for="nmEmail">
-                    Email
+                    <span th:text="#{usuario.field.email}">Email</span>
                     <input
                         type="email"
                         id="nmEmail"
@@ -54,18 +55,18 @@
                 </label>
 
                 <label for="senha">
-                    Senha
+                    <span th:text="#{usuario.field.senha}">Senha</span>
                     <input
                         type="password"
                         id="senha"
                         th:field="*{senha}"
                         maxlength="200"
                     />
-                    <small>Preencha apenas se deseja alterar a senha.</small>
+                    <small th:text="#{usuario.field.senha.hint}">Preencha apenas se deseja alterar a senha.</small>
                 </label>
 
                 <label for="idPerfil">
-                    Perfil
+                    <span th:text="#{usuario.field.perfil}">Perfil</span>
                     <select id="idPerfil" th:field="*{idPerfil}" required>
                         <option
                             th:each="perfil : ${perfis}"
@@ -82,7 +83,7 @@
                     th:value="${idFilial}"
                 />
 
-                <button type="submit">Salvar Alterações</button>
+                <button type="submit" th:text="#{usuario.submit.update}">Salvar Alterações</button>
             </form>
             <div th:replace="~{fragmentos :: rodape}"></div>
 

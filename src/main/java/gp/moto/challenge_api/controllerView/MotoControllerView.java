@@ -12,9 +12,7 @@ import gp.moto.challenge_api.service.TipoMotoService;
 import gp.moto.challenge_api.service.UsuarioService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
-
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -113,6 +111,13 @@ public class MotoControllerView {
 
         try {
             ModelAndView mv = new ModelAndView("redirect:/login/index");
+            Authentication auth =
+                SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+
+            var user = usuarioService.findByUsername(username);
+
+            motoDTO.setIdSecaoFilial(user.getIdFilial().getIdFilial());
             motoService.criar(motoDTO);
             return mv;
         } catch (Exception e) {
