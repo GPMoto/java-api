@@ -6,7 +6,6 @@ import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +25,7 @@ public class FirebaseConfig {
         InputStream serviceAccount;
 
         if (firebaseCredentialsUrl != null && !firebaseCredentialsUrl.isEmpty()) {
-            // Busca do Azure Blob Storage
+            // Busca do Azure Blob Storage com URL SAS completa
             serviceAccount = downloadFromAzure(firebaseCredentialsUrl);
         } else {
             // Fallback para arquivo local (desenvolvimento)
