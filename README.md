@@ -42,6 +42,11 @@ Com essas funcionalidades, a empresa consegue implementar um controle mais efici
 - **SQL SERVER**
 - **Spring Data JPA**
 - **Spring Cache**
+- **Testes com JUnit**
+
+## Testes JUnit
+
+Os testes JUnit são utilizados para garantir a qualidade e a consistência do código-fonte. Eles são executados automaticamente durante o processo de build e podem ser executados individualmente para identificar problemas específicos.
 
 Este README descreve passo-a-passo como executar o projeto localmente, utilizando Docker/docker-compose, criar a imagem Docker e também informações sobre o script de deploy para Azure.
 
