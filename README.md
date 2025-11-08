@@ -4,9 +4,7 @@
 <img width="929" height="1309" alt="image" src="gpsMottu-spring3.drawio.png" />
 
 
-[Challenge Api - Vìdeo de deploy na AZURE - DEVOPS](https://www.youtube.com/watch?v=iPmjPbi-ZJg)
-
-[Challenge Api - Vìdeo demonstrativo - JAVA ADVANCED](https://youtu.be/ir8tQdRJ4yk)
+[Challenge Api - Vìdeo demonstrativo - JAVA ADVANCED](https://youtu.be/3iK9vFOGJF8)
 
 ## Descrição da Solução:
 O Java API - Gestão de Motos é uma aplicação desenvolvida em Java com foco em auxiliar operadores e gestores de filiais no controle e monitoramento de motos, funcionários e setores da empresa.
