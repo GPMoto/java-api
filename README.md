@@ -1,7 +1,7 @@
 # Challenge API - GpsMottu
 
 
-<img width="929" height="1309" alt="image" src="https://github.com/user-attachments/assets/f8f3572d-fdc5-492c-9b54-a42dbbf1d74d" />
+<img width="929" height="1309" alt="image" src="gpsMottu-spring3.drawio.png" />
 
 
 [Challenge Api - Vìdeo de deploy na AZURE - DEVOPS](https://www.youtube.com/watch?v=iPmjPbi-ZJg)
@@ -39,11 +39,11 @@ Com essas funcionalidades, a empresa consegue implementar um controle mais efici
 - **Maven**
 - **Flyway SQLSERVER**
 - **Thymeleaf**
-- **SQL SERVER** 
+- **SQL SERVER**
 - **Spring Data JPA**
 - **Spring Cache**
 
-Este README descreve passo-a-passo como executar o projeto localmente, utilizando Docker/docker-compose, criar a imagem Docker e também informações sobre o script de deploy para Azure.  
+Este README descreve passo-a-passo como executar o projeto localmente, utilizando Docker/docker-compose, criar a imagem Docker e também informações sobre o script de deploy para Azure.
 
 
 ## Sumário
@@ -81,7 +81,7 @@ Os valores de username e password estarão no script como `gpsmottu-admin` e `Gp
 7. Edite o yaml(workflow) gerado pela azure para colocar as seguintes variáveis de ambiente:
 
 ```
-env: 
+env:
   SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
   SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
   SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
@@ -91,7 +91,7 @@ env:
 
 9. Ao término das operações acima, deve-se realizar os seguintes testes com CURL ou Swagger (abaixo seguem-se testes com curl).
 
-Autenticação 
+Autenticação
 ```bash
 curl -X GET "http://gpsmottu-api.azurewebsites.net/api/autenticacao/login?username=Admin%20SP&password=admin123"
 ```
@@ -259,4 +259,3 @@ java -jar target/java-api-0.0.1-SNAPSHOT.jar
 ```
 
 Observação: se preferir usar outra base (MySQL, Azure SQL, etc.), ajuste `SPRING_DATASOURCE_URL` e credenciais conforme necessário.
-
