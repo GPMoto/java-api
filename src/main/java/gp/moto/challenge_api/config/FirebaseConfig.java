@@ -18,7 +18,7 @@ import java.net.http.HttpResponse;
 @Configuration
 public class FirebaseConfig {
 
-    @Value("${firebase.credentials.url:}")
+    @Value("${firebase.credentials.url}")
     private String firebaseCredentialsUrl;
 
     @PostConstruct
